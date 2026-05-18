@@ -1,0 +1,5 @@
+# Debug/default model config.
+# Keep this short for iterative development. Use configs/llm_models_full.yaml
+# only when collecting final comparative results.
+models:
+  - meta-llama/llama-3.1-70b-instruct

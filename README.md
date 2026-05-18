@@ -143,3 +143,66 @@ python -m lemon_factor.analysis.factor_schema_tables \
 ```
 
 This stage maps lexical predicate evidence such as `birthPlace → birth, place` into controlled semantic factors such as `biographical_relation + person + place`.
+
+## lemon-05: optional OpenRouter LLM candidate generation
+
+The deterministic pipeline works without an LLM. To generate optional LLM-assisted predicate decomposition candidates, set an OpenRouter key and run:
+
+```powershell
+$env:OPENROUTER_API_KEY="..."
+python -m lemon_factor.llm.decompose_predicates `
+  data/interim/webnlg_factor_inventory.json `
+  --factor-schema data/interim/factor_schema_seed.json `
+  --models configs/llm_models.yaml `
+  --out data/interim/llm_predicate_decomposition_candidates.jsonl `
+  --raw-out data/interim/llm_raw_responses.jsonl `
+  --limit 50
+```
+
+Dry-run mode requires no key and writes prompts/payloads only:
+
+```powershell
+python -m lemon_factor.llm.decompose_predicates `
+  data/interim/webnlg_factor_inventory.json `
+  --factor-schema data/interim/factor_schema_seed.json `
+  --models configs/llm_models.yaml `
+  --limit 10 `
+  --dry-run
+```
+
+Evaluate candidates against the seed reference:
+
+```powershell
+python -m lemon_factor.llm.evaluate_decompositions `
+  data/interim/llm_predicate_decomposition_candidates.jsonl `
+  data/interim/webnlg_predicate_decompositions_seed.json `
+  --out data/reports/llm_decomposition_eval.json `
+  --table paper/tables/table_llm_decomposition_eval.md `
+  --review-out data/annotation/llm_decomposition_review.csv
+```
+
+LLM outputs are candidate decompositions only. They must pass schema validation and should be reviewed before being treated as evidence.
+
+
+### LLM debug vs final model configs
+
+For iterative debugging, keep LLM runs small:
+
+```powershell
+python -m lemon_factor.llm.decompose_predicates `
+  data/interim/webnlg_factor_inventory.json `
+  --factor-schema data/interim/factor_schema_seed.json `
+  --models configs/llm_models.yaml `
+  --limit 10 `
+  --dry-run
+```
+
+Model configs:
+
+```text
+configs/llm_models.yaml        # default debug: one model
+configs/llm_models_debug.yaml  # explicit one-model debug config
+configs/llm_models_sanity.yaml # two-model sanity comparison
+configs/llm_models_full.yaml   # full final comparison
+```
+

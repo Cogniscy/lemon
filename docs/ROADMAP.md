@@ -197,3 +197,25 @@ Avoid claiming that LEMON-Factor is a general theory of meaning or a replacement
 - expert-review protocol for correcting factors and weights.
 
 **Exit criteria:** tests pass, seed schema/decomposition JSON files validate, review CSV and paper tables are generated.
+
+## lemon-05 — Optional LLM candidate generator
+
+Goal: add a model-agnostic OpenRouter-backed candidate generator for predicate decompositions. The deterministic `lemon-04` seed schema remains the reference. LLM output is evaluated by parse success, schema validity, factor F1, role accuracy, weight MAE, and expert acceptance.
+
+Code artifacts:
+
+```text
+src/lemon_factor/llm/openrouter_client.py
+src/lemon_factor/llm/schema.py
+src/lemon_factor/llm/prompting.py
+src/lemon_factor/llm/decompose_predicates.py
+src/lemon_factor/llm/evaluate_decompositions.py
+configs/llm_models.yaml
+```
+
+Paper contribution: demonstrate that factor decompositions can be proposed by any LLM under a fixed schema/prompt protocol, while quality remains measurable and model-independent.
+
+
+## LLM debug model policy
+
+For work before final result collection, use the one-model debug config in `configs/llm_models.yaml`. Full multi-model runs should use `configs/llm_models_full.yaml` and be reserved for final tables.

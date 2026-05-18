@@ -1,0 +1,4 @@
+# Small sanity config: two models that produced valid candidates in lemon-05 trial.
+models:
+  - meta-llama/llama-3.1-70b-instruct
+  - anthropic/claude-3.5-haiku
