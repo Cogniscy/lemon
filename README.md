@@ -24,6 +24,7 @@ comparison with exact/embedding/MINE-style recoverability
 - `docs/lemon-01.md` — detailed first milestone plan.
 - `docs/lemon-02.md` — WebNLG parquet conversion plan.
 - `docs/lemon-02.1.md` — stratified WebNLG pilot sampling plan.
+- `docs/lemon-03.md` — WebNLG factor inventory plan and commands.
 - `docs/reference_sources.md` — external datasets and baseline references.
 - `docs/annotation_guidelines.md` — expert review templates and labeling policy.
 
@@ -89,3 +90,24 @@ python -m pytest
 ```
 
 The stratified WebNLG path is used to avoid evaluating LEMON-Factor on only the first categories returned by the parquet files.
+
+## lemon-03: WebNLG factor inventory
+
+Build an inventory of predicates, node labels, categories, contexts, and candidate factors from the stratified WebNLG train split:
+
+```bash
+python -m lemon_factor.factors.inventory_cli \
+  data/processed/webnlg_train.jsonl \
+  --out data/interim/webnlg_factor_inventory.json \
+  --summary data/reports/webnlg_factor_inventory_summary.json
+```
+
+Export a compact markdown table for the paper:
+
+```bash
+python -m lemon_factor.analysis.inventory_stats \
+  data/interim/webnlg_factor_inventory.json \
+  --out paper/tables/table_webnlg_inventory.md
+```
+
+The output is a train-side inventory. Candidate factors extracted from predicate names are not final semantic factors; they are evidence for the next factor-schema stage.

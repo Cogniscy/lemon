@@ -1,0 +1,383 @@
+{
+  "dataset": "webnlg",
+  "split": "train",
+  "examples": 200,
+  "predicate_count": 162,
+  "node_label_count": 537,
+  "category_count": 16,
+  "candidate_factor_count": 208,
+  "top_predicates": [
+    {
+      "predicate": "location",
+      "count": 33,
+      "categories": {
+        "Monument": 10,
+        "Building": 9,
+        "University": 4,
+        "Airport": 5,
+        "Company": 4,
+        "MeanOfTransportation": 1
+      },
+      "candidate_factors": [
+        "location"
+      ]
+    },
+    {
+      "predicate": "country",
+      "count": 30,
+      "categories": {
+        "Food": 7,
+        "Monument": 1,
+        "Airport": 3,
+        "City": 7,
+        "MeanOfTransportation": 1,
+        "WrittenWork": 3,
+        "Artist": 2,
+        "University": 4,
+        "SportsTeam": 1,
+        "Politician": 1
+      },
+      "candidate_factors": [
+        "country"
+      ]
+    },
+    {
+      "predicate": "leader",
+      "count": 25,
+      "categories": {
+        "Food": 5,
+        "Monument": 5,
+        "Artist": 4,
+        "SportsTeam": 1,
+        "Politician": 2,
+        "Building": 3,
+        "University": 1,
+        "Airport": 2,
+        "Athlete": 1,
+        "Company": 1
+      },
+      "candidate_factors": [
+        "leader"
+      ]
+    },
+    {
+      "predicate": "birthPlace",
+      "count": 18,
+      "categories": {
+        "Astronaut": 8,
+        "Athlete": 2,
+        "Politician": 3,
+        "Artist": 4,
+        "CelestialBody": 1
+      },
+      "candidate_factors": [
+        "birth",
+        "place"
+      ]
+    },
+    {
+      "predicate": "isPartOf",
+      "count": 17,
+      "categories": {
+        "City": 12,
+        "Airport": 4,
+        "Building": 1
+      },
+      "candidate_factors": [
+        "is",
+        "part",
+        "of"
+      ]
+    },
+    {
+      "predicate": "nationality",
+      "count": 15,
+      "categories": {
+        "Astronaut": 6,
+        "ComicsCharacter": 4,
+        "Politician": 2,
+        "Artist": 1,
+        "CelestialBody": 2
+      },
+      "candidate_factors": [
+        "nationality"
+      ]
+    },
+    {
+      "predicate": "capital",
+      "count": 12,
+      "categories": {
+        "City": 3,
+        "SportsTeam": 2,
+        "Building": 1,
+        "Food": 2,
+        "Monument": 3,
+        "WrittenWork": 1
+      },
+      "candidate_factors": [
+        "capital"
+      ]
+    },
+    {
+      "predicate": "club",
+      "count": 12,
+      "categories": {
+        "Athlete": 8,
+        "SportsTeam": 4
+      },
+      "candidate_factors": [
+        "club"
+      ]
+    },
+    {
+      "predicate": "creator",
+      "count": 11,
+      "categories": {
+        "ComicsCharacter": 10,
+        "Food": 1
+      },
+      "candidate_factors": [
+        "creator"
+      ]
+    },
+    {
+      "predicate": "city",
+      "count": 9,
+      "categories": {
+        "University": 7,
+        "Company": 1,
+        "WrittenWork": 1
+      },
+      "candidate_factors": [
+        "city"
+      ]
+    },
+    {
+      "predicate": "associatedBand/associatedMusicalArtist",
+      "count": 8,
+      "categories": {
+        "Artist": 8
+      },
+      "candidate_factors": [
+        "associated",
+        "band",
+        "associated",
+        "musical",
+        "artist"
+      ]
+    },
+    {
+      "predicate": "battle",
+      "count": 8,
+      "categories": {
+        "Politician": 6,
+        "Airport": 2
+      },
+      "candidate_factors": [
+        "battle"
+      ]
+    },
+    {
+      "predicate": "birthDate",
+      "count": 8,
+      "categories": {
+        "Politician": 2,
+        "Astronaut": 4,
+        "Athlete": 2
+      },
+      "candidate_factors": [
+        "birth",
+        "date"
+      ]
+    },
+    {
+      "predicate": "deathPlace",
+      "count": 8,
+      "categories": {
+        "Astronaut": 3,
+        "Artist": 3,
+        "CelestialBody": 2
+      },
+      "candidate_factors": [
+        "death",
+        "place"
+      ]
+    },
+    {
+      "predicate": "leaderTitle",
+      "count": 8,
+      "categories": {
+        "City": 3,
+        "Monument": 3,
+        "Artist": 1,
+        "Building": 1
+      },
+      "candidate_factors": [
+        "leader",
+        "title"
+      ]
+    },
+    {
+      "predicate": "orbitalPeriod",
+      "count": 8,
+      "categories": {
+        "CelestialBody": 8
+      },
+      "candidate_factors": [
+        "orbital",
+        "period"
+      ]
+    },
+    {
+      "predicate": "affiliation",
+      "count": 7,
+      "categories": {
+        "University": 5,
+        "Astronaut": 1,
+        "WrittenWork": 1
+      },
+      "candidate_factors": [
+        "affiliation"
+      ]
+    },
+    {
+      "predicate": "epoch",
+      "count": 7,
+      "categories": {
+        "CelestialBody": 7
+      },
+      "candidate_factors": [
+        "epoch"
+      ]
+    },
+    {
+      "predicate": "ethnicGroup",
+      "count": 7,
+      "categories": {
+        "City": 2,
+        "WrittenWork": 2,
+        "Monument": 1,
+        "Food": 1,
+        "Politician": 1
+      },
+      "candidate_factors": [
+        "ethnic",
+        "group"
+      ]
+    },
+    {
+      "predicate": "language",
+      "count": 7,
+      "categories": {
+        "Athlete": 1,
+        "WrittenWork": 3,
+        "City": 1,
+        "Monument": 1,
+        "Airport": 1
+      },
+      "candidate_factors": [
+        "language"
+      ]
+    }
+  ],
+  "top_candidate_factors": [
+    [
+      "of",
+      37
+    ],
+    [
+      "leader",
+      33
+    ],
+    [
+      "location",
+      33
+    ],
+    [
+      "country",
+      30
+    ],
+    [
+      "birth",
+      27
+    ],
+    [
+      "place",
+      26
+    ],
+    [
+      "is",
+      20
+    ],
+    [
+      "part",
+      20
+    ],
+    [
+      "city",
+      17
+    ],
+    [
+      "date",
+      17
+    ],
+    [
+      "associated",
+      16
+    ],
+    [
+      "nationality",
+      15
+    ],
+    [
+      "number",
+      13
+    ],
+    [
+      "to",
+      13
+    ],
+    [
+      "capital",
+      12
+    ],
+    [
+      "club",
+      12
+    ],
+    [
+      "by",
+      11
+    ],
+    [
+      "creator",
+      11
+    ],
+    [
+      "death",
+      11
+    ],
+    [
+      "region",
+      10
+    ]
+  ],
+  "categories": {
+    "ComicsCharacter": 13,
+    "Food": 13,
+    "CelestialBody": 13,
+    "City": 13,
+    "University": 13,
+    "MeanOfTransportation": 13,
+    "Politician": 13,
+    "Company": 13,
+    "Artist": 12,
+    "Astronaut": 12,
+    "SportsTeam": 12,
+    "WrittenWork": 12,
+    "Building": 12,
+    "Monument": 12,
+    "Airport": 12,
+    "Athlete": 12
+  }
+}
