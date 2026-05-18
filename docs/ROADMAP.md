@@ -125,3 +125,22 @@ The first publishable claim should stay modest:
 > Pilot results suggest that role-aware factorized semantic decomposition is an interpretable complement to MINE-style fact recoverability for graph–text meaning preservation evaluation.
 
 Avoid claiming that LEMON-Factor is a general theory of meaning or a replacement for MINE.
+
+
+## Milestone lemon-02 — WebNLG parquet ingestion
+
+**Goal:** establish the first real dataset pipeline by converting WebNLG parquet rows into the unified GraphText JSONL format.
+
+**Code deliverables:**
+- `datasets/webnlg_loader.py` for parquet loading through `refs/convert/parquet`;
+- `datasets/convert_webnlg.py` for record conversion;
+- `datasets/normalization.py` for stable IDs, label cleaning, and triple parsing;
+- `analysis/dataset_stats.py` for dataset statistics;
+- offline tests for the converter.
+
+**Paper deliverables:**
+- first dataset statistics table row;
+- reproducibility note for Hugging Face parquet loading;
+- conversion protocol paragraph for the Data section.
+
+**Exit criteria:** WebNLG pilot train/dev JSONL files are produced, validated by Pydantic, summarized by the stats module, and covered by tests.

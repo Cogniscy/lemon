@@ -38,3 +38,38 @@ comparison with exact/embedding/MINE-style recoverability
 ```bash
 python -m pytest -q
 ```
+
+
+## lemon-02: WebNLG parquet conversion
+
+Recent `datasets` versions cannot load `GEM/web_nlg` through the legacy dataset script. Use the parquet conversion instead. The project loader does this internally.
+
+Install research dependencies:
+
+```bash
+python -m pip install -e ".[dev,research]"
+```
+
+Inspect the WebNLG parquet schema:
+
+```bash
+python scripts/inspect_webnlg.py
+```
+
+Convert a pilot subset to unified GraphText JSONL:
+
+```bash
+python -m lemon_factor.datasets.convert_webnlg --language en --n-train 100 --n-dev 50 --out-dir data/processed
+```
+
+Compute dataset statistics:
+
+```bash
+python -m lemon_factor.analysis.dataset_stats data/processed/webnlg_train.jsonl data/processed/webnlg_dev.jsonl --out data/reports/webnlg_stats.json
+```
+
+Run tests:
+
+```bash
+python -m pytest
+```

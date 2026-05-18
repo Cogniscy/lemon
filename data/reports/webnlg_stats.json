@@ -1,0 +1,171 @@
+{
+  "data/processed/webnlg_train.jsonl": {
+    "examples": 100,
+    "nodes_total": 200,
+    "edges_total": 100,
+    "facts_total": 100,
+    "nodes_avg": 2,
+    "edges_avg": 1,
+    "facts_avg": 1,
+    "text_chars_avg": 57.7,
+    "unique_predicates": 14,
+    "top_predicates": [
+      [
+        "runwayLength",
+        25
+      ],
+      [
+        "runwayName",
+        13
+      ],
+      [
+        "location",
+        11
+      ],
+      [
+        "elevationAboveTheSeaLevel",
+        8
+      ],
+      [
+        "operatingOrganisation",
+        8
+      ],
+      [
+        "cityServed",
+        6
+      ],
+      [
+        "isPartOf",
+        6
+      ],
+      [
+        "locationIdentifier",
+        6
+      ],
+      [
+        "1stRunwayLengthFeet",
+        4
+      ],
+      [
+        "country",
+        3
+      ],
+      [
+        "3rdRunwayLengthFeet",
+        3
+      ],
+      [
+        "icaoLocationIdentifier",
+        3
+      ],
+      [
+        "1stRunwaySurfaceType",
+        2
+      ],
+      [
+        "elevationAboveTheSeaLevelInFeet",
+        2
+      ]
+    ],
+    "categories": {
+      "Airport": 100
+    }
+  },
+  "data/processed/webnlg_dev.jsonl": {
+    "examples": 50,
+    "nodes_total": 100,
+    "edges_total": 50,
+    "facts_total": 50,
+    "nodes_avg": 2,
+    "edges_avg": 1,
+    "facts_avg": 1,
+    "text_chars_avg": 49.58,
+    "unique_predicates": 23,
+    "top_predicates": [
+      [
+        "leader",
+        6
+      ],
+      [
+        "runwayName",
+        6
+      ],
+      [
+        "location",
+        5
+      ],
+      [
+        "cityServed",
+        4
+      ],
+      [
+        "associatedBand/associatedMusicalArtist",
+        4
+      ],
+      [
+        "isPartOf",
+        3
+      ],
+      [
+        "runwayLength",
+        2
+      ],
+      [
+        "elevationAboveTheSeaLevel",
+        2
+      ],
+      [
+        "language",
+        2
+      ],
+      [
+        "genre",
+        2
+      ],
+      [
+        "recordLabel",
+        2
+      ],
+      [
+        "operatingOrganisation",
+        1
+      ],
+      [
+        "countySeat",
+        1
+      ],
+      [
+        "mayor",
+        1
+      ],
+      [
+        "capital",
+        1
+      ],
+      [
+        "headquarter",
+        1
+      ],
+      [
+        "country",
+        1
+      ],
+      [
+        "chief",
+        1
+      ],
+      [
+        "activeYearsStartYear",
+        1
+      ],
+      [
+        "origin",
+        1
+      ]
+    ],
+    "categories": {
+      "Airport": 37,
+      "Artist": 13
+    }
+  }
+}
