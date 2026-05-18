@@ -111,3 +111,35 @@ python -m lemon_factor.analysis.inventory_stats \
 ```
 
 The output is a train-side inventory. Candidate factors extracted from predicate names are not final semantic factors; they are evidence for the next factor-schema stage.
+
+## lemon-04: Seed semantic factor schema
+
+Build deterministic seed semantic factors and predicate decompositions from the WebNLG factor inventory:
+
+```bash
+python -m lemon_factor.factors.seed_builder \
+  data/interim/webnlg_factor_inventory.json \
+  --schema-out data/interim/factor_schema_seed.json \
+  --decompositions-out data/interim/webnlg_predicate_decompositions_seed.json \
+  --top-k 50
+```
+
+Export expert-review CSV:
+
+```bash
+python -m lemon_factor.factors.review_export \
+  data/interim/webnlg_predicate_decompositions_seed.json \
+  --out data/annotation/predicate_decomposition_review.csv
+```
+
+Export paper tables:
+
+```bash
+python -m lemon_factor.analysis.factor_schema_tables \
+  --schema data/interim/factor_schema_seed.json \
+  --decompositions data/interim/webnlg_predicate_decompositions_seed.json \
+  --schema-out paper/tables/table_factor_schema_seed.md \
+  --decompositions-out paper/tables/table_predicate_decompositions_seed.md
+```
+
+This stage maps lexical predicate evidence such as `birthPlace → birth, place` into controlled semantic factors such as `biographical_relation + person + place`.

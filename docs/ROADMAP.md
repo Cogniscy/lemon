@@ -163,3 +163,37 @@ Avoid claiming that LEMON-Factor is a general theory of meaning or a replacement
 - less biased Dataset Statistics table.
 
 **Exit criteria:** tests pass and `--stratify-category` creates train/dev files with multiple categories when the source split contains them.
+
+## Milestone lemon-03 — WebNLG factor inventory
+
+**Goal:** extract train-side predicate, node-label, category, and candidate-factor inventory from the stratified WebNLG pilot.
+
+**Code deliverables:**
+- `factors/candidates.py` for predicate-name candidate factors;
+- `factors/inventory.py` for aggregate train-side inventory;
+- `factors/inventory_cli.py` for CLI execution;
+- `analysis/inventory_stats.py` for paper-table export.
+
+**Paper deliverables:**
+- first predicate inventory table;
+- evidence that factorization starts from explicit graph predicates rather than raw text alone.
+
+**Exit criteria:** tests pass and WebNLG train inventory plus compact markdown table are generated.
+
+## Milestone lemon-04 — Seed semantic factor schema and decompositions
+
+**Goal:** map shallow candidate factors into a controlled semantic factor schema and build the first role-aware predicate decompositions.
+
+**Code deliverables:**
+- `factors/decomposition.py` for Pydantic schemas and validation;
+- `factors/seed_schema.py` for default seed factors;
+- `factors/seed_builder.py` for deterministic predicate decomposition rules;
+- `factors/review_export.py` for expert-review CSV;
+- `analysis/factor_schema_tables.py` for paper tables.
+
+**Paper deliverables:**
+- semantic factor schema table;
+- predicate-decomposition examples;
+- expert-review protocol for correcting factors and weights.
+
+**Exit criteria:** tests pass, seed schema/decomposition JSON files validate, review CSV and paper tables are generated.
