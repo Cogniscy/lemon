@@ -1,0 +1,40 @@
+# LEMON-Factor
+
+Pilot repository for **LEMON-Factor: Factorized Semantic Decomposition for Graph–Text Meaning Preservation Evaluation**.
+
+The project is designed as a SPECOM-oriented research prototype. It does **not** put text-to-KG extraction at the center. Instead, it uses datasets with explicit graphs/relations and evaluates whether graph and text preserve the same meaning.
+
+## Core idea
+
+```text
+text + explicit graph
+      ↓
+unified GraphText format
+      ↓
+term/relation factor decompositions learned on train
+      ↓
+LEMON-Factor semantic coverage on dev
+      ↓
+comparison with exact/embedding/MINE-style recoverability
+```
+
+## Main documents
+
+- `docs/ROADMAP.md` — full implementation and paper roadmap.
+- `docs/lemon-01.md` — detailed first milestone plan.
+- `docs/reference_sources.md` — external datasets and baseline references.
+- `docs/annotation_guidelines.md` — expert review templates and labeling policy.
+
+## Current code skeleton
+
+- `src/lemon_factor/schema/graphtext.py` — unified graph/text Pydantic schema.
+- `src/lemon_factor/factors/schema.py` — semantic factor decomposition schema.
+- `src/lemon_factor/metrics/factor.py` — factor similarity and coverage.
+- `src/lemon_factor/mine/retrieve.py` — MINE-compatible retrieval and 2-hop expansion skeleton.
+- `src/lemon_factor/datasets/unified_io.py` — JSONL read/write helpers.
+
+## Run tests
+
+```bash
+python -m pytest -q
+```

@@ -1,0 +1,27 @@
+[project]
+name = "lemon-factor"
+version = "0.1.0"
+description = "Pilot implementation of LEMON-Factor: factorized semantic decomposition for graph-text meaning preservation evaluation."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "pydantic>=2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+]
+research = [
+  "datasets>=2.19",
+  "sentence-transformers>=3.0",
+  "numpy>=1.26",
+  "pandas>=2.2",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100

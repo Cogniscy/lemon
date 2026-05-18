@@ -1,0 +1,10 @@
+pydantic>=2.0
+
+[dev]
+pytest>=8.0
+
+[research]
+datasets>=2.19
+sentence-transformers>=3.0
+numpy>=1.26
+pandas>=2.2
