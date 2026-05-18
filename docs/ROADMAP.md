@@ -31,6 +31,7 @@ comparison with exact matching, embedding similarity, and MINE-style recoverabil
 |---|---|---|---|
 | lemon-01 | Repository, data contract, pilot planning | Reproducible repo, GraphText schema, roadmap, first tests | Reproducibility and data representation sections |
 | lemon-02 | Dataset ingestion | WebNLG/BioRED/MINE loaders and pilot splits | Dataset table and experimental setup |
+| lemon-02.1 | Stratified WebNLG pilot | Category-balanced WebNLG train/dev JSONL | Less biased WebNLG pilot and stronger dataset table |
 | lemon-03 | Factor schema and inventory | Seed factor schema, train term/predicate inventory | Method: factor inventory |
 | lemon-04 | Factor decompositions | Initial factor dictionary and expert review templates | Method examples and annotation protocol |
 | lemon-05 | Similarity metrics | exact, token, embedding, factor, role-factor scorers | Metric definitions |
@@ -144,3 +145,21 @@ Avoid claiming that LEMON-Factor is a general theory of meaning or a replacement
 - conversion protocol paragraph for the Data section.
 
 **Exit criteria:** WebNLG pilot train/dev JSONL files are produced, validated by Pydantic, summarized by the stats module, and covered by tests.
+
+
+## Milestone lemon-02.1 — Stratified WebNLG pilot sampling
+
+**Goal:** replace first-row-only WebNLG pilot sampling with deterministic category-stratified sampling for experiments.
+
+**Code deliverables:**
+- `datasets/sampling.py` with `take_first` and `stratified_sample`;
+- `convert_webnlg.py` CLI flags `--stratify-category`, `--seed`, and `--min-per-category`;
+- expanded dataset statistics with category ratios and edge-count distribution;
+- offline tests for sampler, converter selection, and stats.
+
+**Paper deliverables:**
+- stronger WebNLG pilot description;
+- reproducible sampling protocol;
+- less biased Dataset Statistics table.
+
+**Exit criteria:** tests pass and `--stratify-category` creates train/dev files with multiple categories when the source split contains them.

@@ -86,3 +86,28 @@ def test_stats_count_edges_and_predicates() -> None:
     assert stats["facts_total"] == 3
     assert stats["unique_predicates"] == 2
     assert stats["top_predicates"][0] == ("p", 2)
+
+
+def test_select_records_can_stratify_categories() -> None:
+    from lemon_factor.datasets.convert_webnlg import _select_records
+
+    records = [
+        {"gem_id": "a1", "input": ["A1 | p | B1"], "target": "A1.", "category": "A"},
+        {"gem_id": "a2", "input": ["A2 | p | B2"], "target": "A2.", "category": "A"},
+        {"gem_id": "b1", "input": ["B1 | p | C1"], "target": "B1.", "category": "B"},
+        {"gem_id": "c1", "input": ["C1 | p | D1"], "target": "C1.", "category": "C"},
+    ]
+    selected = _select_records(records, 3, stratify_category=True, seed=3)
+    assert len(selected) == 3
+    assert len({record["category"] for record in selected}) == 3
+
+
+def test_select_records_keeps_first_rows_without_stratification() -> None:
+    from lemon_factor.datasets.convert_webnlg import _select_records
+
+    records = [
+        {"gem_id": "a", "input": ["A | p | B"], "target": "A.", "category": "A"},
+        {"gem_id": "b", "input": ["B | p | C"], "target": "B.", "category": "B"},
+    ]
+    selected = _select_records(records, 1, stratify_category=False)
+    assert [record["gem_id"] for record in selected] == ["a"]

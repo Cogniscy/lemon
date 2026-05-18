@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any, Iterable
 
 from lemon_factor.datasets.normalization import parse_webnlg_triple, stable_id
+from lemon_factor.datasets.sampling import stratified_sample
 from lemon_factor.datasets.unified_io import write_jsonl
 from lemon_factor.datasets.webnlg_loader import get_split, load_webnlg_parquet, take_rows
 from lemon_factor.schema.graphtext import Edge, Fact, GraphTextExample, Node, Split
@@ -101,22 +102,67 @@ def convert_records(
     ]
 
 
+def _select_records(
+    split_data: Any,
+    limit: int | None,
+    *,
+    stratify_category: bool = False,
+    seed: int = 42,
+    min_per_category: int = 1,
+) -> list[dict[str, Any]]:
+    """Select records from a Hugging Face split using the requested strategy."""
+
+    # The non-stratified path intentionally keeps the old behavior: first N rows.
+    if not stratify_category:
+        return take_rows(split_data, limit)
+
+    # WebNLG is modest in size, so materializing a split is acceptable and keeps
+    # category-balanced pilot creation simple and deterministic.
+    all_records = take_rows(split_data, None)
+    return stratified_sample(
+        all_records,
+        limit,
+        label_key="category",
+        seed=seed,
+        min_per_label=min_per_category,
+    )
+
+
 def convert_webnlg_dataset(
     *,
     language: str,
     n_train: int | None,
     n_dev: int | None,
     out_dir: str | Path,
+    stratify_category: bool = False,
+    seed: int = 42,
+    min_per_category: int = 1,
 ) -> dict[str, Path]:
     """Load WebNLG parquet data and write train/dev GraphText JSONL files."""
 
     dataset = load_webnlg_parquet(language)
     out_dir = Path(out_dir)
     train_examples = convert_records(
-        take_rows(get_split(dataset, "train"), n_train), split="train", language=language
+        _select_records(
+            get_split(dataset, "train"),
+            n_train,
+            stratify_category=stratify_category,
+            seed=seed,
+            min_per_category=min_per_category,
+        ),
+        split="train",
+        language=language,
     )
     dev_examples = convert_records(
-        take_rows(get_split(dataset, "validation"), n_dev), split="validation", language=language
+        _select_records(
+            get_split(dataset, "validation"),
+            n_dev,
+            stratify_category=stratify_category,
+            seed=seed + 1,
+            min_per_category=min_per_category,
+        ),
+        split="validation",
+        language=language,
     )
 
     train_path = out_dir / "webnlg_train.jsonl"
@@ -132,6 +178,18 @@ def main() -> None:
     parser.add_argument("--n-train", type=int, default=100, help="Number of train rows to export")
     parser.add_argument("--n-dev", type=int, default=50, help="Number of validation rows to export")
     parser.add_argument("--out-dir", default="data/processed", help="Output directory")
+    parser.add_argument(
+        "--stratify-category",
+        action="store_true",
+        help="Sample pilot rows approximately evenly across WebNLG categories",
+    )
+    parser.add_argument("--seed", type=int, default=42, help="Random seed for stratified sampling")
+    parser.add_argument(
+        "--min-per-category",
+        type=int,
+        default=1,
+        help="Minimum examples to try taking per category before round-robin fill",
+    )
     args = parser.parse_args()
 
     paths = convert_webnlg_dataset(
@@ -139,6 +197,9 @@ def main() -> None:
         n_train=args.n_train,
         n_dev=args.n_dev,
         out_dir=args.out_dir,
+        stratify_category=args.stratify_category,
+        seed=args.seed,
+        min_per_category=args.min_per_category,
     )
     print(json.dumps({key: str(value) for key, value in paths.items()}, ensure_ascii=False, indent=2))
 

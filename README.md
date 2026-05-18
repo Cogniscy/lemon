@@ -22,6 +22,8 @@ comparison with exact/embedding/MINE-style recoverability
 
 - `docs/ROADMAP.md` — full implementation and paper roadmap.
 - `docs/lemon-01.md` — detailed first milestone plan.
+- `docs/lemon-02.md` — WebNLG parquet conversion plan.
+- `docs/lemon-02.1.md` — stratified WebNLG pilot sampling plan.
 - `docs/reference_sources.md` — external datasets and baseline references.
 - `docs/annotation_guidelines.md` — expert review templates and labeling policy.
 
@@ -56,10 +58,22 @@ Inspect the WebNLG parquet schema:
 python scripts/inspect_webnlg.py
 ```
 
-Convert a pilot subset to unified GraphText JSONL:
+Convert a smoke-test subset to unified GraphText JSONL:
 
 ```bash
 python -m lemon_factor.datasets.convert_webnlg --language en --n-train 100 --n-dev 50 --out-dir data/processed
+```
+
+For experiments, prefer deterministic category-stratified sampling:
+
+```bash
+python -m lemon_factor.datasets.convert_webnlg \
+  --language en \
+  --n-train 200 \
+  --n-dev 100 \
+  --stratify-category \
+  --seed 42 \
+  --out-dir data/processed
 ```
 
 Compute dataset statistics:
@@ -73,3 +87,5 @@ Run tests:
 ```bash
 python -m pytest
 ```
+
+The stratified WebNLG path is used to avoid evaluating LEMON-Factor on only the first categories returned by the parquet files.

@@ -1,171 +1,282 @@
 {
   "data/processed/webnlg_train.jsonl": {
-    "examples": 100,
-    "nodes_total": 200,
-    "edges_total": 100,
-    "facts_total": 100,
-    "nodes_avg": 2,
-    "edges_avg": 1,
-    "facts_avg": 1,
-    "text_chars_avg": 57.7,
-    "unique_predicates": 14,
+    "examples": 200,
+    "nodes_total": 768,
+    "edges_total": 568,
+    "facts_total": 568,
+    "nodes_avg": 3.84,
+    "edges_avg": 2.84,
+    "facts_avg": 2.84,
+    "text_chars_avg": 112.545,
+    "unique_predicates": 162,
+    "predicate_count": 162,
     "top_predicates": [
       [
-        "runwayLength",
+        "location",
+        33
+      ],
+      [
+        "country",
+        30
+      ],
+      [
+        "leader",
         25
       ],
       [
-        "runwayName",
-        13
-      ],
-      [
-        "location",
-        11
-      ],
-      [
-        "elevationAboveTheSeaLevel",
-        8
-      ],
-      [
-        "operatingOrganisation",
-        8
-      ],
-      [
-        "cityServed",
-        6
+        "birthPlace",
+        18
       ],
       [
         "isPartOf",
-        6
+        17
       ],
       [
-        "locationIdentifier",
-        6
-      ],
-      [
-        "1stRunwayLengthFeet",
-        4
-      ],
-      [
-        "country",
-        3
-      ],
-      [
-        "3rdRunwayLengthFeet",
-        3
-      ],
-      [
-        "icaoLocationIdentifier",
-        3
-      ],
-      [
-        "1stRunwaySurfaceType",
-        2
-      ],
-      [
-        "elevationAboveTheSeaLevelInFeet",
-        2
-      ]
-    ],
-    "categories": {
-      "Airport": 100
-    }
-  },
-  "data/processed/webnlg_dev.jsonl": {
-    "examples": 50,
-    "nodes_total": 100,
-    "edges_total": 50,
-    "facts_total": 50,
-    "nodes_avg": 2,
-    "edges_avg": 1,
-    "facts_avg": 1,
-    "text_chars_avg": 49.58,
-    "unique_predicates": 23,
-    "top_predicates": [
-      [
-        "leader",
-        6
-      ],
-      [
-        "runwayName",
-        6
-      ],
-      [
-        "location",
-        5
-      ],
-      [
-        "cityServed",
-        4
-      ],
-      [
-        "associatedBand/associatedMusicalArtist",
-        4
-      ],
-      [
-        "isPartOf",
-        3
-      ],
-      [
-        "runwayLength",
-        2
-      ],
-      [
-        "elevationAboveTheSeaLevel",
-        2
-      ],
-      [
-        "language",
-        2
-      ],
-      [
-        "genre",
-        2
-      ],
-      [
-        "recordLabel",
-        2
-      ],
-      [
-        "operatingOrganisation",
-        1
-      ],
-      [
-        "countySeat",
-        1
-      ],
-      [
-        "mayor",
-        1
+        "nationality",
+        15
       ],
       [
         "capital",
-        1
+        12
       ],
       [
-        "headquarter",
-        1
+        "club",
+        12
+      ],
+      [
+        "creator",
+        11
+      ],
+      [
+        "city",
+        9
+      ],
+      [
+        "orbitalPeriod",
+        8
+      ],
+      [
+        "birthDate",
+        8
+      ],
+      [
+        "associatedBand/associatedMusicalArtist",
+        8
+      ],
+      [
+        "deathPlace",
+        8
+      ],
+      [
+        "leaderTitle",
+        8
+      ],
+      [
+        "battle",
+        8
+      ],
+      [
+        "epoch",
+        7
+      ],
+      [
+        "language",
+        7
+      ],
+      [
+        "region",
+        7
+      ],
+      [
+        "ethnicGroup",
+        7
+      ]
+    ],
+    "category_count": 16,
+    "categories": {
+      "ComicsCharacter": 13,
+      "Food": 13,
+      "CelestialBody": 13,
+      "City": 13,
+      "University": 13,
+      "MeanOfTransportation": 13,
+      "Politician": 13,
+      "Company": 13,
+      "Artist": 12,
+      "Astronaut": 12,
+      "SportsTeam": 12,
+      "WrittenWork": 12,
+      "Building": 12,
+      "Monument": 12,
+      "Airport": 12,
+      "Athlete": 12
+    },
+    "category_ratios": {
+      "Airport": 0.06,
+      "Artist": 0.06,
+      "Astronaut": 0.06,
+      "Athlete": 0.06,
+      "Building": 0.06,
+      "CelestialBody": 0.065,
+      "City": 0.065,
+      "ComicsCharacter": 0.065,
+      "Company": 0.065,
+      "Food": 0.065,
+      "MeanOfTransportation": 0.065,
+      "Monument": 0.06,
+      "Politician": 0.065,
+      "SportsTeam": 0.06,
+      "University": 0.065,
+      "WrittenWork": 0.06
+    },
+    "examples_by_edges_count": {
+      "1": 53,
+      "2": 49,
+      "3": 34,
+      "4": 26,
+      "5": 23,
+      "6": 9,
+      "7": 6
+    }
+  },
+  "data/processed/webnlg_dev.jsonl": {
+    "examples": 100,
+    "nodes_total": 408,
+    "edges_total": 308,
+    "facts_total": 308,
+    "nodes_avg": 4.08,
+    "edges_avg": 3.08,
+    "facts_avg": 3.08,
+    "text_chars_avg": 123.9,
+    "unique_predicates": 119,
+    "predicate_count": 119,
+    "top_predicates": [
+      [
+        "location",
+        19
       ],
       [
         "country",
-        1
+        16
       ],
       [
-        "chief",
-        1
+        "leader",
+        13
       ],
       [
-        "activeYearsStartYear",
-        1
+        "isPartOf",
+        11
       ],
       [
-        "origin",
-        1
+        "birthPlace",
+        10
+      ],
+      [
+        "club",
+        7
+      ],
+      [
+        "associatedBand/associatedMusicalArtist",
+        7
+      ],
+      [
+        "creator",
+        6
+      ],
+      [
+        "ground",
+        5
+      ],
+      [
+        "numberOfMembers",
+        5
+      ],
+      [
+        "birthDate",
+        5
+      ],
+      [
+        "city",
+        5
+      ],
+      [
+        "leaderTitle",
+        4
+      ],
+      [
+        "status",
+        4
+      ],
+      [
+        "mediaType",
+        4
+      ],
+      [
+        "occupation",
+        4
+      ],
+      [
+        "language",
+        4
+      ],
+      [
+        "nationality",
+        4
+      ],
+      [
+        "product",
+        4
+      ],
+      [
+        "epoch",
+        4
       ]
     ],
+    "category_count": 16,
     "categories": {
-      "Airport": 37,
-      "Artist": 13
+      "Food": 7,
+      "Company": 7,
+      "SportsTeam": 7,
+      "Airport": 7,
+      "City": 6,
+      "Athlete": 6,
+      "University": 6,
+      "MeanOfTransportation": 6,
+      "WrittenWork": 6,
+      "CelestialBody": 6,
+      "ComicsCharacter": 6,
+      "Astronaut": 6,
+      "Politician": 6,
+      "Monument": 6,
+      "Building": 6,
+      "Artist": 6
+    },
+    "category_ratios": {
+      "Airport": 0.07,
+      "Artist": 0.06,
+      "Astronaut": 0.06,
+      "Athlete": 0.06,
+      "Building": 0.06,
+      "CelestialBody": 0.06,
+      "City": 0.06,
+      "ComicsCharacter": 0.06,
+      "Company": 0.07,
+      "Food": 0.07,
+      "MeanOfTransportation": 0.06,
+      "Monument": 0.06,
+      "Politician": 0.06,
+      "SportsTeam": 0.07,
+      "University": 0.06,
+      "WrittenWork": 0.06
+    },
+    "examples_by_edges_count": {
+      "1": 21,
+      "2": 16,
+      "3": 28,
+      "4": 16,
+      "5": 12,
+      "6": 2,
+      "7": 5
     }
   }
 }
