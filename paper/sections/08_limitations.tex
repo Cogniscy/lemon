@@ -1,1 +1,7 @@
-% 08_limitations: to be drafted after the corresponding roadmap stages.
+\section{Limitations}
+
+The present pilot does not contain human expert validation of factor decompositions. Synthetic LLM adjudication is used only as a bootstrap and is subject to known LLM-as-judge biases. The expanded decomposition dictionary is deterministic but not a gold standard.
+
+The current coverage scorer is lexical. It handles explicit labels and known predicate cues, but it can miss paraphrases, implicit relations, and discourse-level evidence. Future versions should add embedding- or entailment-based evidence while retaining factor-level auditability.
+
+Finally, the WebNLG pilot is small. Larger-scale experiments should measure correlation with human data-coverage judgments and compare against FactSpotter, Data-QuestEval, and neural reference-based metrics.

@@ -1,1 +1,10 @@
-% 05_experiments: to be drafted after the corresponding roadmap stages.
+\section{Experiments}
+
+\subsection{Coverage baseline}
+The first experiment scores WebNLG development examples with the synthetic adjudicated decomposition dictionary and seed lexical cues. We report exact entity-label coverage, predicate cue coverage, LEMON-Factor weighted coverage, missing decomposition rate, and low-coverage edge count.
+
+\subsection{Error-driven expansion}
+The second experiment expands decompositions and lexical cues using missing-predicate analysis from the first coverage run. We then recompute the same metrics and report the before/after delta.
+
+\subsection{Baseline comparison}
+The third experiment compares LEMON-Factor with lightweight lexical controls: exact entity-label overlap, predicate lexical cue coverage, graph--text token Jaccard, and graph--text token cosine. These controls are not intended as strong semantic metrics; they make explicit how much of the LEMON-Factor signal can be explained by surface overlap alone.

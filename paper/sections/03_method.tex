@@ -1,1 +1,17 @@
-% 03_method: to be drafted after the corresponding roadmap stages.
+\section{Method}
+
+\subsection{GraphText representation}
+Each example is represented as text plus an explicit graph. Nodes have stable identifiers and labels; edges contain subject, predicate, object, and provenance metadata. This lets all later stages operate on the same representation regardless of the dataset source.
+
+\subsection{Predicate factor decompositions}
+For each predicate, LEMON-Factor stores a decomposition into weighted semantic factors. Components have a factor id, a role such as \texttt{predicate\_meaning}, \texttt{subject\_domain}, or \texttt{object\_domain}, and a positive weight. Weights are normalized to sum to one. For example, \texttt{birthPlace} can be represented by a biographical relation, a person-domain subject, and a place-domain object.
+
+\subsection{Coverage scoring}
+Given an edge and its decomposition, the scorer checks evidence in the verbalization. Subject-domain and object-domain components are covered by entity-label evidence; predicate-meaning components are covered by lexical cues associated with the predicate and factor. The edge score is a weighted average over factor components:
+\[
+\operatorname{Coverage}(e,t)=\sum_i w_i \cdot \mathbb{I}[f_i \text{ is covered in } t].
+\]
+Example-level and corpus-level scores are averages over edges. Missing decompositions are reported separately because an unscored edge indicates a dictionary limitation, not necessarily a text failure.
+
+\subsection{Error-driven expansion}
+The first coverage run identifies predicates without decompositions and edges with low coverage. The expansion stage adds deterministic fallback decompositions and lexical cues for frequent missing predicates, then recomputes coverage. This is not a human gold standard; it is an engineering step that tests whether the metric can expose and repair its own dictionary blind spots.

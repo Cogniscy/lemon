@@ -1,1 +1,7 @@
-% 06_results: to be drafted after the corresponding roadmap stages.
+\section{Results}
+
+The initial LEMON-Factor run scored 140 of 308 development edges. The missing decomposition rate was 0.5455, exact label coverage was 0.9215, predicate cue coverage was 0.3149, and LEMON-Factor coverage was 0.3683. This shows that entity labels are often mentioned, while predicate-level semantic coverage is harder to establish with the initial dictionary.
+
+After error-driven expansion, all 308 edges were scored. Missing decomposition rate fell to 0.0, predicate cue coverage increased to 0.6526, and LEMON-Factor coverage increased to 0.7915. Low-coverage edges dropped from 191 to 41. This delta indicates that the first low score was largely constrained by incomplete decompositions and cues rather than by universal graph--text mismatch.
+
+The baseline-comparison table reports exact label overlap, predicate cues, lexical graph--text similarity, and LEMON-Factor scores side by side. We use it to separate surface mention preservation from role-aware semantic coverage.

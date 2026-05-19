@@ -256,3 +256,20 @@ table.
 ## lemon-08 — Decomposition coverage expansion and error analysis
 
 Use the first WebNLG coverage results to find missing predicates, expand predicate decompositions and lexical cues, rerun coverage, and export before/after and error-analysis tables for the paper. This stage demonstrates the diagnostic loop of LEMON-Factor: coverage → missing predicates → dictionary expansion → improved coverage → categorized residual errors.
+
+## Milestone lemon-09 — Paper skeleton and baseline comparison
+
+**Goal:** connect the implemented metric pipeline to the SPECOM paper draft and add explicit baseline comparison tables.
+
+**Code deliverables:**
+- `baselines/text_similarity.py` for lightweight lexical graph-text baselines;
+- `analysis/baseline_comparison.py` for comparing exact labels, predicate cues, token similarity, and LEMON-Factor reports;
+- offline tests for the baseline module and CLI.
+
+**Paper deliverables:**
+- populated `paper/main.tex` and section drafts;
+- `paper/references.bib` with initial citations;
+- `paper/tables/table_webnlg_baseline_comparison.md`;
+- integration notes for the research brief.
+
+**Exit criteria:** tests pass, baseline comparison JSON/table are generated, and the paper skeleton clearly distinguishes lexical baselines, LEMON-Factor, and synthetic LLM adjudication limitations.

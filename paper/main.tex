@@ -1,13 +1,13 @@
-% SPECOM/LNCS draft placeholder.
-% Fill after lemon-02..lemon-09 produce tables and figures.
+% SPECOM/LNCS draft. This is a lightweight working draft; it is not yet a final submission file.
 \documentclass[runningheads]{llncs}
 \begin{document}
-\title{LEMON-Factor: Factorized Semantic Decomposition for Graph--Text Meaning Preservation Evaluation}
+\title{LEMON-Factor: Interpretable Factor-Level Semantic Coverage for Graph--Text Evaluation}
 \author{Anonymous}
 \institute{Anonymous}
 \maketitle
 \begin{abstract}
-This placeholder will be completed after the pilot experiments.
+Graph-to-text systems should preserve the meaning of each input relation, not only mention the correct entities or produce a fluent sentence. Existing automatic metrics for RDF-to-text generation are either reference-based and holistic, or operate at the level of whole triples. We propose LEMON-Factor, a diagnostic evaluation framework that decomposes source predicates into weighted semantic factors and checks how these factors are reflected in a verbalization. The current pilot builds a unified WebNLG graph--text dataset, derives a predicate inventory, creates synthetic LLM-adjudicated predicate decompositions, and evaluates deterministic factor-level coverage on a stratified WebNLG development subset. Error-driven expansion reduces missing predicate decompositions and raises factor-level coverage while preserving edge-level audit trails. The pilot is intended as a reproducible proof of concept; synthetic adjudication is not treated as human expert validation.
+\keywords{Graph-to-text evaluation \and Semantic coverage \and Knowledge graphs \and WebNLG \and Predicate decomposition}
 \end{abstract}
 \input{sections/01_introduction}
 \input{sections/02_related_work}
@@ -18,4 +18,6 @@ This placeholder will be completed after the pilot experiments.
 \input{sections/07_error_analysis}
 \input{sections/08_limitations}
 \input{sections/09_conclusion}
+\bibliographystyle{splncs04}
+\bibliography{references}
 \end{document}

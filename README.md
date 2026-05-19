@@ -307,3 +307,28 @@ python -m lemon_factor.coverage.error_analysis `
   --out data/reports/webnlg_coverage_error_analysis.json `
   --table paper/tables/table_webnlg_coverage_error_types.md
 ```
+
+## lemon-09: paper skeleton and baseline comparison
+
+Build a lightweight comparison table that places LEMON-Factor next to surface lexical controls:
+
+```powershell
+python -m lemon_factor.analysis.baseline_comparison `
+  data/processed/webnlg_dev.jsonl `
+  --baseline-report data/reports/webnlg_lemon_factor_coverage.json `
+  --expanded-report data/reports/webnlg_lemon_factor_coverage_expanded.json `
+  --out data/reports/webnlg_baseline_comparison.json `
+  --table paper/tables/table_webnlg_baseline_comparison.md
+```
+
+The table compares exact entity-label coverage, predicate cue coverage, graph-text token Jaccard/cosine, initial LEMON-Factor, and expanded LEMON-Factor. Token baselines are lexical controls, not semantic metrics.
+
+Paper draft files are under:
+
+```text
+paper/main.tex
+paper/sections/*.tex
+paper/references.bib
+```
+
+The draft is LNCS-oriented but not yet submission-ready. It is a structured writing scaffold for SPECOM.

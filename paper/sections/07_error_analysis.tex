@@ -1,1 +1,5 @@
-% 07_error_analysis: to be drafted after the corresponding roadmap stages.
+\section{Error Analysis}
+
+The main error class in the initial run was missing decomposition coverage: many development predicates were not present in the synthetic adjudicated dictionary. After expansion, the remaining low-coverage cases mostly reflect missing lexical cues, weak paraphrase detection, overly generic fallback decompositions, or cases where exact label evidence is high but predicate meaning remains implicit.
+
+This diagnostic behavior is central to the method. A low LEMON-Factor score is not only a scalar failure signal; it points to a predicate, factor role, and evidence type that can be inspected and corrected.
