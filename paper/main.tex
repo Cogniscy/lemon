@@ -1,14 +1,32 @@
-% SPECOM/LNCS draft. This is a lightweight working draft; it is not yet a final submission file.
+% SPECOM/LNCS working draft generated in lemon-10.
 \documentclass[runningheads]{llncs}
+\usepackage[T1]{fontenc}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{multirow}
+\setlist{nosep,leftmargin=*}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcommand{\lemonscore}{\textsc{LEMON-Factor}}
+
 \begin{document}
-\title{LEMON-Factor: Interpretable Factor-Level Semantic Coverage for Graph--Text Evaluation}
-\author{Anonymous}
-\institute{Anonymous}
+\title{LEMON-Factor: Interpretable Factor-Level Semantic Coverage for Graph-to-Text Evaluation}
+\titlerunning{LEMON-Factor for Graph-to-Text Evaluation}
+\author{Tomilov A.A.\inst{1} \and Gineva D.\inst{2} \and Tirskih D.\inst{2}}
+\authorrunning{A.A. Tomilov et al.}
+\institute{Independent researcher, affiliation to be confirmed \and ITMO University, St. Petersburg, Russia}
 \maketitle
+
 \begin{abstract}
-Graph-to-text systems should preserve the meaning of each input relation, not only mention the correct entities or produce a fluent sentence. Existing automatic metrics for RDF-to-text generation are either reference-based and holistic, or operate at the level of whole triples. We propose LEMON-Factor, a diagnostic evaluation framework that decomposes source predicates into weighted semantic factors and checks how these factors are reflected in a verbalization. The current pilot builds a unified WebNLG graph--text dataset, derives a predicate inventory, creates synthetic LLM-adjudicated predicate decompositions, and evaluates deterministic factor-level coverage on a stratified WebNLG development subset. Error-driven expansion reduces missing predicate decompositions and raises factor-level coverage while preserving edge-level audit trails. The pilot is intended as a reproducible proof of concept; synthetic adjudication is not treated as human expert validation.
-\keywords{Graph-to-text evaluation \and Semantic coverage \and Knowledge graphs \and WebNLG \and Predicate decomposition}
+Graph-to-text systems should preserve the meaning of each input relation, not merely mention the correct entities or produce fluent text. Existing automatic metrics for RDF-to-text and data-to-text generation are mostly reference-based and holistic, while recent faithfulness metrics often operate at the level of whole triples. We propose \lemonscore{}, a diagnostic evaluation framework that decomposes source predicates into weighted semantic factors and checks how these factors are reflected in a verbalization. The method is source-directed: it starts from graph predicates and their argument roles, not from text-only atomic claims. We implement a reproducible pilot on a stratified WebNLG subset, construct a predicate inventory, bootstrap a controlled factor schema, generate and adjudicate predicate decompositions, and compute deterministic graph--text coverage. In the first coverage run, 140 of 308 development edges were scored and \lemonscore{} coverage was 0.368. After error-driven decomposition and lexical-cue expansion, all 308 edges were scored and coverage rose to 0.791, while exact entity-label overlap remained unchanged at 0.921. The results show that factor-level coverage exposes a diagnostic layer that surface overlap does not capture. The current study is a pilot: synthetic LLM adjudication and rule-based expansion are not treated as human gold.
+\keywords{Graph-to-text evaluation \and Semantic coverage \and Knowledge graphs \and WebNLG \and Predicate decomposition \and LLM adjudication}
 \end{abstract}
+
 \input{sections/01_introduction}
 \input{sections/02_related_work}
 \input{sections/03_method}
@@ -18,6 +36,5 @@ Graph-to-text systems should preserve the meaning of each input relation, not on
 \input{sections/07_error_analysis}
 \input{sections/08_limitations}
 \input{sections/09_conclusion}
-\bibliographystyle{splncs04}
-\bibliography{references}
+\input{references_latex}
 \end{document}

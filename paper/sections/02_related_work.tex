@@ -1,16 +1,34 @@
 \section{Related Work}
-
-\subsection{Graph-to-text benchmarks and automatic metrics}
-WebNLG established RDF-to-text generation as a benchmark task in which systems map sets of DBpedia RDF triples to natural-language verbalizations~\cite{gardent2017webnlg}. Later WebNLG shared tasks expanded the multilingual and bidirectional setup and continued to report standard automatic metrics, including BLEU, METEOR, chrF++, TER, BERTScore, and BLEURT~\cite{castroferreira2020webnlg,zhang2020bertscore,sellam2020bleurt}. These metrics compare a candidate text with references, but they do not localize semantic omissions inside an input predicate.
+\subsection{RDF-to-text benchmarks and standard metrics}
+The WebNLG Challenge introduced RDF-to-text generation as a benchmark task: systems receive DBpedia-derived RDF triples and generate fluent verbalizations \cite{gardent2017webnlg}. Later WebNLG+ tasks extended the setting to bilingual and bidirectional generation \cite{castroferreira2020webnlg}. The standard automatic evaluation stack includes n-gram and edit-distance metrics as well as neural reference metrics. BLEU remains a conventional reference point \cite{papineni2002bleu}, while BERTScore \cite{zhang2020bertscore} and BLEURT \cite{sellam2020bleurt} add contextual or learned similarity. These metrics compare generated text with reference text and therefore remain mostly holistic.
 
 \subsection{Data coverage and faithfulness metrics}
-Structured-data evaluation has increasingly compared generated text directly with the input data. Wiseman et al. proposed information-extraction-based evaluation for data-to-document generation~\cite{wiseman2017challenges}. PARENT aligns n-grams with source tables and references to handle divergent references~\cite{dhingra2019parent}. Data-QuestEval uses question generation and question answering for reference-less semantic evaluation~\cite{rebuffel2021dataquesteval}. AlignScore learns a general alignment function for factual consistency~\cite{zha2023alignscore}. FactSpotter is the closest graph-to-text predecessor: given a triple $(s,p,o)$ and text, it predicts whether the triple is present in the text and reports strong correlation with human factuality annotations~\cite{zhang2023factspotter}. LEMON-Factor is complementary: it scores sub-predicate semantic factors rather than issuing a single binary triple judgment.
+A second line of work evaluates generated text against the source data. Wiseman et al. proposed information-extraction-based evaluation for data-to-document generation \cite{wiseman2017challenges}. PARENT aligns entailed n-grams with semi-structured source tables and references \cite{dhingra2019parent}. Data-QuestEval uses question generation and answering for reference-less data-to-text evaluation \cite{rebuffel2021dataquesteval}. AlignScore learns a unified alignment function for factual consistency \cite{zha2023alignscore}. The nearest graph-to-text predecessor is FactSpotter, which decides whether a given triple is present in the generated text and reports strong correlation with human annotations for correctness, coverage, and relevance \cite{zhang2023factspotter}. \lemonscore{} complements FactSpotter by moving from binary triple-level decisions to weighted factor-level decisions inside a predicate.
 
-\subsection{Atomic factual evaluation}
-FActScore and related approaches decompose generated text into atomic factual claims and verify them against a knowledge source~\cite{min2023factscore}. VERISCORE similarly focuses on verifiable claims in long-form generation~\cite{sun2024veriscore}. These methods are text-directed: they decompose the generated output. LEMON-Factor is source-directed: it decomposes predicates in the input graph and then checks whether text covers the resulting factors.
+\subsection{Atomic fact and semantic graph evaluation}
+Atomic factuality metrics such as FActScore decompose generated text into atomic claims and verify each claim against a knowledge source \cite{min2023factscore}. VERISCORE extends this line to verifiable claims in long-form generation \cite{sun2024veriscore}. These methods are text-directed: the decomposition target is the generated text. \lemonscore{} is source-directed: the decomposition target is the graph predicate.
 
-\subsection{Semantic graphs and role decomposition}
-Smatch, S$^2$match, and Smatch++ compare semantic graphs, especially AMR parser outputs, through graph overlap and soft semantic matching~\cite{cai2013smatch,opitz2020s2match,opitz2023smatchpp}. LEMON-Factor borrows the idea of interpretable substructure scoring, but avoids requiring an inverse parse of the generated text into a full semantic graph. Its decomposition scheme is motivated by semantic role theory and resources such as FrameNet, PropBank, VerbNet, and AMR, which treat predicate meaning as structured around roles and participants~\cite{baker1998framenet,palmer2005propbank,schuler2005verbnet,banarescu2013amr}.
+Semantic graph evaluation metrics such as Smatch compare semantic graphs, especially AMR graphs, by maximizing triple overlap under variable alignment \cite{cai2013smatch}. S$^2$match and Smatch++ add softer and more standardized variants of graph matching \cite{opitz2020s2match,opitz2023smatchpp}. These metrics are important for parser evaluation, but they require a semantic graph representation of the generated text. \lemonscore{} avoids inverse parsing in the first baseline and instead checks factor evidence directly in the text.
 
-\subsection{LLM-as-judge and synthetic annotation}
-The current pilot uses a strong LLM as a temporary adjudicator for predicate decompositions. Prior work on LLM-as-a-judge reports useful agreement with human preferences but also documents systematic biases such as position, verbosity, and self-enhancement effects~\cite{zheng2023mtbench,gu2024llmjudge,bai2024judgebias}. Therefore, we treat synthetic adjudication as a bootstrap, not as human expert validation.
+\subsection{Predicate decomposition and synthetic adjudication}
+The theoretical motivation for factor decomposition comes from predicate-argument and frame-based semantics. FrameNet represents lexical meanings through frames and frame elements \cite{baker1998framenet}; PropBank annotates predicate-argument structures over corpora \cite{palmer2005propbank}; VerbNet provides broad-coverage verb classes with semantic roles \cite{schuler2005verbnet}. These resources support the view that predicate meaning can be represented through typed roles rather than through a single label.
+
+The present pilot uses LLM-generated and LLM-adjudicated predicate decompositions as a bootstrap. This is not equivalent to expert annotation. Prior work on LLM-as-a-judge documents useful agreement with human preferences as well as position, verbosity, and self-enhancement biases \cite{zheng2023mtbench}. Surveys and empirical studies argue that LLM judges must be calibrated against human judgments before being treated as primary evaluators \cite{gu2024llmjudge,gilardi2024llmjudges}. We therefore mark our adjudicated resource as synthetic.
+
+\begin{table}[t]
+\centering
+\caption{Positioning of \lemonscore{} relative to related evaluation lines.}
+\label{tab:related}
+\scriptsize
+\begin{tabularx}{\textwidth}{p{2.7cm}Y Y}
+\toprule
+Line of work & Main object measured & Limitation addressed by \lemonscore{} \\
+\midrule
+Reference metrics & Similarity to reference text & No source-predicate audit trail \\
+Source faithfulness & Source--text consistency & Usually triple- or sentence-level, not factor-level \\
+Atomic fact metrics & Text-derived claims & Decompose generated text, not source predicates \\
+Semantic graph metrics & Graph--graph overlap & Require parsing text into a graph \\
+Semantic role resources & Predicate roles and frames & Resources, not graph--text coverage metrics \\
+\bottomrule
+\end{tabularx}
+\end{table}

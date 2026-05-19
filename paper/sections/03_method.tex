@@ -1,17 +1,24 @@
 \section{Method}
+\subsection{Graph--text representation}
+Each example is represented as a graph--text pair. The graph contains directed edges \(e=(s,p,o)\), where \(s\) and \(o\) are entity labels and \(p\) is a predicate. The text is the reference or system verbalization to be evaluated. The current pilot uses WebNLG references as the verbalizations, but the scorer can be applied to any graph--text pair in the same normalized format.
 
-\subsection{GraphText representation}
-Each example is represented as text plus an explicit graph. Nodes have stable identifiers and labels; edges contain subject, predicate, object, and provenance metadata. This lets all later stages operate on the same representation regardless of the dataset source.
-
-\subsection{Predicate factor decompositions}
-For each predicate, LEMON-Factor stores a decomposition into weighted semantic factors. Components have a factor id, a role such as \texttt{predicate\_meaning}, \texttt{subject\_domain}, or \texttt{object\_domain}, and a positive weight. Weights are normalized to sum to one. For example, \texttt{birthPlace} can be represented by a biographical relation, a person-domain subject, and a place-domain object.
-
-\subsection{Coverage scoring}
-Given an edge and its decomposition, the scorer checks evidence in the verbalization. Subject-domain and object-domain components are covered by entity-label evidence; predicate-meaning components are covered by lexical cues associated with the predicate and factor. The edge score is a weighted average over factor components:
+\subsection{Semantic factor schema}
+A predicate decomposition maps each predicate \(p\) to a list of weighted components:
 \[
-\operatorname{Coverage}(e,t)=\sum_i w_i \cdot \mathbb{I}[f_i \text{ is covered in } t].
+D(p)=\{(f_i,r_i,w_i)\}_{i=1}^{n},
 \]
-Example-level and corpus-level scores are averages over edges. Missing decompositions are reported separately because an unscored edge indicates a dictionary limitation, not necessarily a text failure.
+where \(f_i\) is a semantic factor, \(r_i\) is its role, and \(w_i>0\) is its salience weight. Roles include \textit{predicate meaning}, \textit{subject domain}, \textit{object domain}, \textit{value domain}, and auxiliary background or modifier roles. The seed schema contains general factors such as \textit{entity}, \textit{person}, \textit{place}, \textit{organization}, \textit{time}, \textit{quantity}, and relation factors such as \textit{biographical relation}, \textit{location relation}, \textit{part-whole relation}, \textit{political relation}, and \textit{creative relation}.
 
-\subsection{Error-driven expansion}
-The first coverage run identifies predicates without decompositions and edges with low coverage. The expansion stage adds deterministic fallback decompositions and lexical cues for frequent missing predicates, then recomputes coverage. This is not a human gold standard; it is an engineering step that tests whether the metric can expose and repair its own dictionary blind spots.
+The factorization is role-aware. For \textit{birthPlace}, the predicate meaning is biographical, the subject domain is person-like, and the object domain is place-like. For \textit{orbitalPeriod}, the predicate meaning is astronomical and the object domain is temporal or quantitative. This representation permits partial credit: a text may mention the subject and object while failing to verbalize the relation.
+
+\subsection{Factor evidence and coverage score}
+For a text \(t\), an edge \(e\), and a component \((f_i,r_i,w_i)\), the evidence function \(E(f_i,r_i,e,t)\in[0,1]\) checks whether the text contains evidence for the component. In the current deterministic baseline, subject-domain and object-domain components are supported by normalized label matches or token overlap. Predicate-meaning components are supported by lexical cues associated with the predicate or factor, such as \textit{born in} for \textit{birthPlace} or \textit{part of} for \textit{isPartOf}.
+
+The edge-level score is a weighted mean:
+\[
+C(e,t)=\frac{\sum_i w_i E(f_i,r_i,e,t)}{\sum_i w_i}.
+\]
+Example-level coverage is the mean of edge-level scores over the graph. Corpus-level coverage is the mean over examples or edges, accompanied by missing-decomposition rate and low-coverage edge count.
+
+\subsection{Decomposition resources}
+The pipeline constructs decomposition resources in stages. First, WebNLG predicates are converted to candidate lexical factors by splitting camelCase and slash-separated names. Second, seed rules map frequent predicates to controlled factors. Third, optional LLM calls through a fixed JSON schema generate candidate decompositions. Fourth, a stronger LLM adjudicator produces a synthetic adjudicated reference. Finally, error-driven expansion adds decompositions for missing development predicates and extends lexical cues. All synthetic and expanded resources are marked as non-gold.

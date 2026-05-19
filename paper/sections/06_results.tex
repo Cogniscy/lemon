@@ -1,7 +1,48 @@
 \section{Results}
+\subsection{Initial and expanded coverage}
+The initial run scored 140 of 308 development edges. The missing decomposition rate was 0.5455, exact label coverage was 0.9215, predicate cue coverage was 0.3149, and \lemonscore{} coverage was 0.3683. This confirms that entity labels are often preserved in WebNLG references, while predicate-level semantic coverage cannot be established for many edges with the initial resource.
 
-The initial LEMON-Factor run scored 140 of 308 development edges. The missing decomposition rate was 0.5455, exact label coverage was 0.9215, predicate cue coverage was 0.3149, and LEMON-Factor coverage was 0.3683. This shows that entity labels are often mentioned, while predicate-level semantic coverage is harder to establish with the initial dictionary.
+After error-driven expansion, all 308 edges were scored. Missing decomposition rate fell to 0.0. Predicate cue coverage increased to 0.6526 and \lemonscore{} coverage increased to 0.7915. The low-coverage edge count dropped from 191 to 41.
 
-After error-driven expansion, all 308 edges were scored. Missing decomposition rate fell to 0.0, predicate cue coverage increased to 0.6526, and LEMON-Factor coverage increased to 0.7915. Low-coverage edges dropped from 191 to 41. This delta indicates that the first low score was largely constrained by incomplete decompositions and cues rather than by universal graph--text mismatch.
+\begin{table}[t]
+\centering
+\caption{Coverage before and after error-driven expansion.}
+\label{tab:coverage-delta}
+\scriptsize
+\begin{tabular}{lrrr}
+\toprule
+Metric & Initial & Expanded & Delta \\
+\midrule
+Scored edges & 140 & 308 & +168 \\
+Missing decomposition rate & 0.5455 & 0.0000 & -0.5455 \\
+Predicate cue coverage & 0.3149 & 0.6526 & +0.3377 \\
+\lemonscore{} coverage & 0.3683 & 0.7915 & +0.4232 \\
+Low-coverage edges & 191 & 41 & -150 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-The baseline-comparison table reports exact label overlap, predicate cues, lexical graph--text similarity, and LEMON-Factor scores side by side. We use it to separate surface mention preservation from role-aware semantic coverage.
+The increase should not be interpreted as proof that generated texts are universally faithful. It shows that the first score was strongly constrained by decomposition and cue coverage. Once all predicates receive decompositions and stronger cues, the scorer can measure relation-level evidence more completely.
+
+\subsection{Comparison with lexical controls}
+Table~\ref{tab:baselines} summarizes the baseline comparison. Exact entity-label overlap is high and unchanged by expansion. Graph--text token cosine and Jaccard are also unchanged, because they do not use predicate decompositions. Predicate cue coverage and \lemonscore{} coverage both increase after expansion, but \lemonscore{} remains distinct because it weights role-aware factors, not only lexical cues.
+
+\begin{table}[t]
+\centering
+\caption{Baseline comparison on the WebNLG development pilot.}
+\label{tab:baselines}
+\scriptsize
+\begin{tabular}{lrrr}
+\toprule
+Method & Initial & Expanded & Delta \\
+\midrule
+Exact entity-label overlap & 0.9215 & 0.9215 & 0.0000 \\
+Predicate lexical cue coverage & 0.3149 & 0.6526 & +0.3377 \\
+Graph--text token cosine & 0.7357 & 0.7357 & 0.0000 \\
+Graph--text token Jaccard & 0.6233 & 0.6233 & 0.0000 \\
+\lemonscore{} coverage & 0.3683 & 0.7915 & +0.4232 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The main observation is that surface/entity overlap already appears high and does not explain the change in \lemonscore{}. The proposed metric is therefore sensitive to the completeness of predicate-level semantic decompositions and relation evidence, not only to whether entity names are repeated.

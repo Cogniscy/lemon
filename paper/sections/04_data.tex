@@ -1,5 +1,58 @@
-\section{Data}
+\section{Data and Experimental Resources}
+\subsection{WebNLG pilot}
+The experiments use a stratified English WebNLG pilot. The train split contains 200 examples and the development split contains 100 examples. Both splits cover 16 WebNLG categories. The development set contains 308 graph edges. The pilot is intentionally small: it is designed to validate the scoring pipeline and to make error analysis inspectable before scaling to larger WebNLG subsets or domain-specific graphs.
 
-We use a stratified WebNLG pilot because the dataset provides explicit RDF triples paired with verbalizations. The current pilot contains 200 train examples and 100 development examples sampled across 16 categories. Train data is used to build the factor inventory and decomposition resources; development data is used to measure graph--text coverage. The main coverage experiment scores 100 development examples containing 308 edges.
+\begin{table}[t]
+\centering
+\caption{Pilot WebNLG statistics used in the current draft.}
+\label{tab:data}
+\scriptsize
+\begin{tabular}{lrrrrr}
+\toprule
+Split & Examples & Edges & Avg. edges & Predicates & Categories \\
+\midrule
+Train & 200 & 568 & 2.84 & 162 & 16 \\
+Development & 100 & 308 & 3.08 & 119 & 16 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-The WebNLG pilot is intentionally small. Its role is to validate the pipeline and produce interpretable diagnostics before moving to larger WebNLG subsets or domain-specific datasets.
+\subsection{Synthetic predicate decompositions}
+A seed factor inventory was built from train predicates and categories. LLM-assisted candidate generation was then tested with two models. The LLM stage is model-agnostic: all models receive the same factor schema, prompt template, and JSON output constraints. In the sanity run, the two models achieved similar factor F1 against the rule-based seed reference, while role accuracy remained lower, indicating that role assignment is the main unstable part of the task.
+
+\begin{table}[t]
+\centering
+\caption{LLM decomposition candidate quality against the seed reference. This is not human validation.}
+\label{tab:llm}
+\scriptsize
+\begin{tabular}{lrrrrr}
+\toprule
+Model & Items & Factor P & Factor R & Factor F1 & Role Acc. \\
+\midrule
+Claude 3.5 Haiku & 19 & 0.754 & 0.807 & 0.775 & 0.596 \\
+Llama 3.1 70B Instruct & 19 & 0.798 & 0.798 & 0.795 & 0.614 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+A synthetic adjudicator was then applied to 29 predicates. The synthetic reference had LLM candidate coverage of 0.621: 18 predicates had LLM candidates and 11 predicates did not. The mean adjudicator confidence was 0.830. This resource is useful for development, but it is not a substitute for human expert annotation.
+
+\begin{table}[t]
+\centering
+\caption{Synthetic adjudication diagnostics.}
+\label{tab:adjudication}
+\scriptsize
+\begin{tabular}{lr}
+\toprule
+Metric & Value \\
+\midrule
+Items & 29 \\
+LLM candidate coverage & 0.621 \\
+Predicates with LLM candidates & 18 \\
+Predicates without LLM candidates & 11 \\
+Mean confidence & 0.830 \\
+Modified decisions & 19 \\
+Accepted seed decisions & 10 \\
+\bottomrule
+\end{tabular}
+\end{table}

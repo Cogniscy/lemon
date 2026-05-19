@@ -332,3 +332,13 @@ paper/references.bib
 ```
 
 The draft is LNCS-oriented but not yet submission-ready. It is a structured writing scaffold for SPECOM.
+
+
+### Build the first paper draft
+
+```powershell
+cd paper
+latexmk -pdf -interaction=nonstopmode main.tex
+```
+
+The lemon-10 draft uses the requested author list: Tomilov A.A., Gineva D. (ITMO), and Tirskih D. (ITMO). Tomilov affiliation is currently a placeholder and should be confirmed before submission.

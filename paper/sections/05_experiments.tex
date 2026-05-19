@@ -1,10 +1,9 @@
 \section{Experiments}
+\subsection{Experiment 1: initial factor coverage}
+The first experiment scores the WebNLG development set using the synthetic adjudicated predicate decomposition dictionary and the seed lexical cue dictionary. We report five quantities: exact entity-label coverage, predicate lexical cue coverage, weighted \lemonscore{} coverage, missing decomposition rate, and the number of low-coverage edges under a threshold of 0.5.
 
-\subsection{Coverage baseline}
-The first experiment scores WebNLG development examples with the synthetic adjudicated decomposition dictionary and seed lexical cues. We report exact entity-label coverage, predicate cue coverage, LEMON-Factor weighted coverage, missing decomposition rate, and low-coverage edge count.
+\subsection{Experiment 2: error-driven expansion}
+The initial run exposes predicates without decompositions. We therefore run a missing-predicate analysis, generate rule-based or fallback decompositions for the missing predicates, extend the lexical cue dictionary, and recompute coverage. This experiment tests whether \lemonscore{} can be improved through interpretable error-driven resource expansion.
 
-\subsection{Error-driven expansion}
-The second experiment expands decompositions and lexical cues using missing-predicate analysis from the first coverage run. We then recompute the same metrics and report the before/after delta.
-
-\subsection{Baseline comparison}
-The third experiment compares LEMON-Factor with lightweight lexical controls: exact entity-label overlap, predicate lexical cue coverage, graph--text token Jaccard, and graph--text token cosine. These controls are not intended as strong semantic metrics; they make explicit how much of the LEMON-Factor signal can be explained by surface overlap alone.
+\subsection{Experiment 3: lexical baseline comparison}
+The third experiment compares \lemonscore{} to lightweight lexical controls. Exact entity-label overlap checks whether entity labels are mentioned. Predicate cue coverage checks explicit relation cues. Graph--text token Jaccard and graph--text token cosine compare a bag-of-words graph lexicalization with the text. These controls are not intended as strong semantic metrics; they make explicit whether \lemonscore{} adds a diagnostic dimension beyond surface overlap.
