@@ -36,6 +36,8 @@ DecompositionSource = Literal[
     "expert",
     "llm_candidate",
     "synthetic_adjudication",
+    "expansion_rule",
+    "fallback_rule",
 ]
 
 _ALLOWED_ROLE_VALUES = {

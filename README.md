@@ -270,3 +270,40 @@ The report includes exact label coverage, predicate cue coverage,
 LEMON-Factor weighted coverage, and missing decomposition rate. The details JSONL
 contains edge-level factor diagnostics.
 
+
+## lemon-08: error-driven coverage expansion
+
+After the first WebNLG coverage run, analyze missing decompositions, expand predicate decompositions and lexical cues, rerun coverage, and produce before/after tables.
+
+```powershell
+python -m lemon_factor.coverage.missing_analysis `
+  data/reports/webnlg_lemon_factor_coverage_details.jsonl `
+  --examples data/processed/webnlg_dev.jsonl `
+  --out data/reports/webnlg_missing_predicates.json `
+  --table paper/tables/table_webnlg_missing_predicates.md
+
+python -m lemon_factor.factors.expand_decompositions `
+  --missing data/reports/webnlg_missing_predicates.json `
+  --base data/interim/webnlg_predicate_decompositions_synthetic_adjudicated.json `
+  --inventory data/interim/webnlg_factor_inventory.json `
+  --out data/interim/webnlg_predicate_decompositions_expanded.json
+
+python -m lemon_factor.coverage.expand_lexical_cues `
+  --missing data/reports/webnlg_missing_predicates.json `
+  --base-cues data/interim/webnlg_lexical_cues_seed.json `
+  --out data/interim/webnlg_lexical_cues_expanded.json
+
+python -m lemon_factor.coverage.run_coverage_delta `
+  data/processed/webnlg_dev.jsonl `
+  --before data/reports/webnlg_lemon_factor_coverage.json `
+  --expanded-decompositions data/interim/webnlg_predicate_decompositions_expanded.json `
+  --expanded-lexical-cues data/interim/webnlg_lexical_cues_expanded.json `
+  --out data/reports/webnlg_lemon_factor_coverage_expanded.json `
+  --details data/reports/webnlg_lemon_factor_coverage_expanded_details.jsonl `
+  --table paper/tables/table_webnlg_coverage_delta.md
+
+python -m lemon_factor.coverage.error_analysis `
+  data/reports/webnlg_lemon_factor_coverage_expanded_details.jsonl `
+  --out data/reports/webnlg_coverage_error_analysis.json `
+  --table paper/tables/table_webnlg_coverage_error_types.md
+```

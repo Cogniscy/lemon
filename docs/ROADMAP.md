@@ -252,3 +252,7 @@ WebNLG dev using explicit graph edges and predicate decompositions. The stage
 exports corpus-level scores, edge-level diagnostics, and a paper-ready markdown
 table.
 
+
+## lemon-08 — Decomposition coverage expansion and error analysis
+
+Use the first WebNLG coverage results to find missing predicates, expand predicate decompositions and lexical cues, rerun coverage, and export before/after and error-analysis tables for the paper. This stage demonstrates the diagnostic loop of LEMON-Factor: coverage → missing predicates → dictionary expansion → improved coverage → categorized residual errors.
