@@ -251,3 +251,22 @@ python -m lemon_factor.llm.model_check `
 ```
 
 Use `configs/llm_adjudicator.yaml` for one-model debugging and `configs/llm_adjudicator_full.yaml` only for final runs.
+
+## lemon-07: LEMON-Factor graph-text coverage
+
+Run the deterministic WebNLG coverage baseline:
+
+```powershell
+python -m lemon_factor.coverage.run_webnlg_coverage `
+  data/processed/webnlg_dev.jsonl `
+  --decompositions data/interim/webnlg_predicate_decompositions_synthetic_adjudicated.json `
+  --lexical-cues data/interim/webnlg_lexical_cues_seed.json `
+  --out data/reports/webnlg_lemon_factor_coverage.json `
+  --details data/reports/webnlg_lemon_factor_coverage_details.jsonl `
+  --table paper/tables/table_webnlg_lemon_factor_coverage.md
+```
+
+The report includes exact label coverage, predicate cue coverage,
+LEMON-Factor weighted coverage, and missing decomposition rate. The details JSONL
+contains edge-level factor diagnostics.
+

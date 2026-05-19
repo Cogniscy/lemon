@@ -242,3 +242,13 @@ Adds OpenRouter model catalog checks and separate debug/full adjudicator configs
 ## lemon-06.2 — Synthetic adjudication quality fixes
 
 Status: implemented. This patch prevents missing confidence from being displayed as false `0.00`, adds LLM candidate coverage diagnostics, and warns when synthetic adjudication includes predicates without LLM candidates. It makes the synthetic reference safer to use in `lemon-07`, while keeping it explicitly marked as non-human.
+
+## lemon-07 — LEMON-Factor graph-text coverage
+
+Status: implemented.
+
+Purpose: compute the first deterministic graph-text semantic coverage score on
+WebNLG dev using explicit graph edges and predicate decompositions. The stage
+exports corpus-level scores, edge-level diagnostics, and a paper-ready markdown
+table.
+
