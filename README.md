@@ -206,3 +206,48 @@ configs/llm_models_sanity.yaml # two-model sanity comparison
 configs/llm_models_full.yaml   # full final comparison
 ```
 
+
+## lemon-06: synthetic LLM adjudication
+
+Generate adjudication prompts without API calls:
+
+```powershell
+python -m lemon_factor.llm.adjudicate_decompositions `
+  --seed data/interim/webnlg_predicate_decompositions_seed.json `
+  --llm data/interim/llm_predicate_decomposition_candidates.jsonl `
+  --inventory data/interim/webnlg_factor_inventory.json `
+  --models configs/llm_adjudicator.yaml `
+  --limit 20 `
+  --dry-run
+```
+
+Live run with OpenRouter:
+
+```powershell
+$env:OPENROUTER_API_KEY="..."
+python -m lemon_factor.llm.adjudicate_decompositions `
+  --seed data/interim/webnlg_predicate_decompositions_seed.json `
+  --llm data/interim/llm_predicate_decomposition_candidates.jsonl `
+  --inventory data/interim/webnlg_factor_inventory.json `
+  --models configs/llm_adjudicator.yaml `
+  --out data/interim/webnlg_predicate_decompositions_synthetic_adjudicated.json `
+  --raw-out data/interim/llm_synthetic_adjudication_raw.jsonl `
+  --review-out data/annotation/synthetic_adjudication_review.csv `
+  --stats-out data/reports/synthetic_adjudication_stats.json `
+  --table paper/tables/table_synthetic_adjudication_stats.md `
+  --limit 30
+```
+
+The result is a synthetic temporary reference, not a human expert gold label.
+
+### lemon-06.1: check adjudicator model availability
+
+Before live synthetic adjudication, run a model preflight check:
+
+```powershell
+python -m lemon_factor.llm.model_check `
+  --models configs/llm_adjudicator_debug.yaml `
+  --out data/reports/openrouter_adjudicator_debug_check.json
+```
+
+Use `configs/llm_adjudicator.yaml` for one-model debugging and `configs/llm_adjudicator_full.yaml` only for final runs.

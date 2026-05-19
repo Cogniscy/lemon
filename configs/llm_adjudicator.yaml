@@ -1,0 +1,4 @@
+# Default debug adjudicator for lemon-06.1.
+# Keep this to one model during development; use llm_adjudicator_full.yaml for final runs.
+models:
+  - meta-llama/llama-3.1-70b-instruct

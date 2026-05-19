@@ -35,6 +35,7 @@ DecompositionSource = Literal[
     "fallback",
     "expert",
     "llm_candidate",
+    "synthetic_adjudication",
 ]
 
 _ALLOWED_ROLE_VALUES = {
@@ -79,7 +80,7 @@ class PredicateDecomposition(BaseModel):
     predicate: str = Field(min_length=1)
     components: list[FactorComponent] = Field(min_length=1)
     source: DecompositionSource = "seed_rule"
-    confidence: float = Field(default=0.7, ge=0.0, le=1.0)
+    confidence: float | None = Field(default=0.7, ge=0.0, le=1.0)
     evidence: dict[str, Any] = Field(default_factory=dict)
 
     @model_validator(mode="after")

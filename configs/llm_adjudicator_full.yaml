@@ -1,0 +1,6 @@
+# Multi-model adjudicator candidates for final experiments.
+# Run lemon_factor.llm.model_check before using this config because OpenRouter
+# model IDs and structured-output capabilities can change over time.
+models:
+  - meta-llama/llama-3.1-70b-instruct
+  - anthropic/claude-3.5-haiku

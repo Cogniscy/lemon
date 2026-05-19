@@ -48,7 +48,7 @@ def decomposition_review_rows(decomposition_set: PredicateDecompositionSet) -> l
                 "candidate_factors": ", ".join(evidence.get("candidate_factors", [])),
                 "proposed_components": _components_text(decomposition),
                 "proposed_weights": _weights_text(decomposition),
-                "confidence": f"{decomposition.confidence:.2f}",
+                "confidence": "" if decomposition.confidence is None else f"{decomposition.confidence:.2f}",
                 "expert_label": "",
                 "missing_factor": "",
                 "wrong_factor": "",

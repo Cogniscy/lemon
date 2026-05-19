@@ -24,3 +24,20 @@ def test_sanity_llm_model_config_has_two_validated_models():
         "meta-llama/llama-3.1-70b-instruct",
         "anthropic/claude-3.5-haiku",
     ]
+
+
+def test_default_adjudicator_config_is_single_debug_model():
+    from pathlib import Path
+    from lemon_factor.llm.decompose_predicates import read_model_config
+
+    models = read_model_config(Path("configs/llm_adjudicator.yaml"))
+    assert models == ["meta-llama/llama-3.1-70b-instruct"]
+
+
+def test_adjudicator_full_config_has_multiple_models():
+    from pathlib import Path
+    from lemon_factor.llm.decompose_predicates import read_model_config
+
+    models = read_model_config(Path("configs/llm_adjudicator_full.yaml"))
+    assert "meta-llama/llama-3.1-70b-instruct" in models
+    assert len(models) >= 2

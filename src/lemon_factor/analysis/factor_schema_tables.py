@@ -12,6 +12,10 @@ def _escape(value: object) -> str:
     return str(value).replace("\n", " ").replace("|", "\\|")
 
 
+def _format_confidence(value: float | None) -> str:
+    return "" if value is None else f"{value:.2f}"
+
+
 def factor_schema_to_markdown(schema_path: str | Path, *, top_k: int | None = None) -> str:
     factors = read_factor_schema(schema_path)
     if top_k is not None:
@@ -55,7 +59,7 @@ def decompositions_to_markdown(
         )
         rows.append(
             f"| {_escape(decomposition.predicate)} | {_escape(components)} | "
-            f"{decomposition.confidence:.2f} | {_escape(category_text)} |"
+            f"{_format_confidence(decomposition.confidence)} | {_escape(category_text)} |"
         )
     return "\n".join(rows) + "\n"
 

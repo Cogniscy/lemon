@@ -219,3 +219,26 @@ Paper contribution: demonstrate that factor decompositions can be proposed by an
 ## LLM debug model policy
 
 For work before final result collection, use the one-model debug config in `configs/llm_models.yaml`. Full multi-model runs should use `configs/llm_models_full.yaml` and be reserved for final tables.
+
+## lemon-06 — Synthetic LLM adjudication reference
+
+Create a temporary adjudicated predicate-decomposition reference by combining seed decompositions, LLM candidates, inventory evidence, and a stronger LLM adjudicator. The output is explicitly marked as synthetic and is used only until human expert validation is available.
+
+Artifacts:
+
+- `src/lemon_factor/llm/adjudicate_decompositions.py`
+- `src/lemon_factor/llm/adjudication_schema.py`
+- `src/lemon_factor/factors/disagreement.py`
+- `data/interim/webnlg_predicate_decompositions_synthetic_adjudicated.json`
+- `data/annotation/synthetic_adjudication_review.csv`
+- `paper/tables/table_synthetic_adjudication_stats.md`
+
+
+## lemon-06.1 — Model preflight for synthetic adjudication
+
+Adds OpenRouter model catalog checks and separate debug/full adjudicator configs. This prevents empty synthetic references caused by stale or unavailable model IDs before moving to LEMON-Factor coverage.
+
+
+## lemon-06.2 — Synthetic adjudication quality fixes
+
+Status: implemented. This patch prevents missing confidence from being displayed as false `0.00`, adds LLM candidate coverage diagnostics, and warns when synthetic adjudication includes predicates without LLM candidates. It makes the synthetic reference safer to use in `lemon-07`, while keeping it explicitly marked as non-human.
