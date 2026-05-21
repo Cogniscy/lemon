@@ -288,3 +288,40 @@ Use the first WebNLG coverage results to find missing predicates, expand predica
 **Paper contribution:** positions LEMON-Factor as a bidirectional representation-level framework and compares it with a current text-to-KG evaluation framing: information retained in nodes and edges.
 
 **Exit criteria:** tests pass; reconstructed graphs, reverse LEMON report, MINE-style report, and bidirectional comparison table are generated.
+
+## lemon-12 — LLM-judged MINE-style fact recoverability
+
+**Goal:** add an optional LLM judge to the MINE-style node/edge baseline. The judge receives a gold fact and a retrieved subgraph and decides whether the fact is recoverable from the retrieved nodes and edges.
+
+**Code deliverables:**
+
+- `mine_nodes_edges/judge_schema.py` for structured binary judgments;
+- `mine_nodes_edges/llm_judge.py` for prompt rendering, offline fixtures, and OpenRouter live calls;
+- `mine_nodes_edges/prompts/judge_fact_recoverability.md`;
+- updated `run_mine_style.py` with `--judge deterministic|offline|llm`;
+- updated bidirectional comparison with optional `--mine-style-llm`.
+
+**Paper contribution:** distinguishes deterministic node/edge hits from LLM-judged fact recoverability and places the result closer to KGGen's MINE evaluation framing.
+
+**Exit criteria:** tests pass without API key; dry-run/offline judge works; live judge produces valid JSON when `OPENROUTER_API_KEY` is set; comparison table includes deterministic and LLM-judged MINE-style rows.
+
+## lemon-12.1 — Stable LLM-judged MINE-style evaluation
+
+**Goal:** stabilize the LLM-judged MINE-style WebNLG adaptation before using it as an experimental result.
+
+**Code deliverables:** compact judge prompts, bounded judgment schema, fixed-subset support, retry-on-invalid-JSON, and detailed report diagnostics.
+
+**Paper contribution:** makes the LLM-judged MINE-style result reproducible on the same subset as deterministic MINE-style and reports parse success, retry statistics, and judge agreement.
+
+**Exit criteria:** tests pass without API key; dry-run works; live report includes requested/valid/failed judgments, retry counts, parse success rate, and deterministic score on the same subset.
+
+## lemon-12.2 — MINE-style score semantics cleanup
+
+**Goal:** make deterministic and LLM-judged MINE-style results comparable by explicitly separating score semantics.
+
+**Code deliverables:** report fields for composite node/edge score, deterministic fact recoverability, LLM fact recoverability, deterministic subset node/edge/fact diagnostics, and optional fixed-subset comparison table output.
+
+**Paper contribution:** prevents overclaiming by showing that deterministic MINE-style composite scoring and LLM-judged fact recoverability are different quantities.
+
+**Exit criteria:** tests pass; bidirectional comparison labels deterministic and LLM MINE-style rows distinctly; `table_webnlg_mine_style_subset_comparison.md` is generated.
+

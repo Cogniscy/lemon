@@ -62,11 +62,12 @@ Method & Direction & Factors & Retrieval & Score & Diagnostic level \\
 \midrule
 Forward \lemonscore{} & KG$\rightarrow$Text & yes & no & 0.7915 & factor/edge/example \\
 Reverse \lemonscore{} & Text$\rightarrow$KG & yes & no & 0.7789 & factor/edge/example \\
-MINE-style nodes/edges & Text$\rightarrow$KG & no & yes & 0.8028 & node/edge/fact \\
+MINE-style composite node/edge & Text$\rightarrow$KG & no & yes & 0.8028 & node/edge/fact \\
+MINE-style LLM fact recoverability & Text$\rightarrow$KG & no & yes & 0.5200 & fact/subgraph \\
 Graph--text token cosine & KG$\leftrightarrow$Text & no & no & 0.7357 & corpus \\
 Graph--text token Jaccard & KG$\leftrightarrow$Text & no & no & 0.6233 & corpus \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-The MINE-style score is slightly higher than reverse \lemonscore{}, but the metrics answer different questions. MINE-style scoring checks whether facts are recoverable from nodes and edges in the reconstructed graph. Reverse \lemonscore{} checks which weighted semantic factors of the original predicates survive reconstruction. The two scores are therefore complementary rather than substitutes.
+The deterministic MINE-style score is slightly higher than reverse \lemonscore{}, but the metrics answer different questions. MINE-style scoring checks whether facts are recoverable from nodes and edges in the reconstructed graph. Reverse \lemonscore{} checks which weighted semantic factors of the original predicates survive reconstruction. The stabilized LLM-judged MINE-style variant is stricter: it estimates binary fact recoverability from the retrieved subgraph rather than the partial-credit node/edge composite. On the locked 50-fact subset, deterministic node information was 0.9600, deterministic edge information was 0.5400, the deterministic composite node/edge score was 0.7500, deterministic fact recoverability was 0.5400, and LLM fact recoverability was 0.5200. The judge agreement with deterministic fact recoverability was 0.9800 with 100\% parse success. Thus, the LLM judge does not currently overturn the deterministic recoverability signal; it mainly provides a stricter fact-level interpretation. The two scores are therefore complementary rather than substitutes.

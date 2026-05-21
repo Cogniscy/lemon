@@ -394,3 +394,87 @@ python -m lemon_factor.analysis.bidirectional_comparison \
 ```
 
 This stage treats MINE as **Measure of Information in Nodes and Edges** and implements a WebNLG-specific deterministic adaptation. It is not a full KGGen reproduction and does not yet include an LLM judge.
+
+## lemon-12: LLM-judged MINE-style recoverability
+
+`lemon-12` keeps the deterministic MINE-style node/edge score from `lemon-11` and adds an optional LLM judge over retrieved subgraphs.
+
+Dry-run prompts without an API call:
+
+```bash
+python -m lemon_factor.mine_nodes_edges.run_mine_style \
+  data/processed/webnlg_dev.jsonl \
+  --reconstructed data/interim/webnlg_reconstructed_graphs_lexical.jsonl \
+  --judge llm \
+  --models configs/llm_adjudicator_debug.yaml \
+  --prompts-out data/interim/mine_style_judge_prompts.jsonl \
+  --dry-run \
+  --limit 10 \
+  --out data/reports/webnlg_mine_style_llm.json \
+  --scores data/reports/webnlg_mine_style_llm_scores.jsonl \
+  --table paper/tables/table_webnlg_mine_style_llm.md
+```
+
+Live LLM-judged run:
+
+```bash
+python -m lemon_factor.mine_nodes_edges.run_mine_style \
+  data/processed/webnlg_dev.jsonl \
+  --reconstructed data/interim/webnlg_reconstructed_graphs_lexical.jsonl \
+  --judge llm \
+  --models configs/llm_adjudicator_debug.yaml \
+  --out data/reports/webnlg_mine_style_llm.json \
+  --scores data/reports/webnlg_mine_style_llm_scores.jsonl \
+  --raw-out data/reports/webnlg_mine_style_llm_raw.jsonl \
+  --table paper/tables/table_webnlg_mine_style_llm.md \
+  --top-k 2 \
+  --hops 2 \
+  --limit 50
+```
+
+Updated comparison with the LLM-judged MINE-style row:
+
+```bash
+python -m lemon_factor.analysis.bidirectional_comparison \
+  --forward data/reports/webnlg_lemon_factor_coverage_expanded.json \
+  --reverse data/reports/webnlg_reverse_lemon.json \
+  --mine-style data/reports/webnlg_mine_style.json \
+  --mine-style-llm data/reports/webnlg_mine_style_llm.json \
+  --baseline data/reports/webnlg_baseline_comparison.json \
+  --out data/reports/webnlg_bidirectional_comparison_llm.json \
+  --table paper/tables/table_webnlg_bidirectional_comparison_llm.md
+```
+
+This is still a WebNLG adaptation of KGGen's MINE idea, not a full benchmark reproduction.
+
+
+## lemon-12.1: Stable LLM-judged MINE-style run
+
+`lemon-12.1` stabilizes the LLM-judged MINE-style run by using compact prompts, bounded JSON schema fields, retry-on-invalid-JSON, and fixed-subset comparison.
+
+Lock a deterministic subset:
+
+```bash
+python -m lemon_factor.mine_nodes_edges.run_mine_style   data/processed/webnlg_dev.jsonl   --reconstructed data/interim/webnlg_reconstructed_graphs_lexical.jsonl   --judge deterministic   --out data/reports/webnlg_mine_style_subset_det.json   --scores data/reports/webnlg_mine_style_subset_det_scores.jsonl   --table paper/tables/table_webnlg_mine_style_subset_det.md   --subset-out data/interim/mine_style_eval_subset.json   --limit 50   --top-k 2   --hops 2
+```
+
+Run the LLM judge on the same subset:
+
+```bash
+python -m lemon_factor.mine_nodes_edges.run_mine_style   data/processed/webnlg_dev.jsonl   --reconstructed data/interim/webnlg_reconstructed_graphs_lexical.jsonl   --judge llm   --models configs/llm_adjudicator_debug.yaml   --subset-in data/interim/mine_style_eval_subset.json   --out data/reports/webnlg_mine_style_llm_stable.json   --scores data/reports/webnlg_mine_style_llm_stable_scores.jsonl   --raw-out data/reports/webnlg_mine_style_llm_stable_raw.jsonl   --table paper/tables/table_webnlg_mine_style_llm_stable.md   --compact-context   --max-context-nodes 6   --max-context-edges 6   --reason-max-words 20   --max-tokens 250   --retry-invalid-json   --top-k 2   --hops 2
+```
+
+The stable report includes requested, valid, and failed judgments; parse success rate; retry attempts and successes; judge agreement with deterministic scoring; and deterministic score on the same subset.
+
+## lemon-12.2: MINE-style score semantics cleanup
+
+`lemon-12.2` separates deterministic composite node/edge scoring from LLM-judged binary fact recoverability. The stable report now includes explicit fields such as `composite_node_edge_score`, `deterministic_fact_recoverability`, `llm_fact_recoverability`, and deterministic subset diagnostics.
+
+Generate the updated bidirectional comparison and fixed-subset MINE table:
+
+```bash
+python -m lemon_factor.analysis.bidirectional_comparison   --forward data/reports/webnlg_lemon_factor_coverage_expanded.json   --reverse data/reports/webnlg_reverse_lemon.json   --mine-style data/reports/webnlg_mine_style.json   --mine-style-llm data/reports/webnlg_mine_style_llm_stable.json   --baseline data/reports/webnlg_baseline_comparison.json   --out data/reports/webnlg_bidirectional_comparison_llm_stable.json   --table paper/tables/table_webnlg_bidirectional_comparison_llm_stable.md   --mine-subset-table paper/tables/table_webnlg_mine_style_subset_comparison.md
+```
+
+This prevents comparing the deterministic partial-credit node/edge composite score directly with the stricter LLM binary fact-recoverability score.
+
