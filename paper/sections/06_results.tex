@@ -46,3 +46,27 @@ Graph--text token Jaccard & 0.6233 & 0.6233 & 0.0000 \\
 \end{table}
 
 The main observation is that surface/entity overlap already appears high and does not explain the change in \lemonscore{}. The proposed metric is therefore sensitive to the completeness of predicate-level semantic decompositions and relation evidence, not only to whether entity names are repeated.
+
+
+\subsection{Bidirectional comparison}
+The reverse experiment produced a reconstructed graph with 390 of 408 nodes and 196 of 308 edges recovered. Reverse \lemonscore{} reached 0.7789, close to the forward expanded \lemonscore{} score of 0.7915. The deterministic MINE-style node/edge score was 0.8028, with node information 0.9692 and edge information 0.6364. This suggests that entity information is easy to recover in WebNLG, whereas relation recovery is the limiting factor.
+
+\begin{table}[t]
+\centering
+\caption{Bidirectional comparison on the WebNLG development pilot.}
+\label{tab:bidirectional}
+\scriptsize
+\begin{tabular}{llcccl}
+\toprule
+Method & Direction & Factors & Retrieval & Score & Diagnostic level \\
+\midrule
+Forward \lemonscore{} & KG$\rightarrow$Text & yes & no & 0.7915 & factor/edge/example \\
+Reverse \lemonscore{} & Text$\rightarrow$KG & yes & no & 0.7789 & factor/edge/example \\
+MINE-style nodes/edges & Text$\rightarrow$KG & no & yes & 0.8028 & node/edge/fact \\
+Graph--text token cosine & KG$\leftrightarrow$Text & no & no & 0.7357 & corpus \\
+Graph--text token Jaccard & KG$\leftrightarrow$Text & no & no & 0.6233 & corpus \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The MINE-style score is slightly higher than reverse \lemonscore{}, but the metrics answer different questions. MINE-style scoring checks whether facts are recoverable from nodes and edges in the reconstructed graph. Reverse \lemonscore{} checks which weighted semantic factors of the original predicates survive reconstruction. The two scores are therefore complementary rather than substitutes.

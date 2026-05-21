@@ -342,3 +342,55 @@ latexmk -pdf -interaction=nonstopmode main.tex
 ```
 
 The lemon-10 draft uses the requested author list: Tomilov A.A., Gineva D. (ITMO), and Tirskih D. (ITMO). Tomilov affiliation is currently a placeholder and should be confirmed before submission.
+
+## lemon-11: Bidirectional LEMON and MINE-style node/edge baseline
+
+Reconstruct a deterministic text-to-KG graph from WebNLG text:
+
+```bash
+python -m lemon_factor.reverse.reconstruct_graph \
+  data/processed/webnlg_dev.jsonl \
+  --lexical-cues data/interim/webnlg_lexical_cues_expanded.json \
+  --mode lexical \
+  --out data/interim/webnlg_reconstructed_graphs_lexical.jsonl \
+  --report data/reports/webnlg_reconstruction_lexical.json
+```
+
+Run reverse LEMON-Factor:
+
+```bash
+python -m lemon_factor.reverse.run_reverse_lemon \
+  data/processed/webnlg_dev.jsonl \
+  --reconstructed data/interim/webnlg_reconstructed_graphs_lexical.jsonl \
+  --decompositions data/interim/webnlg_predicate_decompositions_expanded.json \
+  --out data/reports/webnlg_reverse_lemon.json \
+  --details data/reports/webnlg_reverse_lemon_details.jsonl \
+  --table paper/tables/table_webnlg_reverse_lemon.md
+```
+
+Run the deterministic MINE-style node/edge baseline:
+
+```bash
+python -m lemon_factor.mine_nodes_edges.run_mine_style \
+  data/processed/webnlg_dev.jsonl \
+  --reconstructed data/interim/webnlg_reconstructed_graphs_lexical.jsonl \
+  --out data/reports/webnlg_mine_style.json \
+  --scores data/reports/webnlg_mine_style_scores.jsonl \
+  --table paper/tables/table_webnlg_mine_style.md \
+  --top-k 2 \
+  --hops 2
+```
+
+Build the bidirectional comparison:
+
+```bash
+python -m lemon_factor.analysis.bidirectional_comparison \
+  --forward data/reports/webnlg_lemon_factor_coverage_expanded.json \
+  --reverse data/reports/webnlg_reverse_lemon.json \
+  --mine-style data/reports/webnlg_mine_style.json \
+  --baseline data/reports/webnlg_baseline_comparison.json \
+  --out data/reports/webnlg_bidirectional_comparison.json \
+  --table paper/tables/table_webnlg_bidirectional_comparison.md
+```
+
+This stage treats MINE as **Measure of Information in Nodes and Edges** and implements a WebNLG-specific deterministic adaptation. It is not a full KGGen reproduction and does not yet include an LLM judge.

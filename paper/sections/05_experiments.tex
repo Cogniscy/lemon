@@ -7,3 +7,7 @@ The initial run exposes predicates without decompositions. We therefore run a mi
 
 \subsection{Experiment 3: lexical baseline comparison}
 The third experiment compares \lemonscore{} to lightweight lexical controls. Exact entity-label overlap checks whether entity labels are mentioned. Predicate cue coverage checks explicit relation cues. Graph--text token Jaccard and graph--text token cosine compare a bag-of-words graph lexicalization with the text. These controls are not intended as strong semantic metrics; they make explicit whether \lemonscore{} adds a diagnostic dimension beyond surface overlap.
+
+
+\subsection{Experiment 4: bidirectional text--graph recoverability}
+The fourth experiment evaluates the reverse direction. We construct a deterministic reconstructed graph from each WebNLG text using entity-label evidence and predicate lexical cues. We then score this reconstructed graph in two ways. First, reverse \lemonscore{} checks whether the recovered graph retains the weighted predicate factors of the gold graph. Second, a MINE-style node/edge baseline adapts the Measure of Information in Nodes and Edges idea to WebNLG: gold triples are treated as facts, reconstructed graphs are treated as extracted KGs, and information retention is measured through recovered nodes and edges. This MINE-style variant is deterministic and does not include an LLM judge.

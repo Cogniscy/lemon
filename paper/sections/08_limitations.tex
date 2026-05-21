@@ -6,3 +6,6 @@ The second limitation is lexical evidence. The deterministic scorer can find exp
 The third limitation is scale. The pilot covers 100 development examples and 308 edges. Larger WebNLG experiments and domain-specific datasets are needed. The next validation step should measure correlation between \lemonscore{} and human data-coverage judgments, and compare directly with FactSpotter, Data-QuestEval, and neural reference metrics.
 
 Finally, expansion can inflate scores if fallback decompositions are too permissive. For this reason we report initial and expanded runs separately and mark expanded results as a deterministic baseline rather than as human-validated truth.
+
+
+The reverse-direction experiment uses a lexical pseudo-extractor, not a full text-to-KG model. Likewise, the MINE-style baseline is an adaptation of node/edge information retention to WebNLG graph--text pairs. It should not be described as a full reproduction of KGGen's MINE benchmark. Adding a real KG extractor and an LLM-based fact inferability judge is future work.

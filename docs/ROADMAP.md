@@ -273,3 +273,18 @@ Use the first WebNLG coverage results to find missing predicates, expand predica
 - integration notes for the research brief.
 
 **Exit criteria:** tests pass, baseline comparison JSON/table are generated, and the paper skeleton clearly distinguishes lexical baselines, LEMON-Factor, and synthetic LLM adjudication limitations.
+
+## lemon-11 — Bidirectional LEMON and MINE-style node/edge baseline
+
+**Goal:** extend LEMON-Factor from KG→Text coverage to bidirectional graph-text alignment and add a MINE-style text→KG baseline.
+
+**Code deliverables:**
+
+- `reverse/reconstruct_graph.py` for deterministic text-to-KG pseudo-reconstruction;
+- `reverse/reverse_coverage.py` and `reverse/run_reverse_lemon.py` for Text→KG factor-level recoverability;
+- `mine_nodes_edges/retrieval.py`, `mine_nodes_edges/scoring.py`, and `mine_nodes_edges/run_mine_style.py` for deterministic MINE-style node/edge information retention;
+- `analysis/bidirectional_comparison.py` for Forward LEMON vs Reverse LEMON vs MINE-style comparison.
+
+**Paper contribution:** positions LEMON-Factor as a bidirectional representation-level framework and compares it with a current text-to-KG evaluation framing: information retained in nodes and edges.
+
+**Exit criteria:** tests pass; reconstructed graphs, reverse LEMON report, MINE-style report, and bidirectional comparison table are generated.
