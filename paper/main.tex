@@ -1,4 +1,4 @@
-% SPECOM/LNCS working draft generated in lemon-10.
+% SPECOM/LNCS working draft revised after lemon-13.1.
 \documentclass[runningheads]{llncs}
 \usepackage[T1]{fontenc}
 \usepackage{booktabs}
@@ -13,18 +13,19 @@
 \setlist{nosep,leftmargin=*}
 \newcolumntype{Y}{>{\raggedright\arraybackslash}X}
 \newcommand{\lemonscore}{\textsc{LEMON-Factor}}
+\newcommand{\minebase}{\textsc{MINE-style}}
 
 \begin{document}
-\title{LEMON-Factor: Interpretable Factor-Level Semantic Coverage for Graph-to-Text Evaluation}
-\titlerunning{LEMON-Factor for Graph-to-Text Evaluation}
+\title{LEMON-Factor: Bidirectional Factor-Level Semantic Alignment for Graph--Text Pairs}
+\titlerunning{LEMON-Factor for Graph--Text Alignment}
 \author{Tomilov A.A.\inst{1} \and Gineva D.\inst{2} \and Tirskih D.\inst{2}}
 \authorrunning{A.A. Tomilov et al.}
 \institute{Independent researcher, affiliation to be confirmed \and ITMO University, St. Petersburg, Russia}
 \maketitle
 
 \begin{abstract}
-Graph-to-text systems should preserve the meaning of each input relation, not merely mention the correct entities or produce fluent text. Existing automatic metrics for RDF-to-text and data-to-text generation are mostly reference-based and holistic, while recent faithfulness metrics often operate at the level of whole triples. We propose \lemonscore{}, a diagnostic evaluation framework that decomposes source predicates into weighted semantic factors and checks how these factors are reflected in a verbalization. The method is source-directed: it starts from graph predicates and their argument roles, not from text-only atomic claims. We implement a reproducible pilot on a stratified WebNLG subset, construct a predicate inventory, bootstrap a controlled factor schema, generate and adjudicate predicate decompositions, and compute deterministic graph--text coverage. In the first coverage run, 140 of 308 development edges were scored and \lemonscore{} coverage was 0.368. After error-driven decomposition and lexical-cue expansion, all 308 edges were scored and coverage rose to 0.791, while exact entity-label overlap remained unchanged at 0.921. The results show that factor-level coverage exposes a diagnostic layer that surface overlap does not capture. The current study is a pilot: synthetic LLM adjudication and rule-based expansion are not treated as human gold.
-\keywords{Graph-to-text evaluation \and Semantic coverage \and Knowledge graphs \and WebNLG \and Predicate decomposition \and LLM adjudication}
+Graph--text evaluation requires more than checking whether the right entity names occur in a fluent sentence. A faithful verbalization must preserve the roles and relation meanings encoded by graph predicates, and a useful text-to-graph reconstruction must recover the same predicate-level information. We propose \lemonscore{}, a bidirectional factor-level semantic alignment framework for graph--text pairs. \lemonscore{} decomposes RDF predicates into weighted semantic factors and evaluates both KG$\rightarrow$Text coverage and Text$\rightarrow$KG recoverability. The framework is positioned between triple-level factuality metrics, which typically issue one decision per triple, and atomic-fact metrics, which decompose generated text rather than source predicates. On a stratified WebNLG pilot, expanded Forward \lemonscore{} reaches 0.7915 and Reverse \lemonscore{} reaches 0.7789. A \minebase{} adaptation inspired by KGGen's Measure of Information in Nodes and Edges shows that node information is easier to recover than edge information: on a locked 50-fact subset, deterministic node information is 0.9600, edge information is 0.5400, and LLM-judged fact recoverability is 0.5200. Controlled perturbation calibration further shows that relation deletion reduces Forward \lemonscore{} by 0.211 while exact entity-label coverage changes by only 0.002. These results support \lemonscore{} as an interpretable pilot framework for diagnosing relation-level semantic alignment. We explicitly treat synthetic LLM adjudication and rule-based expansion as provisional resources, not human gold.
+\keywords{Graph-to-text evaluation \and Semantic alignment \and Knowledge graphs \and WebNLG \and Predicate decomposition \and Evaluation calibration}
 \end{abstract}
 
 \input{sections/01_introduction}

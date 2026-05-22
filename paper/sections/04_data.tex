@@ -1,10 +1,10 @@
 \section{Data and Experimental Resources}
 \subsection{WebNLG pilot}
-The experiments use a stratified English WebNLG pilot. The train split contains 200 examples and the development split contains 100 examples. Both splits cover 16 WebNLG categories. The development set contains 308 graph edges. The pilot is intentionally small: it is designed to validate the scoring pipeline and to make error analysis inspectable before scaling to larger WebNLG subsets or domain-specific graphs.
+The experiments use a stratified English WebNLG pilot. The train split contains 200 examples and the development split contains 100 examples. Both splits cover 16 WebNLG categories. The development set contains 308 graph edges. The pilot is intentionally small: it validates the end-to-end scoring pipeline, exposes interpretable failure modes, and allows manual inspection of perturbation manifests before scaling to larger WebNLG subsets or domain-specific graphs.
 
 \begin{table}[t]
 \centering
-\caption{Pilot WebNLG statistics used in the current draft.}
+\caption{Pilot WebNLG statistics.}
 \label{tab:data}
 \scriptsize
 \begin{tabular}{lrrrrr}
@@ -17,12 +17,12 @@ Development & 100 & 308 & 3.08 & 119 & 16 \\
 \end{tabular}
 \end{table}
 
-\subsection{Synthetic predicate decompositions}
-A seed factor inventory was built from train predicates and categories. LLM-assisted candidate generation was then tested with two models. The LLM stage is model-agnostic: all models receive the same factor schema, prompt template, and JSON output constraints. In the sanity run, the two models achieved similar factor F1 against the rule-based seed reference, while role accuracy remained lower, indicating that role assignment is the main unstable part of the task.
+\subsection{Predicate decomposition resources}
+A seed factor inventory was built from training predicates, node labels, categories, and predicate contexts. LLM-assisted candidate generation was then evaluated against the seed reference with two models. This step tests whether general LLMs can propose plausible factor decompositions under a fixed schema; it is not human validation.
 
 \begin{table}[t]
 \centering
-\caption{LLM decomposition candidate quality against the seed reference. This is not human validation.}
+\caption{LLM decomposition candidate quality against the seed reference. This is a sanity check, not human validation.}
 \label{tab:llm}
 \scriptsize
 \begin{tabular}{lrrrrr}
@@ -35,7 +35,7 @@ Llama 3.1 70B Instruct & 19 & 0.798 & 0.798 & 0.795 & 0.614 \\
 \end{tabular}
 \end{table}
 
-A synthetic adjudicator was then applied to 29 predicates. The synthetic reference had LLM candidate coverage of 0.621: 18 predicates had LLM candidates and 11 predicates did not. The mean adjudicator confidence was 0.830. This resource is useful for development, but it is not a substitute for human expert annotation.
+A synthetic adjudicator was applied to 29 predicates. It modified 19 decisions, accepted 10 seed decisions, and produced a mean confidence of 0.830. LLM candidate coverage was 0.621 because 18 of the 29 adjudicated predicates had LLM candidates. The resulting resource is useful for developing the framework, but it remains synthetic and provisional.
 
 \begin{table}[t]
 \centering

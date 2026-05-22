@@ -501,3 +501,8 @@ python -m lemon_factor.calibration.run_calibration `
   --graph-side-table paper/tables/table_webnlg_calibration_graph_side.md `
   --relation-deletion-table paper/tables/table_webnlg_relation_deletion_sanity.md
 ```
+
+### Paper draft after lemon-14
+
+The current paper draft is framed as a bidirectional factor-level semantic alignment framework. It integrates Forward LEMON, Reverse LEMON, MINE-style node/edge comparison, and controlled perturbation calibration. Build from `paper/main.tex`.
+

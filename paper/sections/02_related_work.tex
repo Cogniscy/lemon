@@ -1,34 +1,36 @@
 \section{Related Work}
-\subsection{RDF-to-text benchmarks and standard metrics}
-The WebNLG Challenge introduced RDF-to-text generation as a benchmark task: systems receive DBpedia-derived RDF triples and generate fluent verbalizations \cite{gardent2017webnlg}. Later WebNLG+ tasks extended the setting to bilingual and bidirectional generation \cite{castroferreira2020webnlg}. The standard automatic evaluation stack includes n-gram and edit-distance metrics as well as neural reference metrics. BLEU remains a conventional reference point \cite{papineni2002bleu}, while BERTScore \cite{zhang2020bertscore} and BLEURT \cite{sellam2020bleurt} add contextual or learned similarity. These metrics compare generated text with reference text and therefore remain mostly holistic.
+\subsection{RDF-to-text benchmarks and reference metrics}
+The WebNLG Challenge established RDF-to-text generation as a benchmark task in which systems map DBpedia-derived RDF triples to natural language \cite{gardent2017webnlg}. The WebNLG+ shared task extended the setting to bilingual and bidirectional generation and included both automatic and human evaluation \cite{castroferreira2020webnlg}. The GEM benchmark further argued for broader evaluation practice and challenge sets for NLG evaluation \cite{gehrmann2021gem}. The standard WebNLG automatic stack includes reference-based metrics such as BLEU, METEOR, chrF++, TER, BERTScore, and BLEURT \cite{papineni2002bleu,zhang2020bertscore,sellam2020bleurt}. These metrics produce useful holistic similarity signals, but they do not localize errors to a source predicate or to a semantic role inside the predicate.
 
-\subsection{Data coverage and faithfulness metrics}
-A second line of work evaluates generated text against the source data. Wiseman et al. proposed information-extraction-based evaluation for data-to-document generation \cite{wiseman2017challenges}. PARENT aligns entailed n-grams with semi-structured source tables and references \cite{dhingra2019parent}. Data-QuestEval uses question generation and answering for reference-less data-to-text evaluation \cite{rebuffel2021dataquesteval}. AlignScore learns a unified alignment function for factual consistency \cite{zha2023alignscore}. The nearest graph-to-text predecessor is FactSpotter, which decides whether a given triple is present in the generated text and reports strong correlation with human annotations for correctness, coverage, and relevance \cite{zhang2023factspotter}. \lemonscore{} complements FactSpotter by moving from binary triple-level decisions to weighted factor-level decisions inside a predicate.
+\subsection{Source-aware coverage and factuality metrics}
+A second line of work evaluates generated text against input data. PARENT weights n-gram precision and recall by evidence in the source table and reference text \cite{dhingra2019parent}. Data-QuestEval adapts question-answering evaluation to data-to-text semantic coverage without requiring a reference \cite{rebuffel2021dataquesteval}. AlignScore learns a unified alignment function for factual consistency across several supervision sources \cite{zha2023alignscore}. The closest graph-to-text predecessor is FactSpotter, which decides whether a given triple \((s,p,o)\) is present in a generated text and reports strong correlations with human judgments for data correctness, coverage, and relevance \cite{zhang2023factspotter}. \lemonscore{} complements this line by moving from a binary whole-triple decision to a weighted decomposition of the predicate into semantic factors.
 
-\subsection{Atomic fact and semantic graph evaluation}
-Atomic factuality metrics such as FActScore decompose generated text into atomic claims and verify each claim against a knowledge source \cite{min2023factscore}. VERISCORE extends this line to verifiable claims in long-form generation \cite{sun2024veriscore}. These methods are text-directed: the decomposition target is the generated text. \lemonscore{} is source-directed: the decomposition target is the graph predicate.
+\subsection{Atomic facts, semantic graphs, and directionality}
+Atomic factuality metrics decompose generated text into verifiable claims. FActScore evaluates long-form text by decomposing it into atomic facts and checking support against a knowledge source \cite{min2023factscore}; VERISCORE extends claim verification for long-form factuality \cite{sun2024veriscore}. This direction is text-driven: the output text is decomposed into claims. \lemonscore{} is source-driven: the source predicate is decomposed into factors that can be checked in text or in a reconstructed graph.
 
-Semantic graph evaluation metrics such as Smatch compare semantic graphs, especially AMR graphs, by maximizing triple overlap under variable alignment \cite{cai2013smatch}. S$^2$match and Smatch++ add softer and more standardized variants of graph matching \cite{opitz2020s2match,opitz2023smatchpp}. These metrics are important for parser evaluation, but they require a semantic graph representation of the generated text. \lemonscore{} avoids inverse parsing in the first baseline and instead checks factor evidence directly in the text.
+Semantic graph metrics such as Smatch compare graph structures, especially AMR graphs, by maximizing overlap under node alignment \cite{cai2013smatch}. S$^2$match and Smatch++ add softer or more standardized graph comparison variants \cite{opitz2020s2match,opitz2023smatchpp}. These metrics are important for parser evaluation, but they presuppose graph representations on both sides. \lemonscore{} instead evaluates factor evidence from graph--text pairs and only uses reconstructed graphs in the reverse experiment.
 
-\subsection{Predicate decomposition and synthetic adjudication}
-The theoretical motivation for factor decomposition comes from predicate-argument and frame-based semantics. FrameNet represents lexical meanings through frames and frame elements \cite{baker1998framenet}; PropBank annotates predicate-argument structures over corpora \cite{palmer2005propbank}; VerbNet provides broad-coverage verb classes with semantic roles \cite{schuler2005verbnet}. These resources support the view that predicate meaning can be represented through typed roles rather than through a single label.
+\subsection{Text-to-KG extraction and MINE}
+Recent text-to-KG work has renewed interest in evaluating whether extracted graphs retain useful information from plain text. KGGen introduces a language-model-based text-to-KG generator and releases MINE, Measure of Information in Nodes and Edges, as a benchmark for testing whether an extractor produces useful KGs from text \cite{mo2025kggen}. Our \minebase{} baseline is inspired by this node/edge information split. It is not a reproduction of the KGGen benchmark, which targets KG extractors on plain text; rather, it adapts the idea to WebNLG graph--text pairs so that Text$\rightarrow$KG recoverability can be compared with Reverse \lemonscore{}.
 
-The present pilot uses LLM-generated and LLM-adjudicated predicate decompositions as a bootstrap. This is not equivalent to expert annotation. Prior work on LLM-as-a-judge documents useful agreement with human preferences as well as position, verbosity, and self-enhancement biases \cite{zheng2023mtbench}. Surveys and empirical studies argue that LLM judges must be calibrated against human judgments before being treated as primary evaluators \cite{gu2024llmjudge,gilardi2024llmjudges}. We therefore mark our adjudicated resource as synthetic.
+\subsection{Behavioral testing and metric calibration}
+Evaluation metrics should be tested not only by correlation with human judgments, but also by whether they respond correctly to controlled changes. CheckList introduced behavioral tests for NLP models, including invariance tests, where label-preserving perturbations should not change predictions, and directional expectation tests, where perturbations should change predictions in a prescribed direction \cite{ribeiro2020checklist}. Perturbation CheckLists for NLG metrics apply the same idea to automatic metric evaluation \cite{sai2021perturbation}. He et al. use synthetic stress tests to expose blind spots of model-based NLG metrics \cite{he2023blindspots}. Our calibration follows this methodology: relation deletion is a directional test, while entity aliasing and predicate paraphrase templates are invariance-style checks whose quality is explicitly marked.
 
 \begin{table}[t]
 \centering
-\caption{Positioning of \lemonscore{} relative to related evaluation lines.}
-\label{tab:related}
+\caption{Positioning of \lemonscore{} relative to related evaluation families.}
+\label{tab:positioning}
 \scriptsize
-\begin{tabularx}{\textwidth}{p{2.7cm}Y Y}
+\begin{tabularx}{\textwidth}{p{2.1cm}p{2.3cm}YYp{1.4cm}}
 \toprule
-Line of work & Main object measured & Limitation addressed by \lemonscore{} \\
+Family & Representative methods & Granularity & Missing diagnostic dimension & Direction \\
 \midrule
-Reference metrics & Similarity to reference text & No source-predicate audit trail \\
-Source faithfulness & Source--text consistency & Usually triple- or sentence-level, not factor-level \\
-Atomic fact metrics & Text-derived claims & Decompose generated text, not source predicates \\
-Semantic graph metrics & Graph--graph overlap & Require parsing text into a graph \\
-Semantic role resources & Predicate roles and frames & Resources, not graph--text coverage metrics \\
+Surface/reference & BLEU, METEOR, chrF++, TER, BERTScore, BLEURT & sentence-level holistic & source-predicate roles & KG$\rightarrow$Text \\
+Source-aware & PARENT, Data-QuestEval, AlignScore & n-gram, question, sentence & explicit within-predicate factors & KG$\rightarrow$Text \\
+Triple-level & FactSpotter & binary triple & which part of the predicate failed & KG$\rightarrow$Text \\
+Atomic fact & FActScore, VERISCORE & text-derived atomic claims & source predicate decomposition & Text$\rightarrow$KB \\
+Node/edge & KGGen/MINE & node and edge retention & weighted predicate factors & Text$\rightarrow$KG \\
+\lemonscore{} & this work & weighted factors inside predicates & provisional resource, not human gold & bidirectional \\
 \bottomrule
 \end{tabularx}
 \end{table}

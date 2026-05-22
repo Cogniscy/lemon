@@ -1,13 +1,11 @@
 \section{Results}
-\subsection{Initial and expanded coverage}
-The initial run scored 140 of 308 development edges. The missing decomposition rate was 0.5455, exact label coverage was 0.9215, predicate cue coverage was 0.3149, and \lemonscore{} coverage was 0.3683. This confirms that entity labels are often preserved in WebNLG references, while predicate-level semantic coverage cannot be established for many edges with the initial resource.
-
-After error-driven expansion, all 308 edges were scored. Missing decomposition rate fell to 0.0. Predicate cue coverage increased to 0.6526 and \lemonscore{} coverage increased to 0.7915. The low-coverage edge count dropped from 191 to 41.
+\subsection{RQ1: Forward coverage and resource expansion}
+The initial factor dictionary covered only part of the WebNLG development predicates. As a result, the first coverage run scored 140 of 308 edges and produced a missing decomposition rate of 0.5455. Error-driven expansion reduced the missing rate to zero and increased \lemonscore{} coverage from 0.3683 to 0.7915 (Table~\ref{tab:coverage}). This increase is not presented as proof that all texts are faithful; it shows that factor-level evaluation is sensitive to the completeness of predicate decompositions and lexical evidence.
 
 \begin{table}[t]
 \centering
-\caption{Coverage before and after error-driven expansion.}
-\label{tab:coverage-delta}
+\caption{Forward \lemonscore{} before and after error-driven decomposition and cue expansion.}
+\label{tab:coverage}
 \scriptsize
 \begin{tabular}{lrrr}
 \toprule
@@ -22,10 +20,7 @@ Low-coverage edges & 191 & 41 & -150 \\
 \end{tabular}
 \end{table}
 
-The increase should not be interpreted as proof that generated texts are universally faithful. It shows that the first score was strongly constrained by decomposition and cue coverage. Once all predicates receive decompositions and stronger cues, the scorer can measure relation-level evidence more completely.
-
-\subsection{Comparison with lexical controls}
-Table~\ref{tab:baselines} summarizes the baseline comparison. Exact entity-label overlap is high and unchanged by expansion. Graph--text token cosine and Jaccard are also unchanged, because they do not use predicate decompositions. Predicate cue coverage and \lemonscore{} coverage both increase after expansion, but \lemonscore{} remains distinct because it weights role-aware factors, not only lexical cues.
+The comparison with lexical controls (Table~\ref{tab:baselines}) clarifies the signal. Exact entity-label overlap is already high and unchanged by expansion. Graph--text token cosine and Jaccard are also unchanged. \lemonscore{}, in contrast, changes because it uses predicate decompositions and role-aware evidence. This supports the interpretation that \lemonscore{} measures a different diagnostic layer than surface overlap.
 
 \begin{table}[t]
 \centering
@@ -45,11 +40,8 @@ Graph--text token Jaccard & 0.6233 & 0.6233 & 0.0000 \\
 \end{tabular}
 \end{table}
 
-The main observation is that surface/entity overlap already appears high and does not explain the change in \lemonscore{}. The proposed metric is therefore sensitive to the completeness of predicate-level semantic decompositions and relation evidence, not only to whether entity names are repeated.
-
-
-\subsection{Bidirectional comparison}
-The reverse experiment produced a reconstructed graph with 390 of 408 nodes and 196 of 308 edges recovered. Reverse \lemonscore{} reached 0.7789, close to the forward expanded \lemonscore{} score of 0.7915. The deterministic MINE-style node/edge score was 0.8028, with node information 0.9692 and edge information 0.6364. This suggests that entity information is easy to recover in WebNLG, whereas relation recovery is the limiting factor.
+\subsection{RQ2: Bidirectionality}
+The reverse experiment recovered 390 of 408 nodes and 196 of 308 edges. Reverse \lemonscore{} reached 0.7789, close to the expanded Forward \lemonscore{} score of 0.7915 (Table~\ref{tab:bidirectional}). The small gap suggests that the predicate-factor representation can be used in both directions: from graph to text and from text back to graph. The result should be interpreted as a pilot observation because the reconstructed graph is produced by a lexical pseudo-extractor.
 
 \begin{table}[t]
 \centering
@@ -70,9 +62,68 @@ Graph--text token Jaccard & KG$\leftrightarrow$Text & no & no & 0.6233 & corpus 
 \end{tabular}
 \end{table}
 
-The deterministic MINE-style score is slightly higher than reverse \lemonscore{}, but the metrics answer different questions. MINE-style scoring checks whether facts are recoverable from nodes and edges in the reconstructed graph. Reverse \lemonscore{} checks which weighted semantic factors of the original predicates survive reconstruction. The stabilized LLM-judged MINE-style variant is stricter: it estimates binary fact recoverability from the retrieved subgraph rather than the partial-credit node/edge composite. On the locked 50-fact subset, deterministic node information was 0.9600, deterministic edge information was 0.5400, the deterministic composite node/edge score was 0.7500, deterministic fact recoverability was 0.5400, and LLM fact recoverability was 0.5200. The judge agreement with deterministic fact recoverability was 0.9800 with 100\% parse success. Thus, the LLM judge does not currently overturn the deterministic recoverability signal; it mainly provides a stricter fact-level interpretation. The two scores are therefore complementary rather than substitutes.
+\subsection{RQ3: Relation information is harder than node information}
+The full deterministic \minebase{} composite score is 0.8028, but this aggregate hides a strong node/edge gap. On the locked 50-fact subset (Table~\ref{tab:mine-subset}), node information is 0.9600, while edge information and deterministic fact recoverability are both 0.5400. The LLM-judged fact recoverability score is 0.5200, with 0.9800 agreement with the deterministic fact decision and 100\% parse success. These numbers indicate that WebNLG texts tend to preserve entity mentions more reliably than relation recoverability. They also show why the partial-credit composite score and the binary LLM fact score must not be treated as interchangeable.
 
+\begin{table}[t]
+\centering
+\caption{MINE-style score semantics on the fixed 50-fact subset.}
+\label{tab:mine-subset}
+\scriptsize
+\begin{tabular}{lr}
+\toprule
+Metric & Value \\
+\midrule
+Facts & 50 \\
+Deterministic node information & 0.9600 \\
+Deterministic edge information & 0.5400 \\
+Deterministic composite node/edge score & 0.7500 \\
+Deterministic fact recoverability & 0.5400 \\
+LLM fact recoverability & 0.5200 \\
+Judge agreement with deterministic & 0.9800 \\
+Parse success rate & 1.0000 \\
+Mean judge confidence & 0.5417 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-\paragraph{Calibration under controlled noise.}
-The calibration run is reported with separate text-side and graph-side summaries. This avoids averaging Forward LEMON over perturbations that affect only reconstructed graphs, and avoids averaging Reverse LEMON or MINE-style scores over purely text-side changes. Relation phrase deletion reduced Forward LEMON while leaving exact entity-label coverage almost unchanged, indicating that entity overlap alone is insensitive to relation-level damage. Graph-side node and edge deletion strongly reduced Reverse LEMON and MINE-style edge/fact recoverability, as expected. We additionally mark weak template perturbations, such as alias rewrites and predicate paraphrase templates, so their invariance behavior is not overinterpreted as fully validated natural paraphrase robustness.
+\subsection{RQ4: Perturbation calibration}
+Table~\ref{tab:calibration} reports targeted calibration summaries after separating text-side and graph-side perturbations. Destructive text perturbations produce a monotonic Forward \lemonscore{} decrease, while destructive graph perturbations produce monotonic decreases in Reverse \lemonscore{} and MINE-style recoverability. This supports the expected directional behavior of the metrics.
 
+\begin{table}[t]
+\centering
+\caption{Targeted perturbation calibration. Slopes are average score changes with increasing destructive noise.}
+\label{tab:calibration}
+\scriptsize
+\begin{tabular}{llrrrr}
+\toprule
+Metric & Target & Destr. slope & Spearman & Viol. & Pres. delta \\
+\midrule
+Forward \lemonscore{} & text & -0.3241 & -1.0000 & 0 & 0.0527 \\
+Exact label coverage & text & -0.1508 & -0.9162 & 1 & 0.0585 \\
+Predicate cue coverage & text & -0.4525 & -0.6667 & 0 & 0.0438 \\
+Reverse \lemonscore{} & graph & -0.5546 & -1.0000 & 0 & 0.0000 \\
+MINE composite node/edge & graph & -0.5161 & -1.0000 & 0 & 0.0000 \\
+MINE fact recoverability & graph & -0.7204 & -1.0000 & 0 & 0.0000 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The clearest sanity check is relation phrase deletion (Table~\ref{tab:relation-deletion}). Exact entity-label coverage changes by only -0.0020, while Forward \lemonscore{} drops by -0.2106. This is the central validity signal of the pilot: entity preservation alone is not relation preservation, and the factor-level metric reacts to relation-level semantic omission.
+
+\begin{table}[t]
+\centering
+\caption{Relation deletion sanity check.}
+\label{tab:relation-deletion}
+\scriptsize
+\begin{tabular}{lrrr}
+\toprule
+Metric & Baseline & Final & Delta \\
+\midrule
+Exact label coverage & 0.9215 & 0.9194 & -0.0020 \\
+Forward \lemonscore{} & 0.7915 & 0.5808 & -0.2106 \\
+Predicate cue coverage & 0.6526 & 0.2890 & -0.3636 \\
+MINE fact recoverability & 0.6364 & 0.2825 & -0.3539 \\
+\bottomrule
+\end{tabular}
+\end{table}

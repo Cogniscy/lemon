@@ -1,18 +1,14 @@
 \section{Experiments}
-\subsection{Experiment 1: initial factor coverage}
-The first experiment scores the WebNLG development set using the synthetic adjudicated predicate decomposition dictionary and the seed lexical cue dictionary. We report five quantities: exact entity-label coverage, predicate lexical cue coverage, weighted \lemonscore{} coverage, missing decomposition rate, and the number of low-coverage edges under a threshold of 0.5.
+The experiments are organized by the four research questions from the introduction rather than by development stage.
 
-\subsection{Experiment 2: error-driven expansion}
-The initial run exposes predicates without decompositions. We therefore run a missing-predicate analysis, generate rule-based or fallback decompositions for the missing predicates, extend the lexical cue dictionary, and recompute coverage. This experiment tests whether \lemonscore{} can be improved through interpretable error-driven resource expansion.
+\subsection{RQ1: Forward factor-level semantic coverage}
+We first score WebNLG development texts using the synthetic adjudicated predicate decompositions and seed lexical cues. We then run an error-driven expansion: missing predicates are identified, rule-based or fallback decompositions are added, lexical cues are expanded, and coverage is recomputed. This measures how much of the initial low score comes from missing resources rather than from the text itself.
 
-\subsection{Experiment 3: lexical baseline comparison}
-The third experiment compares \lemonscore{} to lightweight lexical controls. Exact entity-label overlap checks whether entity labels are mentioned. Predicate cue coverage checks explicit relation cues. Graph--text token Jaccard and graph--text token cosine compare a bag-of-words graph lexicalization with the text. These controls are not intended as strong semantic metrics; they make explicit whether \lemonscore{} adds a diagnostic dimension beyond surface overlap.
+\subsection{RQ2: Bidirectional factor recoverability}
+To test whether the factor representation is bidirectional, we reconstruct a graph from each WebNLG text with a deterministic lexical pseudo-extractor and compute Reverse \lemonscore{}. This score is compared with expanded Forward \lemonscore{}. A small forward--reverse gap would suggest that the same factor schema can support both KG$\rightarrow$Text coverage and Text$\rightarrow$KG recoverability.
 
+\subsection{RQ3: MINE-style node/edge information retention}
+We compare Reverse \lemonscore{} with a \minebase{} baseline inspired by KGGen's Measure of Information in Nodes and Edges. The deterministic variant reports node information, edge information, and a composite node/edge score. The LLM-judged variant evaluates binary fact recoverability on a fixed 50-fact subset using compact JSON-constrained judgments. We report parse success, deterministic agreement, and confidence to avoid treating LLM judgments as unqualified gold.
 
-\subsection{Experiment 4: bidirectional text--graph recoverability}
-The fourth experiment evaluates the reverse direction. We construct a deterministic reconstructed graph from each WebNLG text using entity-label evidence and predicate lexical cues. We then score this reconstructed graph in two ways. First, reverse \lemonscore{} checks whether the recovered graph retains the weighted predicate factors of the gold graph. Second, a MINE-style node/edge baseline adapts the Measure of Information in Nodes and Edges idea to WebNLG: gold triples are treated as facts, reconstructed graphs are treated as extracted KGs, and information retention is measured through recovered nodes and edges. This experiment has two MINE-style variants: a deterministic node/edge-hit baseline and an optional LLM-judged recoverability baseline. In the LLM-judged variant, the judge receives a gold fact and a retrieved subgraph and decides whether the fact is inferable without outside knowledge.
-
-
-\paragraph{Controlled perturbation calibration.}
-We further calibrate the metrics by injecting deterministic perturbations into the WebNLG text and into reconstructed graphs. Meaning-destroying perturbations include relation phrase deletion, object swaps, predicate swaps, node drops, and edge drops. Meaning-preserving perturbations include alias-like entity rewrites and deterministic predicate paraphrases. All perturbed datasets and operation-level manifests are saved separately, allowing each score change to be traced back to the injected noise.
-
+\subsection{RQ4: Controlled perturbation calibration}
+We inject deterministic noise into text and reconstructed graphs. Destructive perturbations should reduce relevant scores; preserving perturbations should produce smaller changes. All perturbed examples, reconstructed graphs, and operation-level manifests are stored under a separate perturbation directory. To avoid misleading averages, text-side perturbations are used primarily to calibrate Forward \lemonscore{}, while graph-side perturbations are used primarily to calibrate Reverse \lemonscore{} and MINE-style recoverability.
