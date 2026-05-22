@@ -478,3 +478,26 @@ python -m lemon_factor.analysis.bidirectional_comparison   --forward data/report
 
 This prevents comparing the deterministic partial-credit node/edge composite score directly with the stricter LLM binary fact-recoverability score.
 
+
+
+## lemon-13 calibration
+
+Controlled perturbation calibration checks whether metrics fall under meaning-destroying noise and remain stable under meaning-preserving noise. All injected noise artifacts and manifests are saved under `data/perturbed/lemon13/`.
+
+```powershell
+python -m lemon_factor.calibration.run_calibration `
+  data/processed/webnlg_dev.jsonl `
+  --reconstructed data/interim/webnlg_reconstructed_graphs_lexical.jsonl `
+  --decompositions data/interim/webnlg_predicate_decompositions_expanded.json `
+  --lexical-cues data/interim/webnlg_lexical_cues_expanded.json `
+  --noise-types delete_relation_phrase swap_object swap_predicate entity_alias predicate_paraphrase drop_edge drop_node graph_swap_predicate `
+  --noise-levels 0.0 0.1 0.25 0.5 `
+  --perturbation-dir data/perturbed/lemon13 `
+  --out data/reports/webnlg_calibration_scores.json `
+  --details data/reports/webnlg_calibration_details.jsonl `
+  --table paper/tables/table_webnlg_calibration_summary.md `
+  --by-noise-table paper/tables/table_webnlg_calibration_by_noise.md `
+  --text-side-table paper/tables/table_webnlg_calibration_text_side.md `
+  --graph-side-table paper/tables/table_webnlg_calibration_graph_side.md `
+  --relation-deletion-table paper/tables/table_webnlg_relation_deletion_sanity.md
+```

@@ -11,3 +11,8 @@ The third experiment compares \lemonscore{} to lightweight lexical controls. Exa
 
 \subsection{Experiment 4: bidirectional text--graph recoverability}
 The fourth experiment evaluates the reverse direction. We construct a deterministic reconstructed graph from each WebNLG text using entity-label evidence and predicate lexical cues. We then score this reconstructed graph in two ways. First, reverse \lemonscore{} checks whether the recovered graph retains the weighted predicate factors of the gold graph. Second, a MINE-style node/edge baseline adapts the Measure of Information in Nodes and Edges idea to WebNLG: gold triples are treated as facts, reconstructed graphs are treated as extracted KGs, and information retention is measured through recovered nodes and edges. This experiment has two MINE-style variants: a deterministic node/edge-hit baseline and an optional LLM-judged recoverability baseline. In the LLM-judged variant, the judge receives a gold fact and a retrieved subgraph and decides whether the fact is inferable without outside knowledge.
+
+
+\paragraph{Controlled perturbation calibration.}
+We further calibrate the metrics by injecting deterministic perturbations into the WebNLG text and into reconstructed graphs. Meaning-destroying perturbations include relation phrase deletion, object swaps, predicate swaps, node drops, and edge drops. Meaning-preserving perturbations include alias-like entity rewrites and deterministic predicate paraphrases. All perturbed datasets and operation-level manifests are saved separately, allowing each score change to be traced back to the injected noise.
+

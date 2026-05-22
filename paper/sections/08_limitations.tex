@@ -9,3 +9,8 @@ Finally, expansion can inflate scores if fallback decompositions are too permiss
 
 
 The reverse-direction experiment uses a lexical pseudo-extractor, not a full text-to-KG model. Likewise, the MINE-style baseline is an adaptation of node/edge information retention to WebNLG graph--text pairs. It should not be described as a full reproduction of KGGen's MINE benchmark. The deterministic MINE-style score is a partial-credit node/edge composite, while the LLM-judged variant is a binary fact-recoverability score over retrieved subgraphs; these quantities should not be interpreted as interchangeable. The LLM-based fact inferability judge added in the MINE-style variant is still provisional and should be calibrated against human judgments and controlled perturbations. We therefore report valid judgment coverage, parse success, retry statistics, and deterministic agreement whenever the LLM-judged variant is used. Adding a real KG extractor remains future work.
+
+
+\paragraph{Perturbation validity.}
+The calibration perturbations are deterministic and template-like. They support causal sanity checks of metric behavior, but they do not cover the full range of natural paraphrases or factual errors. LLM-generated perturbations are left for future work because they require separate validation that the perturbation is truly meaning-preserving or meaning-destroying.
+
