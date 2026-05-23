@@ -67,18 +67,20 @@ def summarize_path(path: str | Path) -> dict[str, Any]:
 
 def write_markdown_table(stats_by_path: dict[str, dict[str, Any]], path: str | Path) -> None:
     lines = [
-        "| Dataset | Split | Examples | Entity types | Predicates | Nodes | Edges | Avg edges | Norm. ID coverage | Document-level ratio |",
-        "|---|---|---:|---|---|---:|---:|---:|---:|---:|",
+        "| Dataset | Split | Examples | Text chars avg | Entity types | Predicate types | Top predicates | Nodes | Edges | Avg edges | Norm. ID coverage | Document-level ratio |",
+        "|---|---|---:|---:|---|---:|---|---:|---:|---:|---:|---:|",
     ]
     for stats in stats_by_path.values():
         entity_types = ", ".join(f"{k}:{v}" for k, v in list(stats.get("entity_type_counts", {}).items())[:4])
         predicates = ", ".join(f"{k}:{v}" for k, v in list(stats.get("predicate_counts", {}).items())[:4])
         lines.append(
-            "| {dataset} | {split} | {examples} | {entity_types} | {predicates} | {nodes_total} | {edges_total} | {edges_avg:.2f} | {norm:.3f} | {doc_ratio:.3f} |".format(
+            "| {dataset} | {split} | {examples} | {text_chars_avg:.1f} | {entity_types} | {predicate_count} | {predicates} | {nodes_total} | {edges_total} | {edges_avg:.2f} | {norm:.3f} | {doc_ratio:.3f} |".format(
                 dataset=stats.get("dataset", "unknown"),
                 split=stats.get("split", "unknown"),
                 examples=stats.get("examples", 0),
+                text_chars_avg=float(stats.get("text_chars_avg", 0.0)),
                 entity_types=entity_types or "—",
+                predicate_count=stats.get("predicate_count", 0),
                 predicates=predicates or "—",
                 nodes_total=stats.get("nodes_total", 0),
                 edges_total=stats.get("edges_total", 0),

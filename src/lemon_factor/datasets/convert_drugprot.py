@@ -42,15 +42,24 @@ RELATION_MAP = {
     "ACTIVATOR": "chemical_activates_gene_or_protein",
     "INHIBITOR": "chemical_inhibits_gene_or_protein",
     "INDIRECT-UPREGULATOR": "chemical_indirectly_upregulates_gene_or_protein",
-    "INDIRECT_DOWNREGULATOR": "chemical_indirectly_downregulates_gene_or_protein",
+    "INDIRECT_UPREGULATOR": "chemical_indirectly_upregulates_gene_or_protein",
     "INDIRECT-DOWNREGULATOR": "chemical_indirectly_downregulates_gene_or_protein",
+    "INDIRECT_DOWNREGULATOR": "chemical_indirectly_downregulates_gene_or_protein",
     "SUBSTRATE": "chemical_substrate_of_gene_or_protein",
     "PRODUCT-OF": "chemical_product_of_gene_or_protein",
     "PRODUCT_OF": "chemical_product_of_gene_or_protein",
+    "SUBSTRATE_PRODUCT-OF": "chemical_substrate_product_of_gene_or_protein",
+    "SUBSTRATE_PRODUCT_OF": "chemical_substrate_product_of_gene_or_protein",
     "PART-OF": "part_of_relation",
     "PART_OF": "part_of_relation",
     "AGONIST": "chemical_agonist_of_gene_or_protein",
+    "AGONIST-ACTIVATOR": "chemical_agonist_activator_of_gene_or_protein",
+    "AGONIST_ACTIVATOR": "chemical_agonist_activator_of_gene_or_protein",
+    "AGONIST-INHIBITOR": "chemical_agonist_inhibitor_of_gene_or_protein",
+    "AGONIST_INHIBITOR": "chemical_agonist_inhibitor_of_gene_or_protein",
     "ANTAGONIST": "chemical_antagonist_of_gene_or_protein",
+    "DIRECT-REGULATOR": "chemical_directly_regulates_gene_or_protein",
+    "DIRECT_REGULATOR": "chemical_directly_regulates_gene_or_protein",
 }
 
 
@@ -63,7 +72,7 @@ def map_drugprot_entity_type(raw: str) -> str:
     value = raw.strip().lower()
     if value in {"chemical", "chem", "chemical_entity", "compound"}:
         return "Chemical"
-    if value in {"gene", "protein", "gene-y", "gene/protein", "gene_protein"}:
+    if value in {"gene", "protein", "gene-y", "gene-n", "gene/protein", "gene_protein"}:
         return "GeneOrProtein"
     return raw.strip() or "Entity"
 
@@ -73,6 +82,35 @@ def _extract_arg(value: str) -> str:
     if ":" in value:
         return value.split(":")[-1]
     return value
+
+
+def _is_abstract_file(path: Path) -> bool:
+    """Return True for DrugProt abstract TSV names.
+
+    The official DrugProt Gold Standard archive uses the misspelled file name
+    ``drugprot_training_abstracs.tsv``.  Accept both spellings so the parser
+    keeps title and abstract text instead of producing graph examples with empty
+    ``text`` fields.
+    """
+
+    name = path.name.lower()
+    return "abstract" in name or "abstrac" in name
+
+
+def _has_extracted_drugprot_files(path: str | Path) -> bool:
+    base = Path(path)
+    if not base.exists():
+        return False
+    return bool(choose_local_files(base, ["*.tsv"]))
+
+
+def _extract_existing_archives(path: str | Path) -> None:
+    base = Path(path)
+    for archive in sorted(base.glob("*.zip")):
+        target = base / archive.stem
+        if target.exists() and any(target.iterdir()):
+            continue
+        extract_zip(archive, target)
 
 
 def parse_drugprot_tsv(raw_dir: str | Path) -> list[BioDocument]:
@@ -88,7 +126,7 @@ def parse_drugprot_tsv(raw_dir: str | Path) -> list[BioDocument]:
             if not line.strip() or line.lower().startswith("pmid"):
                 continue
             parts = line.rstrip("\n").split("\t")
-            if "abstract" in lower and len(parts) >= 3:
+            if _is_abstract_file(path) and len(parts) >= 3:
                 pmid, title, abstract = parts[0], parts[1], parts[2]
                 abstracts[pmid] = {"title": title, "abstract": abstract, "split": split}
             elif "entit" in lower and len(parts) >= 6:
@@ -173,6 +211,24 @@ def load_local_documents(raw_dir: str | Path) -> list[BioDocument]:
 
 def download_direct_corpus(download_dir: str | Path, acquisition_manifest: str | Path | None = None) -> Path:
     out_dir = Path(download_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    if not _has_extracted_drugprot_files(out_dir):
+        _extract_existing_archives(out_dir)
+    if _has_extracted_drugprot_files(out_dir):
+        if acquisition_manifest:
+            write_acquisition_manifest(
+                acquisition_manifest,
+                dataset=DATASET,
+                source_type="local_zenodo_archive",
+                source_url=SOURCE_URL,
+                raw_dir=out_dir,
+                status="reused_existing_raw_files",
+                license_note=LICENSE_NOTE,
+                notes=["Reused existing DrugProt TSV files or an already downloaded Zenodo archive."],
+            )
+        return out_dir
+
     try:
         files = download_zenodo_record_files(ZENODO_RECORD_ID, out_dir)
         for path in files:

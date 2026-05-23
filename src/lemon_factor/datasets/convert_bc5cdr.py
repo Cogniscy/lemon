@@ -276,10 +276,37 @@ def load_local_documents(raw_dir: str | Path) -> list[BioDocument]:
     return documents
 
 
+def _has_bc5cdr_raw_files(path: str | Path) -> bool:
+    base = Path(path)
+    if not base.exists():
+        return False
+    for candidate in choose_local_files(base, ["*.json", "*.jsonl", "*.xml", "*.bioc", "*.BioC*", "*.PubTator*", "*.pubtator*"]):
+        name = candidate.name.lower()
+        if "pubtator" in name or "bioc" in name or candidate.suffix.lower() in {".json", ".jsonl", ".xml", ".bioc"}:
+            return True
+    return False
+
+
 def download_direct_corpus(download_dir: str | Path, acquisition_manifest: str | Path | None = None) -> Path:
     """Download the Open Biomedical Corpora BC5CDR mirror and return raw dir."""
 
     out_dir = Path(download_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    if _has_bc5cdr_raw_files(out_dir):
+        if acquisition_manifest:
+            write_acquisition_manifest(
+                acquisition_manifest,
+                dataset=DATASET,
+                source_type="local_github_archive",
+                source_url=DIRECT_SOURCE_URL,
+                raw_dir=out_dir,
+                status="reused_existing_raw_files",
+                license_note=LICENSE_NOTE,
+                notes=["Reused existing BC5CDR PubTator/BioC files or an already downloaded GitHub archive."],
+            )
+        return out_dir
+
     try:
         download_github_repo_zip("openbiocorpora", "biocreative-v-cdr", out_dir, branch="master")
         extract_nested_zips(out_dir)

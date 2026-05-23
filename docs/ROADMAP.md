@@ -325,3 +325,45 @@ Use the first WebNLG coverage results to find missing predicates, expand predica
 
 **Exit criteria:** tests pass; bidirectional comparison labels deterministic and LLM MINE-style rows distinctly; `table_webnlg_mine_style_subset_comparison.md` is generated.
 
+
+
+## lemon-13 — Controlled perturbation calibration
+
+Status: implemented. Adds deterministic meaning-destroying and meaning-preserving perturbation operators for text and reconstructed graphs, saves all noise-injected artifacts plus manifests under `data/perturbed/lemon13/`, and reports sensitivity slopes, Spearman noise-score correlations, monotonicity violations, and invariance deltas for Forward LEMON, Reverse LEMON, MINE-style scores, and lexical controls.
+
+## lemon-13.1 — Calibration report cleanup
+
+Status: implemented. Splits calibration summaries into text-side and graph-side views, adds direction-aware targeted metric summaries, marks perturbation quality (`clean`, `weak_template`, `precision_only`), and emits a relation deletion sanity-check table. This avoids averaging Forward LEMON over graph-only perturbations and avoids treating weak template paraphrases as fully validated meaning-preserving noise.
+
+## lemon-14 — Paper reframing
+
+Status: done. The paper draft was reframed as a bidirectional factor-level graph--text semantic alignment framework, integrating Forward/Reverse LEMON, MINE-style node/edge baseline, and controlled perturbation calibration.
+
+
+## lemon-15.1 — Biomedical dataset feasibility and converters
+
+Status: implemented.
+
+- Added GraphText converters for BC5CDR, ChemProt, and BioRED.
+- Added shared biomedical conversion helpers and dataset statistics.
+- Added fixture-based tests for all converters.
+- Added manifests for source/access/license notes.
+- Raw biomedical data is intentionally kept outside the repository.
+
+## lemon-15.1.1 — Biomedical converter UX and HF Parquet fallback
+
+Status: implemented. BC5CDR no longer depends on `trust_remote_code` as the primary HuggingFace route. Added `--source hf-parquet`, retained `--source bigbio` as a legacy alias, and replaced missing raw directory tracebacks for BC5CDR/ChemProt/BioRED with actionable messages.
+
+Next: `lemon-15.2` biomedical factor schema, decompositions, and lexical cues.
+
+## lemon-15.1.2 — Biomedical acquisition layer
+
+Status: implemented. Adds `biomedical_download.py`, direct acquisition support for BC5CDR and BioRED, a new DrugProt converter with Zenodo-backed acquisition, and `biomedical_sources_check.py`. ChemProt remains local/manual and is no longer a blocker for biomedical validation.
+
+Recommended biomedical trio after this patch:
+
+- BC5CDR: chemical--disease relations, direct GitHub mirror.
+- DrugProt: chemical--gene/protein relations, direct Zenodo record.
+- BioRED: multi-type document-level biomedical relations, direct NCBI GitHub repository.
+
+Exit criteria: tests pass; source check table is generated; direct commands either convert data or fail with actionable manual-download instructions.
