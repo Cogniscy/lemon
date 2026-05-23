@@ -1,0 +1,15 @@
+[
+  {
+    "pmid": "3001",
+    "split": "train",
+    "title": "Gene disease association",
+    "abstract": "BRCA1 is positively correlated with breast cancer risk.",
+    "entities": [
+      {"id": "G1", "text": "BRCA1", "type": "Gene", "external_id": "NCBI:672"},
+      {"id": "D1", "text": "breast cancer", "type": "Disease", "external_id": "MESH:D001943"}
+    ],
+    "relations": [
+      {"type": "Positive_Correlation", "arg1": "G1", "arg2": "D1", "novelty": "Novel"}
+    ]
+  }
+]

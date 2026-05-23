@@ -1,0 +1,6 @@
+1002|t|Ibuprofen liver injury
+1002|a|Ibuprofen may induce liver injury.
+1002	0	9	Ibuprofen	Chemical	MESH:D007052
+1002	21	33	liver injury	Disease	MESH:D008107
+1002	CID	MESH:D007052	MESH:D008107
+

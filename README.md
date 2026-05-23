@@ -506,3 +506,96 @@ python -m lemon_factor.calibration.run_calibration `
 
 The current paper draft is framed as a bidirectional factor-level semantic alignment framework. It integrates Forward LEMON, Reverse LEMON, MINE-style node/edge comparison, and controlled perturbation calibration. Build from `paper/main.tex`.
 
+
+## lemon-15.1 Biomedical dataset converters
+
+Biomedical cross-domain validation starts with converter-only support for BC5CDR, ChemProt, and BioRED. Raw data should be placed under `data/biomedical/raw/` and should not be committed. BC5CDR additionally supports `--source hf-parquet`; the older `--source bigbio` remains as a legacy alias but no longer relies on `trust_remote_code`.
+
+```powershell
+python -m lemon_factor.datasets.convert_bc5cdr `
+  --source hf-parquet `
+  --out-dir data/biomedical/processed `
+  --manifest data/biomedical/manifests/bc5cdr_manifest.json `
+  --limit 200
+
+python -m lemon_factor.datasets.convert_bc5cdr `
+  --source local `
+  --raw-dir data/biomedical/raw/bc5cdr `
+  --out-dir data/biomedical/processed `
+  --manifest data/biomedical/manifests/bc5cdr_manifest.json
+
+python -m lemon_factor.datasets.convert_chemprot `
+  --raw-dir data/biomedical/raw/chemprot `
+  --out-dir data/biomedical/processed `
+  --manifest data/biomedical/manifests/chemprot_manifest.json `
+  --keep-relations CPR:3 CPR:4 CPR:5 CPR:6 CPR:9
+
+python -m lemon_factor.datasets.convert_biored `
+  --raw-dir data/biomedical/raw/biored `
+  --out-dir data/biomedical/processed `
+  --manifest data/biomedical/manifests/biored_manifest.json
+```
+
+After conversion, build dataset statistics:
+
+```powershell
+python -m lemon_factor.analysis.biomedical_dataset_stats `
+  data/biomedical/processed/bc5cdr_train.jsonl `
+  --out data/biomedical/reports/biomedical_dataset_stats.json `
+  --table paper/tables/table_biomedical_dataset_stats.md
+```
+
+## lemon-15.1.2 Biomedical acquisition layer
+
+`lemon-15.1.2` adds a safer raw-data acquisition layer for biomedical validation. BC5CDR and BioRED can now be downloaded from public GitHub repositories; DrugProt is available as an open Zenodo-backed alternative to ChemProt; ChemProt remains local/manual because common loaders expect a local `ChemProt_Corpus.zip`.
+
+Check source status:
+
+```powershell
+python -m lemon_factor.datasets.biomedical_sources_check `
+  --out data/biomedical/reports/biomedical_sources_check.json `
+  --table paper/tables/table_biomedical_sources_check.md
+```
+
+BC5CDR direct conversion:
+
+```powershell
+python -m lemon_factor.datasets.convert_bc5cdr `
+  --source direct `
+  --download-dir data/biomedical/raw/bc5cdr `
+  --out-dir data/biomedical/processed `
+  --manifest data/biomedical/manifests/bc5cdr_manifest.json `
+  --limit 200
+```
+
+BioRED direct conversion:
+
+```powershell
+python -m lemon_factor.datasets.convert_biored `
+  --source direct `
+  --download-dir data/biomedical/raw/biored `
+  --out-dir data/biomedical/processed `
+  --manifest data/biomedical/manifests/biored_manifest.json `
+  --limit 200
+```
+
+DrugProt direct conversion:
+
+```powershell
+python -m lemon_factor.datasets.convert_drugprot `
+  --source direct `
+  --download-dir data/biomedical/raw/drugprot `
+  --out-dir data/biomedical/processed `
+  --manifest data/biomedical/manifests/drugprot_manifest.json `
+  --limit 200
+```
+
+ChemProt remains supported in local mode only:
+
+```powershell
+python -m lemon_factor.datasets.convert_chemprot `
+  --raw-dir data/biomedical/raw/chemprot `
+  --out-dir data/biomedical/processed `
+  --manifest data/biomedical/manifests/chemprot_manifest.json `
+  --keep-relations CPR:3 CPR:4 CPR:5 CPR:6 CPR:9
+```

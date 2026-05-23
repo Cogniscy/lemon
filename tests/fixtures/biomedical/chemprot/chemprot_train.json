@@ -1,0 +1,15 @@
+[
+  {
+    "pmid": "2001",
+    "split": "train",
+    "title": "Drug activates receptor",
+    "abstract": "Compound X acts as an agonist of receptor Y.",
+    "entities": [
+      {"id": "T1", "text": "Compound X", "type": "Chemical"},
+      {"id": "T2", "text": "receptor Y", "type": "Protein"}
+    ],
+    "relations": [
+      {"type": "CPR:5", "arg1": "T1", "arg2": "T2"}
+    ]
+  }
+]

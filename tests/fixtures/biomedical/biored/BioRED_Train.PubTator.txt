@@ -1,0 +1,6 @@
+3002|t|Drug gene binding
+3002|a|Drug A binds protein B in vitro.
+3002	0	6	Drug A	Chemical	MESH:D000001
+3002	13	22	protein B	Gene	NCBI:123
+3002	Binding	MESH:D000001	NCBI:123	Background
+

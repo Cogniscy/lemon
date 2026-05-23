@@ -1,0 +1,15 @@
+[
+  {
+    "pmid": "1001",
+    "split": "train",
+    "title": "Aspirin and asthma",
+    "abstract": "Aspirin can induce asthma in sensitive patients.",
+    "entities": [
+      {"id": "C1", "text": "Aspirin", "type": "Chemical", "mesh_id": "MESH:D001241"},
+      {"id": "D1", "text": "asthma", "type": "Disease", "mesh_id": "MESH:D001249"}
+    ],
+    "relations": [
+      {"type": "CID", "chemical": "C1", "disease": "D1"}
+    ]
+  }
+]
