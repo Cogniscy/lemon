@@ -1,0 +1,6488 @@
+{
+  "schema_version": "lem03-webnlg-v1",
+  "factors": [
+    {
+      "id": "entity",
+      "label": "Entity",
+      "level": "universal",
+      "description": "Generic entity or concept.",
+      "allowed_roles": [
+        "subject_domain",
+        "object_domain",
+        "value_domain",
+        "background"
+      ],
+      "parents": []
+    },
+    {
+      "id": "person",
+      "label": "Person",
+      "level": "universal",
+      "description": "Human individual or person-like agent.",
+      "allowed_roles": [
+        "subject_domain",
+        "object_domain",
+        "value_domain",
+        "background"
+      ],
+      "parents": [
+        "entity"
+      ]
+    },
+    {
+      "id": "place",
+      "label": "Place",
+      "level": "universal",
+      "description": "Location, city, country, region, or spatial object.",
+      "allowed_roles": [
+        "subject_domain",
+        "object_domain",
+        "value_domain",
+        "background"
+      ],
+      "parents": [
+        "entity"
+      ]
+    },
+    {
+      "id": "organization",
+      "label": "Organization",
+      "level": "universal",
+      "description": "Institution, company, team, university, or formal group.",
+      "allowed_roles": [
+        "subject_domain",
+        "object_domain",
+        "value_domain",
+        "background"
+      ],
+      "parents": [
+        "entity"
+      ]
+    },
+    {
+      "id": "creative_work",
+      "label": "Creative work",
+      "level": "domain",
+      "description": "Work, character, song, book, artwork, or cultural artifact.",
+      "allowed_roles": [
+        "subject_domain",
+        "object_domain",
+        "value_domain",
+        "background"
+      ],
+      "parents": [
+        "entity"
+      ]
+    },
+    {
+      "id": "event",
+      "label": "Event",
+      "level": "universal",
+      "description": "Event or historically bounded occurrence.",
+      "allowed_roles": [
+        "subject_domain",
+        "object_domain",
+        "value_domain",
+        "background"
+      ],
+      "parents": [
+        "entity"
+      ]
+    },
+    {
+      "id": "time",
+      "label": "Time",
+      "level": "universal",
+      "description": "Date, period, epoch, or temporal value.",
+      "allowed_roles": [
+        "subject_domain",
+        "object_domain",
+        "value_domain",
+        "background"
+      ],
+      "parents": []
+    },
+    {
+      "id": "quantity",
+      "label": "Quantity",
+      "level": "universal",
+      "description": "Numeric value, scalar quantity, count, or physical magnitude.",
+      "allowed_roles": [
+        "subject_domain",
+        "object_domain",
+        "value_domain",
+        "background"
+      ],
+      "parents": []
+    },
+    {
+      "id": "measurement",
+      "label": "Measurement",
+      "level": "scientific",
+      "description": "Measured property or value-bearing observation.",
+      "allowed_roles": [
+        "subject_domain",
+        "object_domain",
+        "value_domain",
+        "background",
+        "predicate_meaning"
+      ],
+      "parents": []
+    },
+    {
+      "id": "language",
+      "label": "Language",
+      "level": "domain",
+      "description": "Natural language or language attribute.",
+      "allowed_roles": [
+        "subject_domain",
+        "object_domain",
+        "value_domain",
+        "background"
+      ],
+      "parents": [
+        "entity"
+      ]
+    },
+    {
+      "id": "identifier",
+      "label": "Identifier",
+      "level": "domain",
+      "description": "Code, database identifier, location identifier, or registry key.",
+      "allowed_roles": [
+        "subject_domain",
+        "object_domain",
+        "value_domain",
+        "background"
+      ],
+      "parents": []
+    },
+    {
+      "id": "entity_relation",
+      "label": "Entity relation",
+      "level": "abstract_relation",
+      "description": "Generic relation between graph entities.",
+      "allowed_roles": [
+        "predicate_meaning",
+        "modifier",
+        "background"
+      ],
+      "parents": []
+    },
+    {
+      "id": "biographical_relation",
+      "label": "Biographical relation",
+      "level": "abstract_relation",
+      "description": "Birth, death, nationality, occupation, and person-level biography facts.",
+      "allowed_roles": [
+        "predicate_meaning",
+        "modifier",
+        "background"
+      ],
+      "parents": [
+        "entity_relation"
+      ]
+    },
+    {
+      "id": "location_relation",
+      "label": "Location relation",
+      "level": "abstract_relation",
+      "description": "Spatial containment, location, country, city, or place association.",
+      "allowed_roles": [
+        "predicate_meaning",
+        "modifier",
+        "background"
+      ],
+      "parents": [
+        "entity_relation"
+      ]
+    },
+    {
+      "id": "part_whole_relation",
+      "label": "Part-whole relation",
+      "level": "abstract_relation",
+      "description": "Membership, containment, part-of, or whole-part structure.",
+      "allowed_roles": [
+        "predicate_meaning",
+        "modifier",
+        "background"
+      ],
+      "parents": [
+        "entity_relation"
+      ]
+    },
+    {
+      "id": "membership_relation",
+      "label": "Membership relation",
+      "level": "abstract_relation",
+      "description": "Affiliation, club, team, membership, or participation relation.",
+      "allowed_roles": [
+        "predicate_meaning",
+        "modifier",
+        "background"
+      ],
+      "parents": [
+        "entity_relation"
+      ]
+    },
+    {
+      "id": "political_relation",
+      "label": "Political relation",
+      "level": "abstract_relation",
+      "description": "Leadership, mayor, capital, governance, or office relation.",
+      "allowed_roles": [
+        "predicate_meaning",
+        "modifier",
+        "background"
+      ],
+      "parents": [
+        "entity_relation"
+      ]
+    },
+    {
+      "id": "creative_relation",
+      "label": "Creative relation",
+      "level": "abstract_relation",
+      "description": "Creator, author, artist, band, work, or cultural production relation.",
+      "allowed_roles": [
+        "predicate_meaning",
+        "modifier",
+        "background"
+      ],
+      "parents": [
+        "entity_relation"
+      ]
+    },
+    {
+      "id": "organizational_relation",
+      "label": "Organizational relation",
+      "level": "abstract_relation",
+      "description": "Company, university, headquarters, operation, or institutional relation.",
+      "allowed_roles": [
+        "predicate_meaning",
+        "modifier",
+        "background"
+      ],
+      "parents": [
+        "entity_relation"
+      ]
+    },
+    {
+      "id": "astronomical_relation",
+      "label": "Astronomical relation",
+      "level": "abstract_relation",
+      "description": "Celestial-body and astronomy-specific relation.",
+      "allowed_roles": [
+        "predicate_meaning",
+        "modifier",
+        "background"
+      ],
+      "parents": [
+        "entity_relation"
+      ]
+    },
+    {
+      "id": "sports_relation",
+      "label": "Sports relation",
+      "level": "abstract_relation",
+      "description": "Athlete, club, team, ground, or sport competition relation.",
+      "allowed_roles": [
+        "predicate_meaning",
+        "modifier",
+        "background"
+      ],
+      "parents": [
+        "entity_relation"
+      ]
+    },
+    {
+      "id": "transport_relation",
+      "label": "Transport relation",
+      "level": "abstract_relation",
+      "description": "Airport, runway, vehicle, infrastructure, or transport relation.",
+      "allowed_roles": [
+        "predicate_meaning",
+        "modifier",
+        "background"
+      ],
+      "parents": [
+        "entity_relation"
+      ]
+    },
+    {
+      "id": "language_relation",
+      "label": "Language relation",
+      "level": "abstract_relation",
+      "description": "Language-used, language-of-work, or language attribute relation.",
+      "allowed_roles": [
+        "predicate_meaning",
+        "modifier",
+        "background"
+      ],
+      "parents": [
+        "entity_relation"
+      ]
+    },
+    {
+      "id": "identifier_relation",
+      "label": "Identifier relation",
+      "level": "abstract_relation",
+      "description": "Identifier-bearing relation such as ICAO or location codes.",
+      "allowed_roles": [
+        "predicate_meaning",
+        "modifier",
+        "background"
+      ],
+      "parents": [
+        "entity_relation"
+      ]
+    }
+  ],
+  "decompositions": {
+    "location": {
+      "predicate": "location",
+      "components": [
+        {
+          "factor": "location_relation",
+          "role": "predicate_meaning",
+          "weight": 0.6,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "subject_domain",
+          "weight": 0.1,
+          "rationale": null
+        }
+      ],
+      "source": "synthetic_adjudication",
+      "confidence": 0.85,
+      "evidence": {
+        "adjudication_status": "modified",
+        "confidence_missing": false,
+        "selected_sources": [],
+        "rationale": "",
+        "adjudicator_model": "meta-llama/llama-3.1-70b-instruct",
+        "raw_response_id": "openrouter-adjudication-1",
+        "disagreement_type": "factor_disagreement",
+        "synthetic": true
+      }
+    },
+    "country": {
+      "predicate": "country",
+      "components": [
+        {
+          "factor": "location_relation",
+          "role": "predicate_meaning",
+          "weight": 0.6,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        },
+        {
+          "factor": "entity_relation",
+          "role": "background",
+          "weight": 0.1,
+          "rationale": null
+        }
+      ],
+      "source": "synthetic_adjudication",
+      "confidence": 0.85,
+      "evidence": {
+        "adjudication_status": "modified",
+        "confidence_missing": false,
+        "selected_sources": [],
+        "rationale": "",
+        "adjudicator_model": "meta-llama/llama-3.1-70b-instruct",
+        "raw_response_id": "openrouter-adjudication-2",
+        "disagreement_type": "factor_disagreement",
+        "synthetic": true
+      }
+    },
+    "leader": {
+      "predicate": "leader",
+      "components": [
+        {
+          "factor": "political_relation",
+          "role": "predicate_meaning",
+          "weight": 0.6,
+          "rationale": null
+        },
+        {
+          "factor": "person",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "subject_domain",
+          "weight": 0.1,
+          "rationale": null
+        }
+      ],
+      "source": "synthetic_adjudication",
+      "confidence": 0.85,
+      "evidence": {
+        "adjudication_status": "modified",
+        "confidence_missing": false,
+        "selected_sources": [],
+        "rationale": "",
+        "adjudicator_model": "meta-llama/llama-3.1-70b-instruct",
+        "raw_response_id": "openrouter-adjudication-3",
+        "disagreement_type": "seed_suspect",
+        "synthetic": true
+      }
+    },
+    "birthPlace": {
+      "predicate": "birthPlace",
+      "components": [
+        {
+          "factor": "biographical_relation",
+          "role": "predicate_meaning",
+          "weight": 0.6,
+          "rationale": null
+        },
+        {
+          "factor": "person",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "object_domain",
+          "weight": 0.2,
+          "rationale": null
+        }
+      ],
+      "source": "synthetic_adjudication",
+      "confidence": 0.95,
+      "evidence": {
+        "adjudication_status": "modified",
+        "confidence_missing": false,
+        "selected_sources": [],
+        "rationale": "",
+        "adjudicator_model": "meta-llama/llama-3.1-70b-instruct",
+        "raw_response_id": "openrouter-adjudication-4",
+        "disagreement_type": "role_disagreement",
+        "synthetic": true
+      }
+    },
+    "isPartOf": {
+      "predicate": "isPartOf",
+      "components": [
+        {
+          "factor": "part_whole_relation",
+          "role": "predicate_meaning",
+          "weight": 0.55,
+          "rationale": null
+        },
+        {
+          "factor": "location_relation",
+          "role": "modifier",
+          "weight": 0.3,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "subject_domain",
+          "weight": 0.15,
+          "rationale": null
+        }
+      ],
+      "source": "synthetic_adjudication",
+      "confidence": 0.9,
+      "evidence": {
+        "adjudication_status": "modified",
+        "confidence_missing": false,
+        "selected_sources": [],
+        "rationale": "",
+        "adjudicator_model": "meta-llama/llama-3.1-70b-instruct",
+        "raw_response_id": "openrouter-adjudication-5",
+        "disagreement_type": "factor_disagreement",
+        "synthetic": true
+      }
+    },
+    "nationality": {
+      "predicate": "nationality",
+      "components": [
+        {
+          "factor": "biographical_relation",
+          "role": "predicate_meaning",
+          "weight": 0.6,
+          "rationale": null
+        },
+        {
+          "factor": "person",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "object_domain",
+          "weight": 0.2,
+          "rationale": null
+        }
+      ],
+      "source": "synthetic_adjudication",
+      "confidence": 0.92,
+      "evidence": {
+        "adjudication_status": "modified",
+        "confidence_missing": false,
+        "selected_sources": [],
+        "rationale": "",
+        "adjudicator_model": "meta-llama/llama-3.1-70b-instruct",
+        "raw_response_id": "openrouter-adjudication-6",
+        "disagreement_type": "role_disagreement",
+        "synthetic": true
+      }
+    },
+    "capital": {
+      "predicate": "capital",
+      "components": [
+        {
+          "factor": "political_relation",
+          "role": "predicate_meaning",
+          "weight": 0.6,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        },
+        {
+          "factor": "location_relation",
+          "role": "modifier",
+          "weight": 0.1,
+          "rationale": null
+        }
+      ],
+      "source": "synthetic_adjudication",
+      "confidence": 0.92,
+      "evidence": {
+        "adjudication_status": "modified",
+        "confidence_missing": false,
+        "selected_sources": [],
+        "rationale": "",
+        "adjudicator_model": "meta-llama/llama-3.1-70b-instruct",
+        "raw_response_id": "openrouter-adjudication-7",
+        "disagreement_type": "factor_disagreement",
+        "synthetic": true
+      }
+    },
+    "club": {
+      "predicate": "club",
+      "components": [
+        {
+          "factor": "sports_relation",
+          "role": "predicate_meaning",
+          "weight": 0.6,
+          "rationale": null
+        },
+        {
+          "factor": "membership_relation",
+          "role": "modifier",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "person",
+          "role": "subject_domain",
+          "weight": 0.1,
+          "rationale": null
+        },
+        {
+          "factor": "organization",
+          "role": "object_domain",
+          "weight": 0.1,
+          "rationale": null
+        }
+      ],
+      "source": "synthetic_adjudication",
+      "confidence": 0.92,
+      "evidence": {
+        "adjudication_status": "modified",
+        "confidence_missing": false,
+        "selected_sources": [],
+        "rationale": "",
+        "adjudicator_model": "meta-llama/llama-3.1-70b-instruct",
+        "raw_response_id": "openrouter-adjudication-8",
+        "disagreement_type": "seed_suspect",
+        "synthetic": true
+      }
+    },
+    "creator": {
+      "predicate": "creator",
+      "components": [
+        {
+          "factor": "creative_relation",
+          "role": "predicate_meaning",
+          "weight": 0.65,
+          "rationale": null
+        },
+        {
+          "factor": "person",
+          "role": "subject_domain",
+          "weight": 0.25,
+          "rationale": null
+        },
+        {
+          "factor": "creative_work",
+          "role": "object_domain",
+          "weight": 0.1,
+          "rationale": null
+        }
+      ],
+      "source": "synthetic_adjudication",
+      "confidence": 0.92,
+      "evidence": {
+        "adjudication_status": "modified",
+        "confidence_missing": false,
+        "selected_sources": [],
+        "rationale": "",
+        "adjudicator_model": "meta-llama/llama-3.1-70b-instruct",
+        "raw_response_id": "openrouter-adjudication-9",
+        "disagreement_type": "role_disagreement",
+        "synthetic": true
+      }
+    },
+    "city": {
+      "predicate": "city",
+      "components": [
+        {
+          "factor": "location_relation",
+          "role": "predicate_meaning",
+          "weight": 0.7,
+          "rationale": null
+        },
+        {
+          "factor": "organization",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "object_domain",
+          "weight": 0.1,
+          "rationale": null
+        }
+      ],
+      "source": "synthetic_adjudication",
+      "confidence": 0.85,
+      "evidence": {
+        "adjudication_status": "modified",
+        "confidence_missing": false,
+        "selected_sources": [],
+        "rationale": "",
+        "adjudicator_model": "meta-llama/llama-3.1-70b-instruct",
+        "raw_response_id": "openrouter-adjudication-10",
+        "disagreement_type": "factor_disagreement",
+        "synthetic": true
+      }
+    },
+    "associatedBand/associatedMusicalArtist": {
+      "predicate": "associatedBand/associatedMusicalArtist",
+      "components": [
+        {
+          "factor": "creative_relation",
+          "role": "predicate_meaning",
+          "weight": 0.65,
+          "rationale": null
+        },
+        {
+          "factor": "person",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "organization",
+          "role": "object_domain",
+          "weight": 0.15,
+          "rationale": null
+        }
+      ],
+      "source": "synthetic_adjudication",
+      "confidence": 0.9,
+      "evidence": {
+        "adjudication_status": "modified",
+        "confidence_missing": false,
+        "selected_sources": [],
+        "rationale": "",
+        "adjudicator_model": "meta-llama/llama-3.1-70b-instruct",
+        "raw_response_id": "openrouter-adjudication-11",
+        "disagreement_type": "seed_suspect",
+        "synthetic": true
+      }
+    },
+    "battle": {
+      "predicate": "battle",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.6,
+          "rationale": null
+        },
+        {
+          "factor": "organization",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "event",
+          "role": "object_domain",
+          "weight": 0.2,
+          "rationale": null
+        }
+      ],
+      "source": "synthetic_adjudication",
+      "confidence": 0.8,
+      "evidence": {
+        "adjudication_status": "accepted_seed",
+        "confidence_missing": false,
+        "selected_sources": [],
+        "rationale": "",
+        "adjudicator_model": "meta-llama/llama-3.1-70b-instruct",
+        "raw_response_id": "openrouter-adjudication-12",
+        "disagreement_type": "no_llm_candidates",
+        "synthetic": true
+      }
+    },
+    "deathPlace": {
+      "predicate": "deathPlace",
+      "components": [
+        {
+          "factor": "biographical_relation",
+          "role": "predicate_meaning",
+          "weight": 0.6,
+          "rationale": null
+        },
+        {
+          "factor": "person",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "object_domain",
+          "weight": 0.2,
+          "rationale": null
+        }
+      ],
+      "source": "synthetic_adjudication",
+      "confidence": 0.85,
+      "evidence": {
+        "adjudication_status": "modified",
+        "confidence_missing": false,
+        "selected_sources": [],
+        "rationale": "",
+        "adjudicator_model": "meta-llama/llama-3.1-70b-instruct",
+        "raw_response_id": "openrouter-adjudication-14",
+        "disagreement_type": "factor_disagreement",
+        "synthetic": true
+      }
+    },
+    "leaderTitle": {
+      "predicate": "leaderTitle",
+      "components": [
+        {
+          "factor": "political_relation",
+          "role": "predicate_meaning",
+          "weight": 0.6,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        }
+      ],
+      "source": "synthetic_adjudication",
+      "confidence": 0.85,
+      "evidence": {
+        "adjudication_status": "modified",
+        "confidence_missing": false,
+        "selected_sources": [],
+        "rationale": "",
+        "adjudicator_model": "meta-llama/llama-3.1-70b-instruct",
+        "raw_response_id": "openrouter-adjudication-15",
+        "disagreement_type": "factor_disagreement",
+        "synthetic": true
+      }
+    },
+    "orbitalPeriod": {
+      "predicate": "orbitalPeriod",
+      "components": [
+        {
+          "factor": "astronomical_relation",
+          "role": "predicate_meaning",
+          "weight": 0.6,
+          "rationale": null
+        },
+        {
+          "factor": "measurement",
+          "role": "predicate_meaning",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "time",
+          "role": "value_domain",
+          "weight": 0.2,
+          "rationale": null
+        }
+      ],
+      "source": "synthetic_adjudication",
+      "confidence": 0.92,
+      "evidence": {
+        "adjudication_status": "modified",
+        "confidence_missing": false,
+        "selected_sources": [],
+        "rationale": "",
+        "adjudicator_model": "meta-llama/llama-3.1-70b-instruct",
+        "raw_response_id": "openrouter-adjudication-16",
+        "disagreement_type": "factor_disagreement",
+        "synthetic": true
+      }
+    },
+    "affiliation": {
+      "predicate": "affiliation",
+      "components": [
+        {
+          "factor": "membership_relation",
+          "role": "predicate_meaning",
+          "weight": 0.65,
+          "rationale": null
+        },
+        {
+          "factor": "organization",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "organization",
+          "role": "object_domain",
+          "weight": 0.15,
+          "rationale": null
+        }
+      ],
+      "source": "synthetic_adjudication",
+      "confidence": 0.9,
+      "evidence": {
+        "adjudication_status": "modified",
+        "confidence_missing": false,
+        "selected_sources": [],
+        "rationale": "",
+        "adjudicator_model": "meta-llama/llama-3.1-70b-instruct",
+        "raw_response_id": "openrouter-adjudication-17",
+        "disagreement_type": "all_agree",
+        "synthetic": true
+      }
+    },
+    "epoch": {
+      "predicate": "epoch",
+      "components": [
+        {
+          "factor": "astronomical_relation",
+          "role": "predicate_meaning",
+          "weight": 0.45,
+          "rationale": null
+        },
+        {
+          "factor": "time",
+          "role": "value_domain",
+          "weight": 0.35,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        }
+      ],
+      "source": "synthetic_adjudication",
+      "confidence": 0.85,
+      "evidence": {
+        "adjudication_status": "modified",
+        "confidence_missing": false,
+        "selected_sources": [],
+        "rationale": "",
+        "adjudicator_model": "meta-llama/llama-3.1-70b-instruct",
+        "raw_response_id": "openrouter-adjudication-18",
+        "disagreement_type": "factor_disagreement",
+        "synthetic": true
+      }
+    },
+    "ethnicGroup": {
+      "predicate": "ethnicGroup",
+      "components": [
+        {
+          "factor": "membership_relation",
+          "role": "predicate_meaning",
+          "weight": 0.55,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "subject_domain",
+          "weight": 0.25,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.2,
+          "rationale": null
+        }
+      ],
+      "source": "synthetic_adjudication",
+      "confidence": 0.85,
+      "evidence": {
+        "adjudication_status": "modified",
+        "confidence_missing": false,
+        "selected_sources": [],
+        "rationale": "",
+        "adjudicator_model": "meta-llama/llama-3.1-70b-instruct",
+        "raw_response_id": "openrouter-adjudication-19",
+        "disagreement_type": "factor_disagreement",
+        "synthetic": true
+      }
+    },
+    "language": {
+      "predicate": "language",
+      "components": [
+        {
+          "factor": "language_relation",
+          "role": "predicate_meaning",
+          "weight": 0.6,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "background",
+          "weight": 0.3,
+          "rationale": null
+        },
+        {
+          "factor": "language",
+          "role": "object_domain",
+          "weight": 0.1,
+          "rationale": null
+        }
+      ],
+      "source": "synthetic_adjudication",
+      "confidence": 0.88,
+      "evidence": {
+        "adjudication_status": "modified",
+        "confidence_missing": false,
+        "selected_sources": [],
+        "rationale": "",
+        "adjudicator_model": "meta-llama/llama-3.1-70b-instruct",
+        "raw_response_id": "openrouter-adjudication-20",
+        "disagreement_type": "factor_disagreement",
+        "synthetic": true
+      }
+    },
+    "region": {
+      "predicate": "region",
+      "components": [
+        {
+          "factor": "location_relation",
+          "role": "predicate_meaning",
+          "weight": 0.6,
+          "rationale": null
+        },
+        {
+          "factor": "creative_work",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "object_domain",
+          "weight": 0.2,
+          "rationale": null
+        }
+      ],
+      "source": "synthetic_adjudication",
+      "confidence": 0.8,
+      "evidence": {
+        "adjudication_status": "accepted_seed",
+        "confidence_missing": false,
+        "selected_sources": [],
+        "rationale": "",
+        "adjudicator_model": "meta-llama/llama-3.1-70b-instruct",
+        "raw_response_id": "openrouter-adjudication-21",
+        "disagreement_type": "no_llm_candidates",
+        "synthetic": true
+      }
+    },
+    "almaMater": {
+      "predicate": "almaMater",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "person",
+          "role": "subject_domain",
+          "weight": 0.3,
+          "rationale": null
+        },
+        {
+          "factor": "organization",
+          "role": "object_domain",
+          "weight": 0.2,
+          "rationale": null
+        }
+      ],
+      "source": "synthetic_adjudication",
+      "confidence": 0.8,
+      "evidence": {
+        "adjudication_status": "accepted_seed",
+        "confidence_missing": false,
+        "selected_sources": [],
+        "rationale": "",
+        "adjudicator_model": "meta-llama/llama-3.1-70b-instruct",
+        "raw_response_id": "openrouter-adjudication-22",
+        "disagreement_type": "no_llm_candidates",
+        "synthetic": true
+      }
+    },
+    "apoapsis": {
+      "predicate": "apoapsis",
+      "components": [
+        {
+          "factor": "astronomical_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "quantity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "synthetic_adjudication",
+      "confidence": 0.78,
+      "evidence": {
+        "adjudication_status": "accepted_seed",
+        "confidence_missing": false,
+        "selected_sources": [],
+        "rationale": "",
+        "adjudicator_model": "meta-llama/llama-3.1-70b-instruct",
+        "raw_response_id": "openrouter-adjudication-23",
+        "disagreement_type": "no_llm_candidates",
+        "synthetic": true
+      }
+    },
+    "established": {
+      "predicate": "established",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.6,
+          "rationale": null
+        },
+        {
+          "factor": "organization",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "time",
+          "role": "object_domain",
+          "weight": 0.2,
+          "rationale": null
+        }
+      ],
+      "source": "synthetic_adjudication",
+      "confidence": 0.8,
+      "evidence": {
+        "adjudication_status": "modified",
+        "confidence_missing": false,
+        "selected_sources": [],
+        "rationale": "",
+        "adjudicator_model": "meta-llama/llama-3.1-70b-instruct",
+        "raw_response_id": "openrouter-adjudication-24",
+        "disagreement_type": "no_llm_candidates",
+        "synthetic": true
+      }
+    },
+    "starring": {
+      "predicate": "starring",
+      "components": [
+        {
+          "factor": "creative_relation",
+          "role": "predicate_meaning",
+          "weight": 0.6,
+          "rationale": null
+        },
+        {
+          "factor": "creative_work",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "person",
+          "role": "object_domain",
+          "weight": 0.2,
+          "rationale": null
+        }
+      ],
+      "source": "synthetic_adjudication",
+      "confidence": 0.8,
+      "evidence": {
+        "adjudication_status": "accepted_seed",
+        "confidence_missing": false,
+        "selected_sources": [],
+        "rationale": "",
+        "adjudicator_model": "meta-llama/llama-3.1-70b-instruct",
+        "raw_response_id": "openrouter-adjudication-25",
+        "disagreement_type": "no_llm_candidates",
+        "synthetic": true
+      }
+    },
+    "commander": {
+      "predicate": "commander",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.6,
+          "rationale": null
+        },
+        {
+          "factor": "person",
+          "role": "subject_domain",
+          "weight": 0.3,
+          "rationale": null
+        },
+        {
+          "factor": "event",
+          "role": "object_domain",
+          "weight": 0.1,
+          "rationale": null
+        }
+      ],
+      "source": "synthetic_adjudication",
+      "confidence": 0.8,
+      "evidence": {
+        "adjudication_status": "accepted_seed",
+        "confidence_missing": false,
+        "selected_sources": [],
+        "rationale": "",
+        "adjudicator_model": "meta-llama/llama-3.1-70b-instruct",
+        "raw_response_id": "openrouter-adjudication-26",
+        "disagreement_type": "no_llm_candidates",
+        "synthetic": true
+      }
+    },
+    "currency": {
+      "predicate": "currency",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "subject_domain",
+          "weight": 0.3,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.2,
+          "rationale": null
+        }
+      ],
+      "source": "synthetic_adjudication",
+      "confidence": 0.45,
+      "evidence": {
+        "adjudication_status": "accepted_seed",
+        "confidence_missing": false,
+        "selected_sources": [],
+        "rationale": "",
+        "adjudicator_model": "meta-llama/llama-3.1-70b-instruct",
+        "raw_response_id": "openrouter-adjudication-27",
+        "disagreement_type": "no_llm_candidates",
+        "synthetic": true
+      }
+    },
+    "genre": {
+      "predicate": "genre",
+      "components": [
+        {
+          "factor": "creative_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "person",
+          "role": "subject_domain",
+          "weight": 0.3,
+          "rationale": null
+        },
+        {
+          "factor": "creative_work",
+          "role": "object_domain",
+          "weight": 0.2,
+          "rationale": null
+        }
+      ],
+      "source": "synthetic_adjudication",
+      "confidence": 0.8,
+      "evidence": {
+        "adjudication_status": "accepted_seed",
+        "confidence_missing": false,
+        "selected_sources": [],
+        "rationale": "",
+        "adjudicator_model": "meta-llama/llama-3.1-70b-instruct",
+        "raw_response_id": "openrouter-adjudication-28",
+        "disagreement_type": "no_llm_candidates",
+        "synthetic": true
+      }
+    },
+    "league": {
+      "predicate": "league",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.6,
+          "rationale": null
+        },
+        {
+          "factor": "organization",
+          "role": "subject_domain",
+          "weight": 0.3,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.1,
+          "rationale": null
+        }
+      ],
+      "source": "synthetic_adjudication",
+      "confidence": 0.7,
+      "evidence": {
+        "adjudication_status": "accepted_seed",
+        "confidence_missing": false,
+        "selected_sources": [],
+        "rationale": "",
+        "adjudicator_model": "meta-llama/llama-3.1-70b-instruct",
+        "raw_response_id": "openrouter-adjudication-29",
+        "disagreement_type": "no_llm_candidates",
+        "synthetic": true
+      }
+    },
+    "mission": {
+      "predicate": "mission",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "person",
+          "role": "subject_domain",
+          "weight": 0.3,
+          "rationale": null
+        },
+        {
+          "factor": "event",
+          "role": "object_domain",
+          "weight": 0.2,
+          "rationale": null
+        }
+      ],
+      "source": "synthetic_adjudication",
+      "confidence": 0.6,
+      "evidence": {
+        "adjudication_status": "accepted_seed",
+        "confidence_missing": false,
+        "selected_sources": [],
+        "rationale": "",
+        "adjudicator_model": "meta-llama/llama-3.1-70b-instruct",
+        "raw_response_id": "openrouter-adjudication-30",
+        "disagreement_type": "no_llm_candidates",
+        "synthetic": true
+      }
+    },
+    "birthDate": {
+      "predicate": "birthDate",
+      "components": [
+        {
+          "factor": "biographical_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "person",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "time",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "expansion_rule",
+      "confidence": 0.68,
+      "evidence": {
+        "count": 8,
+        "categories": {
+          "Politician": 2,
+          "Astronaut": 4,
+          "Athlete": 2
+        },
+        "candidate_factors": [
+          "birth",
+          "date"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-20605",
+            "category": "Politician",
+            "subj": "Albert B. White",
+            "pred": "birthDate",
+            "obj": "1856-09-22",
+            "text": "Albert B. White was born 22nd of September, 1856 and died on 3rd of July, 1941."
+          },
+          {
+            "example_id": "web_nlg_en-train-34481",
+            "category": "Astronaut",
+            "subj": "Buzz Aldrin",
+            "pred": "birthDate",
+            "obj": "1930-01-20",
+            "text": "Buzz Aldrin was born on January 20th 1930 in Glen Ridge, New Jersey, USA. He joined NASA in 1963 where he became a member of the Apollo 11 crew before he retired."
+          },
+          {
+            "example_id": "web_nlg_en-train-35045",
+            "category": "Astronaut",
+            "subj": "Buzz Aldrin",
+            "pred": "birthDate",
+            "obj": "1930-01-20",
+            "text": "US national Buzz Aldrin was born on the 20th of January, 1930 in Glen Ridge, New Jersey. He graduated with a Sc.D from MIT in 1963 and was selected by NASA the same year. He served as a crew member of Apollo 11 and received 20 awards during his service."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 5
+      }
+    },
+    "ground": {
+      "predicate": "ground",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "person",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 4,
+        "categories": {
+          "SportsTeam": 2,
+          "Athlete": 2
+        },
+        "candidate_factors": [
+          "ground"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-28318",
+            "category": "SportsTeam",
+            "subj": "A.C. Lumezzane",
+            "pred": "ground",
+            "obj": "Italy",
+            "text": "A.C. Lumezzane's ground is in Italy where the capital is Rome, the official language is Italian and the leader is Pietro Grasso."
+          },
+          {
+            "example_id": "web_nlg_en-train-24044",
+            "category": "Athlete",
+            "subj": "FC Terek Grozny",
+            "pred": "ground",
+            "obj": "Grozny",
+            "text": "Aleksandr Prudnikov plays for FC Terek Grozny whose base is in Grozny and is managed by Rashid Rakhimov. He also plays for the Alania Vladikavkaz club."
+          },
+          {
+            "example_id": "web_nlg_en-train-13931",
+            "category": "SportsTeam",
+            "subj": "A.S. Gubbio 1910",
+            "pred": "ground",
+            "obj": "Italy",
+            "text": "The ground of A.S. Gubbio 1910 is located in Italy, the capital of which is Rome."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 5
+      }
+    },
+    "numberOfMembers": {
+      "predicate": "numberOfMembers",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "organization",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "quantity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 3,
+        "categories": {
+          "SportsTeam": 3
+        },
+        "candidate_factors": [
+          "number",
+          "of",
+          "members"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-21023",
+            "category": "SportsTeam",
+            "subj": "A.C. Lumezzane",
+            "pred": "numberOfMembers",
+            "obj": "4150",
+            "text": "The full name of A.C. Lumezzane is Associazione Calcio Lumezzane SpA, they have 4150 members and play in the Lega Pro league."
+          },
+          {
+            "example_id": "web_nlg_en-train-21051",
+            "category": "SportsTeam",
+            "subj": "A.C. Lumezzane",
+            "pred": "numberOfMembers",
+            "obj": "4150",
+            "text": "A.C. Lumezzane, with 4150 members, plays in the Lega Pro, and were active in 2014."
+          },
+          {
+            "example_id": "web_nlg_en-train-13908",
+            "category": "SportsTeam",
+            "subj": "Akron Summit Assault",
+            "pred": "numberOfMembers",
+            "obj": "3000",
+            "text": "Akron Summit Assault has got 3000 members and the chairman is Dave Laughlin."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 5
+      }
+    },
+    "mediaType": {
+      "predicate": "mediaType",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "creative_work",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 3,
+        "categories": {
+          "WrittenWork": 3
+        },
+        "candidate_factors": [
+          "media",
+          "type"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-28884",
+            "category": "WrittenWork",
+            "subj": "1634: The Ram Rebellion",
+            "pred": "mediaType",
+            "obj": "Hardcover",
+            "text": "The hardcover book, 1634: The Ram Rebellion was written by Eric Flint, Virginia DeMarce, et al. It has 512 pages altogether and has an ISBN number of 1-4165-2060-0."
+          },
+          {
+            "example_id": "web_nlg_en-train-21870",
+            "category": "WrittenWork",
+            "subj": "A Wizard of Mars",
+            "pred": "mediaType",
+            "obj": "Hardcover",
+            "text": "A Wizard of Mars was written by Diane Duane and published in hardback with 560 pages."
+          },
+          {
+            "example_id": "web_nlg_en-train-7324",
+            "category": "WrittenWork",
+            "subj": "A Fortress of Grey Ice",
+            "pred": "mediaType",
+            "obj": "Print",
+            "text": "The book \"A Fortress of Grey Ice\" can be found in print."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 4
+      }
+    },
+    "occupation": {
+      "predicate": "occupation",
+      "components": [
+        {
+          "factor": "biographical_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "person",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "expansion_rule",
+      "confidence": 0.68,
+      "evidence": {
+        "count": 2,
+        "categories": {
+          "Astronaut": 2
+        },
+        "candidate_factors": [
+          "occupation"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-35079",
+            "category": "Astronaut",
+            "subj": "Elliot See",
+            "pred": "occupation",
+            "obj": "Test pilot",
+            "text": "Elliot See, a US national, was born in Dallas and graduated from the University of Texas at Austin. He flew as a test pilot and was selected by NASA in 1962. He died on 28 February 1966 in St Louis."
+          },
+          {
+            "example_id": "web_nlg_en-train-30541",
+            "category": "Astronaut",
+            "subj": "Alan Bean",
+            "pred": "occupation",
+            "obj": "Test pilot",
+            "text": "Retired NASA test pilot Alan Bean was a student at UT Austin. He received his B.S. in 1955. Alan Bean was born in Wheeler, Texas and was chosen by NASA in 1963."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 4
+      }
+    },
+    "product": {
+      "predicate": "product",
+      "components": [
+        {
+          "factor": "organizational_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "organization",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "organization",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "expansion_rule",
+      "confidence": 0.68,
+      "evidence": {
+        "count": 4,
+        "categories": {
+          "Company": 4
+        },
+        "candidate_factors": [
+          "product"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-34634",
+            "category": "Company",
+            "subj": "Hypermarcas",
+            "pred": "product",
+            "obj": "Drugs",
+            "text": "Hypermarcas is an S.A. corporation which produces pharmaceutical drugs and healthcare products. They employ 10,252 people and own the subsidiary Mantecorp. Their net income is $108,600,000."
+          },
+          {
+            "example_id": "web_nlg_en-train-34634",
+            "category": "Company",
+            "subj": "Hypermarcas",
+            "pred": "product",
+            "obj": "Healthcare",
+            "text": "Hypermarcas is an S.A. corporation which produces pharmaceutical drugs and healthcare products. They employ 10,252 people and own the subsidiary Mantecorp. Their net income is $108,600,000."
+          },
+          {
+            "example_id": "web_nlg_en-train-11294",
+            "category": "Company",
+            "subj": "Trane",
+            "pred": "product",
+            "obj": "Building Management System",
+            "text": "Trane is a subsidiary company that makes building management systems."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 4
+      }
+    },
+    "status": {
+      "predicate": "status",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "person",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 4,
+        "categories": {
+          "Astronaut": 3,
+          "MeanOfTransportation": 1
+        },
+        "candidate_factors": [
+          "status"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-34525",
+            "category": "Astronaut",
+            "subj": "Elliot See",
+            "pred": "status",
+            "obj": "Deceased",
+            "text": "Former NASA Astronaut Elliot See has died in Saint Louis. The American was born in Dallas and graduated from the University of Texas in Austin before being chosen by NASA in 1962."
+          },
+          {
+            "example_id": "web_nlg_en-train-30541",
+            "category": "Astronaut",
+            "subj": "Alan Bean",
+            "pred": "status",
+            "obj": "Retired",
+            "text": "Retired NASA test pilot Alan Bean was a student at UT Austin. He received his B.S. in 1955. Alan Bean was born in Wheeler, Texas and was chosen by NASA in 1963."
+          },
+          {
+            "example_id": "web_nlg_en-train-34481",
+            "category": "Astronaut",
+            "subj": "Buzz Aldrin",
+            "pred": "status",
+            "obj": "Retired",
+            "text": "Buzz Aldrin was born on January 20th 1930 in Glen Ridge, New Jersey, USA. He joined NASA in 1963 where he became a member of the Apollo 11 crew before he retired."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 4
+      }
+    },
+    "alternativeName": {
+      "predicate": "alternativeName",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "creative_work",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 3,
+        "categories": {
+          "ComicsCharacter": 2,
+          "MeanOfTransportation": 1
+        },
+        "candidate_factors": [
+          "alternative",
+          "name"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-18206",
+            "category": "ComicsCharacter",
+            "subj": "Asterix (comicsCharacter)",
+            "pred": "alternativeName",
+            "obj": "Astérix",
+            "text": "Frenchman, Rene Goscinny created Asterix, the comic character who is sometimes called \"Astérix\"."
+          },
+          {
+            "example_id": "web_nlg_en-train-5130",
+            "category": "MeanOfTransportation",
+            "subj": "AMC Matador",
+            "pred": "alternativeName",
+            "obj": "VAM Classic",
+            "text": "The alternative name for the AMC Matador is VAM Classic."
+          },
+          {
+            "example_id": "web_nlg_en-train-25719",
+            "category": "ComicsCharacter",
+            "subj": "Asterix (comicsCharacter)",
+            "pred": "alternativeName",
+            "obj": "Astérix",
+            "text": "The comic character Asterix is sometimes called \"Astérix\" and was created by Albert Uderzo and the French national, Rene Goscinny."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 3
+      }
+    },
+    "dedicatedTo": {
+      "predicate": "dedicatedTo",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 2,
+        "categories": {
+          "Monument": 2
+        },
+        "candidate_factors": [
+          "dedicated",
+          "to"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-33392",
+            "category": "Monument",
+            "subj": "Baku Turkish Martyrs' Memorial",
+            "pred": "dedicatedTo",
+            "obj": "Ottoman Army soldiers killed in the Battle of Baku",
+            "text": "Turk Sehitleri Aniti is the local name of the red granite and white marble Baku Turkish Martyrs memorial. The memorial is located in Baku, Azerbaijan where the leader is Artur Rasizade. It is dedicated to the memory of the Ottoman army soldiers killed in the battle of Baku."
+          },
+          {
+            "example_id": "web_nlg_en-train-35230",
+            "category": "Monument",
+            "subj": "Baku Turkish Martyrs' Memorial",
+            "pred": "dedicatedTo",
+            "obj": "Ottoman Army soldiers killed in the Battle of Baku",
+            "text": "Baku is the capital city of Azerbaijan where the legislature is the National Assembly and the leader is Artur Rasizade. The city is the location of the Baku Turkish Martyrs' memorial designed by Huseyin Butuner and Hilmi Guner in red granite and white marble. The memorial commemorates the soldiers of the Ottoman army who were killed in the Battle of Baku."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 3
+      }
+    },
+    "designer": {
+      "predicate": "designer",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 4,
+        "categories": {
+          "Monument": 4
+        },
+        "candidate_factors": [
+          "designer"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-35266",
+            "category": "Monument",
+            "subj": "Atatürk Monument (İzmir)",
+            "pred": "designer",
+            "obj": "Pietro Canonica",
+            "text": "The Turkish leader (official title President of Turkey) is Ahmet Davutoglu. Pietro Canonica designed the Ataturk Monument in Izmir and it was inaugurated on 27th of July, 1932. Turkey's largest City is Istanbul and the currency is the Turkish lira."
+          },
+          {
+            "example_id": "web_nlg_en-train-12759",
+            "category": "Monument",
+            "subj": "Baku Turkish Martyrs' Memorial",
+            "pred": "designer",
+            "obj": "Hüseyin Bütüner and Hilmi Güner",
+            "text": "The Baku Turkish Martyrs' Memorial is known in Turkish as Turk Sehitleri Aniti and the designers are Hüseyin Bütüner and Hilmi Güner."
+          },
+          {
+            "example_id": "web_nlg_en-train-35230",
+            "category": "Monument",
+            "subj": "Baku Turkish Martyrs' Memorial",
+            "pred": "designer",
+            "obj": "Hüseyin Bütüner and Hilmi Güner",
+            "text": "Baku is the capital city of Azerbaijan where the legislature is the National Assembly and the leader is Artur Rasizade. The city is the location of the Baku Turkish Martyrs' memorial designed by Huseyin Butuner and Hilmi Guner in red granite and white marble. The memorial commemorates the soldiers of the Ottoman army who were killed in the Battle of Baku."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 3
+      }
+    },
+    "dishVariation": {
+      "predicate": "dishVariation",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "creative_work",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 2,
+        "categories": {
+          "Food": 2
+        },
+        "candidate_factors": [
+          "dish",
+          "variation"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-32609",
+            "category": "Food",
+            "subj": "Batagor",
+            "pred": "dishVariation",
+            "obj": "Siomay",
+            "text": "Jusuf Kalla is a leader in Indonesia, where there is a traditional dish called batagor. The dish is similar to siomay (which contains peanut sauce) and shumai."
+          },
+          {
+            "example_id": "web_nlg_en-train-32609",
+            "category": "Food",
+            "subj": "Siomay",
+            "pred": "dishVariation",
+            "obj": "Shumai",
+            "text": "Jusuf Kalla is a leader in Indonesia, where there is a traditional dish called batagor. The dish is similar to siomay (which contains peanut sauce) and shumai."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 3
+      }
+    },
+    "industry": {
+      "predicate": "industry",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "organization",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 2,
+        "categories": {
+          "Company": 2
+        },
+        "candidate_factors": [
+          "industry"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-18398",
+            "category": "Company",
+            "subj": "AmeriGas",
+            "pred": "industry",
+            "obj": "Energy industry",
+            "text": "AmeriGas, an energy industry, serves the United States area of 9,833,516.63 square kilometers."
+          },
+          {
+            "example_id": "web_nlg_en-train-25865",
+            "category": "Company",
+            "subj": "Trane",
+            "pred": "industry",
+            "obj": "Building materials",
+            "text": "The company Trane's industry is building materials. It has 29,000 employees. Trane is in Europe in Ireland."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 3
+      }
+    },
+    "isbnNumber": {
+      "predicate": "isbnNumber",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "creative_work",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "quantity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "WrittenWork": 1
+        },
+        "candidate_factors": [
+          "isbn",
+          "number"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-28884",
+            "category": "WrittenWork",
+            "subj": "1634: The Ram Rebellion",
+            "pred": "isbnNumber",
+            "obj": "1-4165-2060-0",
+            "text": "The hardcover book, 1634: The Ram Rebellion was written by Eric Flint, Virginia DeMarce, et al. It has 512 pages altogether and has an ISBN number of 1-4165-2060-0."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 3
+      }
+    },
+    "manufacturer": {
+      "predicate": "manufacturer",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 2,
+        "categories": {
+          "MeanOfTransportation": 2
+        },
+        "candidate_factors": [
+          "manufacturer"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-5389",
+            "category": "MeanOfTransportation",
+            "subj": "Antares (rocket)",
+            "pred": "manufacturer",
+            "obj": "Yuzhnoye Design Office",
+            "text": "The Antares rocket is manufactured by the Yuzhnoye Design Office."
+          },
+          {
+            "example_id": "web_nlg_en-train-12422",
+            "category": "MeanOfTransportation",
+            "subj": "Alvis Speed 25",
+            "pred": "manufacturer",
+            "obj": "Alvis Car and Engineering Company",
+            "text": "The Alvis Speed 25 was manufactured by the Alvis Car and Engineering Company which was later succeeded by the Rover Company."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 3
+      }
+    },
+    "material": {
+      "predicate": "material",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 4,
+        "categories": {
+          "Monument": 4
+        },
+        "candidate_factors": [
+          "material"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-33392",
+            "category": "Monument",
+            "subj": "Baku Turkish Martyrs' Memorial",
+            "pred": "material",
+            "obj": "Red granite and white marble",
+            "text": "Turk Sehitleri Aniti is the local name of the red granite and white marble Baku Turkish Martyrs memorial. The memorial is located in Baku, Azerbaijan where the leader is Artur Rasizade. It is dedicated to the memory of the Ottoman army soldiers killed in the battle of Baku."
+          },
+          {
+            "example_id": "web_nlg_en-train-12737",
+            "category": "Monument",
+            "subj": "Atatürk Monument (İzmir)",
+            "pred": "material",
+            "obj": "Bronze",
+            "text": "The Atatürk Monument (made of bronze) in Izmir was inaugurated on 1932-07-27."
+          },
+          {
+            "example_id": "web_nlg_en-train-35230",
+            "category": "Monument",
+            "subj": "Baku Turkish Martyrs' Memorial",
+            "pred": "material",
+            "obj": "Red granite and white marble",
+            "text": "Baku is the capital city of Azerbaijan where the legislature is the National Assembly and the leader is Artur Rasizade. The city is the location of the Baku Turkish Martyrs' memorial designed by Huseyin Butuner and Hilmi Guner in red granite and white marble. The memorial commemorates the soldiers of the Ottoman army who were killed in the Battle of Baku."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 3
+      }
+    },
+    "oclcNumber": {
+      "predicate": "oclcNumber",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "creative_work",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "quantity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 3,
+        "categories": {
+          "WrittenWork": 3
+        },
+        "candidate_factors": [
+          "oclc",
+          "number"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-validation-1368",
+            "edge_index": 1,
+            "category": "WrittenWork",
+            "subj": "A Severed Wasp",
+            "pred": "oclcNumber",
+            "obj": "8805735",
+            "text": "A Severed Wasp was published in hardback and has 388 pages. The OCLC number of A Severed Wasp is 8805735 and the ISBN number of \"0-374-26131-8\"."
+          },
+          {
+            "example_id": "web_nlg_en-validation-1366",
+            "edge_index": 0,
+            "category": "WrittenWork",
+            "subj": "A Severed Wasp",
+            "pred": "oclcNumber",
+            "obj": "8805735",
+            "text": "A Severed Wasp is available in print, with The Library of Congress Classification PS3523.E55 S4 1982. Its ISBN number is 0-374-26131-8, and its OCLC number is 8805735."
+          },
+          {
+            "example_id": "web_nlg_en-validation-1369",
+            "edge_index": 2,
+            "category": "WrittenWork",
+            "subj": "A Wizard of Mars",
+            "pred": "oclcNumber",
+            "obj": "318875313",
+            "text": "A Wizard of Mars, written by Diane Duane, is available in hardcover, has the ISBN number 978-0-15-204770-2 and the OCLC number 318875313."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 3
+      }
+    },
+    "operator": {
+      "predicate": "operator",
+      "components": [
+        {
+          "factor": "organizational_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "organization",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "expansion_rule",
+      "confidence": 0.68,
+      "evidence": {
+        "count": 2,
+        "categories": {
+          "Astronaut": 1,
+          "MeanOfTransportation": 1
+        },
+        "candidate_factors": [
+          "operator"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-34469",
+            "category": "Astronaut",
+            "subj": "Apollo 8",
+            "pred": "operator",
+            "obj": "NASA",
+            "text": "NASA's Apollo 8 had three crew members who included Frank Borman, Buzz Aldrin as the backup pilot and William Anders. Anders was born in British Hong Kong which has Chris Patten as its representative."
+          },
+          {
+            "example_id": "web_nlg_en-train-32935",
+            "category": "MeanOfTransportation",
+            "subj": "AIDAstella",
+            "pred": "operator",
+            "obj": "AIDA Cruises",
+            "text": "The AIDAstella, built by Meyer Werft, is currently in service and has a 32.2 m. beam and is 253260.0 millimetres long. AIDA Cruises operates this vessel."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 3
+      }
+    },
+    "owner": {
+      "predicate": "owner",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 2,
+        "categories": {
+          "Airport": 1,
+          "Building": 1
+        },
+        "candidate_factors": [
+          "owner"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-22599",
+            "category": "Airport",
+            "subj": "Antwerp International Airport",
+            "pred": "owner",
+            "obj": "Flemish Region",
+            "text": "Antwerp International airport, operated by Flemish Government and owned by the Flemish Region, has a runway length of 1510.0 and is 12 metres above sea level."
+          },
+          {
+            "example_id": "web_nlg_en-train-9726",
+            "category": "Building",
+            "subj": "3Arena",
+            "pred": "owner",
+            "obj": "Live Nation Entertainment",
+            "text": "The 3Arena (located in Dublin) is owned by Live Nation Entertainment."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 3
+      }
+    },
+    "party": {
+      "predicate": "party",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "person",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "Politician": 1
+        },
+        "candidate_factors": [
+          "party"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-13023",
+            "category": "Politician",
+            "subj": "Adam Holloway",
+            "pred": "party",
+            "obj": "Conservative Party (UK)",
+            "text": "Adam Holloway, a national of the United Kingdom, is a member of the Tories."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 3
+      }
+    },
+    "relatedMeanOfTransportation": {
+      "predicate": "relatedMeanOfTransportation",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 3,
+        "categories": {
+          "MeanOfTransportation": 3
+        },
+        "candidate_factors": [
+          "related",
+          "mean",
+          "of",
+          "transportation"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-validation-615",
+            "edge_index": 0,
+            "category": "MeanOfTransportation",
+            "subj": "Alfa Romeo 164",
+            "pred": "relatedMeanOfTransportation",
+            "obj": "Fiat Croma",
+            "text": "The Alfa Romeo 164, which was assembled in Milan, and the Fiat Croma are related means of transportation."
+          },
+          {
+            "example_id": "web_nlg_en-validation-1267",
+            "edge_index": 0,
+            "category": "MeanOfTransportation",
+            "subj": "1955 Dodge",
+            "pred": "relatedMeanOfTransportation",
+            "obj": "DeSoto Custom",
+            "text": "The 1955 Dodge, the Chrysler Newport and the DeSoto Custom are related means of transportation. DeSoto are the manufacturers of the DeSoto Custom, the successor of which, is the DeSoto Firedome."
+          },
+          {
+            "example_id": "web_nlg_en-validation-1267",
+            "edge_index": 1,
+            "category": "MeanOfTransportation",
+            "subj": "DeSoto Custom",
+            "pred": "relatedMeanOfTransportation",
+            "obj": "Chrysler Newport",
+            "text": "The 1955 Dodge, the Chrysler Newport and the DeSoto Custom are related means of transportation. DeSoto are the manufacturers of the DeSoto Custom, the successor of which, is the DeSoto Firedome."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 3
+      }
+    },
+    "runwayLength": {
+      "predicate": "runwayLength",
+      "components": [
+        {
+          "factor": "transport_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "quantity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "expansion_rule",
+      "confidence": 0.68,
+      "evidence": {
+        "count": 5,
+        "categories": {
+          "Airport": 5
+        },
+        "candidate_factors": [
+          "runway",
+          "length"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-29353",
+            "category": "Airport",
+            "subj": "Abilene Regional Airport",
+            "pred": "runwayLength",
+            "obj": "2195.0",
+            "text": "Abilene regional airport serves Abilene, Taylor County, Texas in the United States and has a runway length of 2195.0."
+          },
+          {
+            "example_id": "web_nlg_en-train-22599",
+            "category": "Airport",
+            "subj": "Antwerp International Airport",
+            "pred": "runwayLength",
+            "obj": "1510.0",
+            "text": "Antwerp International airport, operated by Flemish Government and owned by the Flemish Region, has a runway length of 1510.0 and is 12 metres above sea level."
+          },
+          {
+            "example_id": "web_nlg_en-train-14852",
+            "category": "Airport",
+            "subj": "Allama Iqbal International Airport",
+            "pred": "runwayLength",
+            "obj": "3310.0",
+            "text": "The 18L/36R runway in Allama Iqbal International airport in Pakistan, has a length of 3310.0."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 3
+      }
+    },
+    "season": {
+      "predicate": "season",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "organization",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "SportsTeam": 1
+        },
+        "candidate_factors": [
+          "season"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-21051",
+            "category": "SportsTeam",
+            "subj": "A.C. Lumezzane",
+            "pred": "season",
+            "obj": "2014",
+            "text": "A.C. Lumezzane, with 4150 members, plays in the Lega Pro, and were active in 2014."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 3
+      }
+    },
+    "successor": {
+      "predicate": "successor",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 2,
+        "categories": {
+          "Politician": 1,
+          "MeanOfTransportation": 1
+        },
+        "candidate_factors": [
+          "successor"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-20749",
+            "category": "Politician",
+            "subj": "Alfred N. Phillips",
+            "pred": "successor",
+            "obj": "Albert E. Austin",
+            "text": "Albert E. Austin succeeded Alfred N. Phillips who was born in Connecticut and worked at the United States House of Representatives."
+          },
+          {
+            "example_id": "web_nlg_en-train-12422",
+            "category": "MeanOfTransportation",
+            "subj": "Alvis Car and Engineering Company",
+            "pred": "successor",
+            "obj": "Rover Company",
+            "text": "The Alvis Speed 25 was manufactured by the Alvis Car and Engineering Company which was later succeeded by the Rover Company."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 3
+      }
+    },
+    "author": {
+      "predicate": "author",
+      "components": [
+        {
+          "factor": "creative_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "creative_work",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "person",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "expansion_rule",
+      "confidence": 0.68,
+      "evidence": {
+        "count": 3,
+        "categories": {
+          "WrittenWork": 3
+        },
+        "candidate_factors": [
+          "author"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-28884",
+            "category": "WrittenWork",
+            "subj": "1634: The Ram Rebellion",
+            "pred": "author",
+            "obj": "Eric Flint, Virginia DeMarce, et al.",
+            "text": "The hardcover book, 1634: The Ram Rebellion was written by Eric Flint, Virginia DeMarce, et al. It has 512 pages altogether and has an ISBN number of 1-4165-2060-0."
+          },
+          {
+            "example_id": "web_nlg_en-train-21870",
+            "category": "WrittenWork",
+            "subj": "A Wizard of Mars",
+            "pred": "author",
+            "obj": "Diane Duane",
+            "text": "A Wizard of Mars was written by Diane Duane and published in hardback with 560 pages."
+          },
+          {
+            "example_id": "web_nlg_en-train-7526",
+            "category": "WrittenWork",
+            "subj": "Alcatraz Versus the Evil Librarians",
+            "pred": "author",
+            "obj": "Brandon Sanderson",
+            "text": "The author of Alcatraz Versus the Evil Librarians is Brandon Sanderson."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 2
+      }
+    },
+    "background": {
+      "predicate": "background",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "person",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "Artist": 1
+        },
+        "candidate_factors": [
+          "background"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-848",
+            "category": "Artist",
+            "subj": "Ahmet Ertegun",
+            "pred": "background",
+            "obj": "non performing personnel",
+            "text": "Ahmet Ertegun's background is non performing personnel."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 2
+      }
+    },
+    "backupPilot": {
+      "predicate": "backupPilot",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "person",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "Astronaut": 1
+        },
+        "candidate_factors": [
+          "backup",
+          "pilot"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-34469",
+            "category": "Astronaut",
+            "subj": "Apollo 8",
+            "pred": "backupPilot",
+            "obj": "Buzz Aldrin",
+            "text": "NASA's Apollo 8 had three crew members who included Frank Borman, Buzz Aldrin as the backup pilot and William Anders. Anders was born in British Hong Kong which has Chris Patten as its representative."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 2
+      }
+    },
+    "broadcastedBy": {
+      "predicate": "broadcastedBy",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "creative_work",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 3,
+        "categories": {
+          "ComicsCharacter": 3
+        },
+        "candidate_factors": [
+          "broadcasted",
+          "by"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-25671",
+            "category": "ComicsCharacter",
+            "subj": "Bananaman",
+            "pred": "broadcastedBy",
+            "obj": "BBC",
+            "text": "Bananaman was created by Steve Bright and starred Tim Brooke-Taylor. It was first aired on 3 October 1983, being broadcast by the BBC."
+          },
+          {
+            "example_id": "web_nlg_en-train-25653",
+            "category": "ComicsCharacter",
+            "subj": "Bananaman",
+            "pred": "broadcastedBy",
+            "obj": "BBC",
+            "text": "Bananaman was first broadcast by the BBC on 3 October 1983. It was created by Steve Bright and starred Jill Shilling."
+          },
+          {
+            "example_id": "web_nlg_en-train-32174",
+            "category": "ComicsCharacter",
+            "subj": "Bananaman",
+            "pred": "broadcastedBy",
+            "obj": "BBC",
+            "text": "Bananaman first aired on the BBC on October 3rd, 1983 and broadcast its last episode on April 15th, 1986. Steve Bright created the series which starred Bill Oddie."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 2
+      }
+    },
+    "builder": {
+      "predicate": "builder",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 3,
+        "categories": {
+          "MeanOfTransportation": 3
+        },
+        "candidate_factors": [
+          "builder"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-5243",
+            "category": "MeanOfTransportation",
+            "subj": "Aleksey Chirikov (icebreaker)",
+            "pred": "builder",
+            "obj": "Arctech Helsinki Shipyard",
+            "text": "Arctech Helsinki Shipyard built the icebreaker, Aleksey Chirikov."
+          },
+          {
+            "example_id": "web_nlg_en-train-32935",
+            "category": "MeanOfTransportation",
+            "subj": "AIDAstella",
+            "pred": "builder",
+            "obj": "Meyer Werft",
+            "text": "The AIDAstella, built by Meyer Werft, is currently in service and has a 32.2 m. beam and is 253260.0 millimetres long. AIDA Cruises operates this vessel."
+          },
+          {
+            "example_id": "web_nlg_en-train-19798",
+            "category": "MeanOfTransportation",
+            "subj": "Alhambra",
+            "pred": "builder",
+            "obj": "Samuda Brothers",
+            "text": "The Samuda Brothers built the Alhambra which has a Humphrys, Tennant and Dykes power type from Deptford."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 2
+      }
+    },
+    "cityServed": {
+      "predicate": "cityServed",
+      "components": [
+        {
+          "factor": "location_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "expansion_rule",
+      "confidence": 0.68,
+      "evidence": {
+        "count": 4,
+        "categories": {
+          "Airport": 4
+        },
+        "candidate_factors": [
+          "city",
+          "served"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-29353",
+            "category": "Airport",
+            "subj": "Abilene Regional Airport",
+            "pred": "cityServed",
+            "obj": "Abilene, Texas",
+            "text": "Abilene regional airport serves Abilene, Taylor County, Texas in the United States and has a runway length of 2195.0."
+          },
+          {
+            "example_id": "web_nlg_en-train-7782",
+            "category": "Airport",
+            "subj": "Afonso Pena International Airport",
+            "pred": "cityServed",
+            "obj": "Curitiba",
+            "text": "Afonso Pena International Airport serves the city of Curitiba, part of the South Region in Brazil."
+          },
+          {
+            "example_id": "web_nlg_en-train-22347",
+            "category": "Airport",
+            "subj": "Afonso Pena International Airport",
+            "pred": "cityServed",
+            "obj": "Curitiba",
+            "text": "Afonso Pena International Airport serves the city of Curitiba, Parana. Afonso Pena International Airport in Infraero, Brasilia operates there."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 2
+      }
+    },
+    "course": {
+      "predicate": "course",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "creative_work",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "Food": 1
+        },
+        "candidate_factors": [
+          "course"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-4654",
+            "category": "Food",
+            "subj": "Batchoy",
+            "pred": "course",
+            "obj": "Soup",
+            "text": "Batchoy is a type of soup."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 2
+      }
+    },
+    "discoverer": {
+      "predicate": "discoverer",
+      "components": [
+        {
+          "factor": "astronomical_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "quantity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "expansion_rule",
+      "confidence": 0.68,
+      "evidence": {
+        "count": 3,
+        "categories": {
+          "CelestialBody": 3
+        },
+        "candidate_factors": [
+          "discoverer"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-31334",
+            "category": "CelestialBody",
+            "subj": "(410777) 2009 FD",
+            "pred": "discoverer",
+            "obj": "Spacewatch",
+            "text": "The celestial body known as (410777) 2009 FD, discovered by Spacewatch, has an orbital period of 39447000, a periapsis of 88234300000.0, an epoch date of 27 June 2015, and an apoapsis of 259776702.47055 km."
+          },
+          {
+            "example_id": "web_nlg_en-train-24885",
+            "category": "CelestialBody",
+            "subj": "107 Camilla",
+            "pred": "discoverer",
+            "obj": "N. R. Pogson",
+            "text": "With an orbital period of 2368.05 days, 107 Camilla, was discovered by Nottingham born, N R Pogson, who died in Chennai."
+          },
+          {
+            "example_id": "web_nlg_en-train-24792",
+            "category": "CelestialBody",
+            "subj": "101 Helena",
+            "pred": "discoverer",
+            "obj": "James Craig Watson",
+            "text": "101 Helena was discovered by the Canadian James Craig Watson, who died in Madison, Wisconsin. Its apoapsis is 441092000.0 kilometres."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 2
+      }
+    },
+    "escapeVelocity": {
+      "predicate": "escapeVelocity",
+      "components": [
+        {
+          "factor": "astronomical_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "quantity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "expansion_rule",
+      "confidence": 0.68,
+      "evidence": {
+        "count": 3,
+        "categories": {
+          "CelestialBody": 3
+        },
+        "candidate_factors": [
+          "escape",
+          "velocity"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-31534",
+            "category": "CelestialBody",
+            "subj": "110 Lydia",
+            "pred": "escapeVelocity",
+            "obj": "0.0455 (kilometrePerSeconds)",
+            "text": "110 Lydia, mass 6.7kg, has an orbital period of 142603000.0 and a periapsis of 377016000000.0. Its epoch date is 31 December 2006 and the escape velocity is 0.0455 km/s."
+          },
+          {
+            "example_id": "web_nlg_en-train-31389",
+            "category": "CelestialBody",
+            "subj": "101 Helena",
+            "pred": "escapeVelocity",
+            "obj": "0.0348 (kilometrePerSeconds)",
+            "text": "101 Helena has a mass of 3.0 kilograms, an orbital period of 1516.6700000000003 days and its epoch date was on 2006-12-31. Its apoapsis is 441092000.0 kilometres and it has an escape velocity of 0.0348 km/s."
+          },
+          {
+            "example_id": "web_nlg_en-train-31363",
+            "category": "CelestialBody",
+            "subj": "1000 Piazzia",
+            "pred": "escapeVelocity",
+            "obj": "0.0252 (kilometrePerSeconds)",
+            "text": "1000 Piazzia, which has the epoch date of 27 June 2015, has a mass of 1.1 kgs and an orbital period of 488160.0. The escape velocity is 0.0252 km per sec and a periapsis of 352497000000.0."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 2
+      }
+    },
+    "fullName": {
+      "predicate": "fullName",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "organization",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "SportsTeam": 1
+        },
+        "candidate_factors": [
+          "full",
+          "name"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-21023",
+            "category": "SportsTeam",
+            "subj": "A.C. Lumezzane",
+            "pred": "fullName",
+            "obj": "Associazione Calcio Lumezzane SpA",
+            "text": "The full name of A.C. Lumezzane is Associazione Calcio Lumezzane SpA, they have 4150 members and play in the Lega Pro league."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 2
+      }
+    },
+    "hasToItsWest": {
+      "predicate": "hasToItsWest",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 2,
+        "categories": {
+          "Monument": 1,
+          "University": 1
+        },
+        "candidate_factors": [
+          "has",
+          "to",
+          "its",
+          "west"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-33370",
+            "category": "Monument",
+            "subj": "Adams County, Pennsylvania",
+            "pred": "hasToItsWest",
+            "obj": "Franklin County, Pennsylvania",
+            "text": "The 11th Mississippi Infantry Monument is located in Adams County, Pennsylvania. To the west of Adams County lies Franklin County, to the north is Cumberland County and the southwest lies Frederick County - all in Pennsylvania. To the southeast of Adams County lies Carroll County, Maryland."
+          },
+          {
+            "example_id": "web_nlg_en-train-35308",
+            "category": "University",
+            "subj": "Karnataka",
+            "pred": "hasToItsWest",
+            "obj": "Arabian Sea",
+            "text": "The Visvesvaraya Technological University affiliated Acharya Institute of Technology in Bangalore, Karnataka was given the 'Technical Campus' status by the All India Council for Technical Education in Mumbai. Karnataka has the Arabian Sea to its west. Bangalore was founded by Kempe Gowda I."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 2
+      }
+    },
+    "ingredient": {
+      "predicate": "ingredient",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "creative_work",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 4,
+        "categories": {
+          "Food": 4
+        },
+        "candidate_factors": [
+          "ingredient"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-32609",
+            "category": "Food",
+            "subj": "Siomay",
+            "pred": "ingredient",
+            "obj": "Peanut sauce",
+            "text": "Jusuf Kalla is a leader in Indonesia, where there is a traditional dish called batagor. The dish is similar to siomay (which contains peanut sauce) and shumai."
+          },
+          {
+            "example_id": "web_nlg_en-train-11424",
+            "category": "Food",
+            "subj": "Arrabbiata sauce",
+            "pred": "ingredient",
+            "obj": "Tomato",
+            "text": "Tomato is an ingredient in Arrabbiata sauce which is a traditional dish from Rome."
+          },
+          {
+            "example_id": "web_nlg_en-train-11395",
+            "category": "Food",
+            "subj": "Arem-arem",
+            "pred": "ingredient",
+            "obj": "Banana leaf",
+            "text": "Arem-arem is nationwide in Indonesia, but more specific to Java and one of the ingredients is banana leaf."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 2
+      }
+    },
+    "keyPerson": {
+      "predicate": "keyPerson",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "organization",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "Company": 1
+        },
+        "candidate_factors": [
+          "key",
+          "person"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-11246",
+            "category": "Company",
+            "subj": "Hypermarcas",
+            "pred": "keyPerson",
+            "obj": "CEO",
+            "text": "Hypermarcas, whose key person is their CEO, produces pharmaceutical drugs."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 2
+      }
+    },
+    "numberOfPages": {
+      "predicate": "numberOfPages",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "creative_work",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "quantity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 2,
+        "categories": {
+          "WrittenWork": 2
+        },
+        "candidate_factors": [
+          "number",
+          "of",
+          "pages"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-28884",
+            "category": "WrittenWork",
+            "subj": "1634: The Ram Rebellion",
+            "pred": "numberOfPages",
+            "obj": "512",
+            "text": "The hardcover book, 1634: The Ram Rebellion was written by Eric Flint, Virginia DeMarce, et al. It has 512 pages altogether and has an ISBN number of 1-4165-2060-0."
+          },
+          {
+            "example_id": "web_nlg_en-train-21870",
+            "category": "WrittenWork",
+            "subj": "A Wizard of Mars",
+            "pred": "numberOfPages",
+            "obj": "560",
+            "text": "A Wizard of Mars was written by Diane Duane and published in hardback with 560 pages."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 2
+      }
+    },
+    "numberOfStudents": {
+      "predicate": "numberOfStudents",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "organization",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "quantity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "University": 1
+        },
+        "candidate_factors": [
+          "number",
+          "of",
+          "students"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-34782",
+            "category": "University",
+            "subj": "Accademia di Architettura di Mendrisio",
+            "pred": "numberOfStudents",
+            "obj": "600",
+            "text": "The Accademia di Architettura di Mendrisio is located in Ticino, Mendrisio, Switzerland. It has 100 academic staff and 600 students. It was established in 1996."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 2
+      }
+    },
+    "office": {
+      "predicate": "office",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "person",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 2,
+        "categories": {
+          "Politician": 2
+        },
+        "candidate_factors": [
+          "office"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-13123",
+            "category": "Politician",
+            "subj": "Agnes Kant",
+            "pred": "office",
+            "obj": "Socialist Party (Netherlands)",
+            "text": "Agnes Kant held office in the Socialist Party of the Netherlands which was led by Emile Roemer."
+          },
+          {
+            "example_id": "web_nlg_en-train-20749",
+            "category": "Politician",
+            "subj": "Alfred N. Phillips",
+            "pred": "office",
+            "obj": "United States House of Representatives",
+            "text": "Albert E. Austin succeeded Alfred N. Phillips who was born in Connecticut and worked at the United States House of Representatives."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 2
+      }
+    },
+    "periapsis": {
+      "predicate": "periapsis",
+      "components": [
+        {
+          "factor": "astronomical_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "quantity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "expansion_rule",
+      "confidence": 0.68,
+      "evidence": {
+        "count": 4,
+        "categories": {
+          "CelestialBody": 4
+        },
+        "candidate_factors": [
+          "periapsis"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-31534",
+            "category": "CelestialBody",
+            "subj": "110 Lydia",
+            "pred": "periapsis",
+            "obj": "377016000000.0",
+            "text": "110 Lydia, mass 6.7kg, has an orbital period of 142603000.0 and a periapsis of 377016000000.0. Its epoch date is 31 December 2006 and the escape velocity is 0.0455 km/s."
+          },
+          {
+            "example_id": "web_nlg_en-train-24975",
+            "category": "CelestialBody",
+            "subj": "1101 Clematis",
+            "pred": "periapsis",
+            "obj": "445895000000.0",
+            "text": "1101 Clematis, having a mass of 5.7 kilograms, an orbital period of 183309000.0, and a periapsis of 445895000000, has its epoch on the 31st of July 2016."
+          },
+          {
+            "example_id": "web_nlg_en-train-31334",
+            "category": "CelestialBody",
+            "subj": "(410777) 2009 FD",
+            "pred": "periapsis",
+            "obj": "88234300000.0",
+            "text": "The celestial body known as (410777) 2009 FD, discovered by Spacewatch, has an orbital period of 39447000, a periapsis of 88234300000.0, an epoch date of 27 June 2015, and an apoapsis of 259776702.47055 km."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 2
+      }
+    },
+    "state": {
+      "predicate": "state",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "organization",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 4,
+        "categories": {
+          "Monument": 1,
+          "University": 3
+        },
+        "candidate_factors": [
+          "state"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-34650",
+            "category": "Monument",
+            "subj": "11th Mississippi Infantry Monument",
+            "pred": "state",
+            "obj": "Pennsylvania",
+            "text": "The 11th Mississippi Infantry Monument was established in 2000 and categorised as contributing property. It is located in Gettysburg, Adams County, Pennsylvania, United States."
+          },
+          {
+            "example_id": "web_nlg_en-train-21511",
+            "category": "University",
+            "subj": "AWH Engineering College",
+            "pred": "state",
+            "obj": "Kerala",
+            "text": "With a staff compliment of 250, AWH Engineering College is located in Kerala, the leader of that state is named Kochi."
+          },
+          {
+            "example_id": "web_nlg_en-train-34808",
+            "category": "University",
+            "subj": "Acharya Institute of Technology",
+            "pred": "state",
+            "obj": "Karnataka",
+            "text": "The city of Bangalore in the state of Karnataka, India which lies southwest of Telangana is the location of the Acharya Institute of Technology affiliated to the Visvesvaraya Technological University. The Institute was given Technical Campus status by the All India Council for Technical Education based in Mumbai."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 2
+      }
+    },
+    "subsidiary": {
+      "predicate": "subsidiary",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 2,
+        "categories": {
+          "Company": 1,
+          "MeanOfTransportation": 1
+        },
+        "candidate_factors": [
+          "subsidiary"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-34634",
+            "category": "Company",
+            "subj": "Hypermarcas",
+            "pred": "subsidiary",
+            "obj": "Mantecorp",
+            "text": "Hypermarcas is an S.A. corporation which produces pharmaceutical drugs and healthcare products. They employ 10,252 people and own the subsidiary Mantecorp. Their net income is $108,600,000."
+          },
+          {
+            "example_id": "web_nlg_en-train-5486",
+            "category": "MeanOfTransportation",
+            "subj": "Audi",
+            "pred": "subsidiary",
+            "obj": "Lamborghini",
+            "text": "Lamborghini is a subsidiary of Audi."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 2
+      }
+    },
+    "type": {
+      "predicate": "type",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "organization",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 3,
+        "categories": {
+          "Company": 3
+        },
+        "candidate_factors": [
+          "type"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-34634",
+            "category": "Company",
+            "subj": "Hypermarcas",
+            "pred": "type",
+            "obj": "S.A. (corporation)",
+            "text": "Hypermarcas is an S.A. corporation which produces pharmaceutical drugs and healthcare products. They employ 10,252 people and own the subsidiary Mantecorp. Their net income is $108,600,000."
+          },
+          {
+            "example_id": "web_nlg_en-train-11294",
+            "category": "Company",
+            "subj": "Trane",
+            "pred": "type",
+            "obj": "Subsidiary",
+            "text": "Trane is a subsidiary company that makes building management systems."
+          },
+          {
+            "example_id": "web_nlg_en-train-11254",
+            "category": "Company",
+            "subj": "Hypermarcas",
+            "pred": "type",
+            "obj": "S.A. (corporation)",
+            "text": "The S.A. (corporation) of Hypermarcas employs a total of 10252 people."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 2
+      }
+    },
+    "academicStaffSize": {
+      "predicate": "academicStaffSize",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "organization",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 3,
+        "categories": {
+          "University": 3
+        },
+        "candidate_factors": [
+          "academic",
+          "staff",
+          "size"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-34782",
+            "category": "University",
+            "subj": "Accademia di Architettura di Mendrisio",
+            "pred": "academicStaffSize",
+            "obj": "100",
+            "text": "The Accademia di Architettura di Mendrisio is located in Ticino, Mendrisio, Switzerland. It has 100 academic staff and 600 students. It was established in 1996."
+          },
+          {
+            "example_id": "web_nlg_en-train-34119",
+            "category": "University",
+            "subj": "School of Business and Social Sciences at the Aarhus University",
+            "pred": "academicStaffSize",
+            "obj": "737",
+            "text": "The School of Business and Social Sciences at the Aarhus University was established in Aarhus, Denmark in 1928. The School is affiliated with the European University Association and has 737 academic staff."
+          },
+          {
+            "example_id": "web_nlg_en-train-21511",
+            "category": "University",
+            "subj": "AWH Engineering College",
+            "pred": "academicStaffSize",
+            "obj": "250",
+            "text": "With a staff compliment of 250, AWH Engineering College is located in Kerala, the leader of that state is named Kochi."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "activeYearsStartYear": {
+      "predicate": "activeYearsStartYear",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "person",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "time",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 3,
+        "categories": {
+          "Artist": 3
+        },
+        "candidate_factors": [
+          "active",
+          "years",
+          "start",
+          "year"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-15134",
+            "category": "Artist",
+            "subj": "Aaron Bertram",
+            "pred": "activeYearsStartYear",
+            "obj": "1998",
+            "text": "Aaron Bertram began performing in 1998 and played for the Suburban Legends Band and also for the Kids Imagine Nation."
+          },
+          {
+            "example_id": "web_nlg_en-train-30330",
+            "category": "Artist",
+            "subj": "Andrew Rayel",
+            "pred": "activeYearsStartYear",
+            "obj": "2009",
+            "text": "Andrew Rayel is a Trance musician associated with Christian Burns and Jonathan Mendelsohn. He was born in Chisinau, Moldova, and started performing in 2009."
+          },
+          {
+            "example_id": "web_nlg_en-train-30106",
+            "category": "Artist",
+            "subj": "Alex Day",
+            "pred": "activeYearsStartYear",
+            "obj": "2006",
+            "text": "U.K. born acoustic musician Alex Day is associated with the Chameleon Circuit and Charlie McDonnell. He began performing in 2006."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "anthem": {
+      "predicate": "anthem",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "person",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "Athlete": 1
+        },
+        "candidate_factors": [
+          "anthem"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-validation-802",
+            "edge_index": 0,
+            "category": "Athlete",
+            "subj": "Canada",
+            "pred": "anthem",
+            "obj": "O Canada",
+            "text": "Alex Plante was born in Canada; where the national anthem is O Canada and the leader is, Elizabeth II."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "assembly": {
+      "predicate": "assembly",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "MeanOfTransportation": 1
+        },
+        "candidate_factors": [
+          "assembly"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-validation-615",
+            "edge_index": 1,
+            "category": "MeanOfTransportation",
+            "subj": "Alfa Romeo 164",
+            "pred": "assembly",
+            "obj": "Milan",
+            "text": "The Alfa Romeo 164, which was assembled in Milan, and the Fiat Croma are related means of transportation."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "award": {
+      "predicate": "award",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "creative_work",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 3,
+        "categories": {
+          "Astronaut": 1,
+          "ComicsCharacter": 2
+        },
+        "candidate_factors": [
+          "award"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-34417",
+            "category": "Astronaut",
+            "subj": "Alan Shepard",
+            "pred": "award",
+            "obj": "Distinguished Service Medal (United States Navy)",
+            "text": "Alan Shepard was born in New Hampshire on 18th November 1923, graduated from NWC with an M.A. in 1957, retired on 1st August 1974 and died in California. He was awarded the Distinguished Service Medal by The United States Navy."
+          },
+          {
+            "example_id": "web_nlg_en-train-4076",
+            "category": "ComicsCharacter",
+            "subj": "Roy Thomas",
+            "pred": "award",
+            "obj": "Academy of Comic Book Arts",
+            "text": "Roy Thomas won an award from the Academy of Comic Book Arts."
+          },
+          {
+            "example_id": "web_nlg_en-train-11001",
+            "category": "ComicsCharacter",
+            "subj": "Sheldon Moldoff",
+            "pred": "award",
+            "obj": "Inkpot Award",
+            "text": "Sheldon Moldoff created the Black Pirate and won the Inkpot Award."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "buildingStartDate": {
+      "predicate": "buildingStartDate",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "time",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "Building": 1
+        },
+        "candidate_factors": [
+          "building",
+          "start",
+          "date"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-validation-821",
+            "edge_index": 2,
+            "category": "Building",
+            "subj": "Alan B. Miller Hall",
+            "pred": "buildingStartDate",
+            "obj": "30 March 2007",
+            "text": "The College of William and Mary is the owner of the Alan B. Miller Hall in Virginia. The building was begun on 30 March 2007."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "category": {
+      "predicate": "category",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 2,
+        "categories": {
+          "Monument": 2
+        },
+        "candidate_factors": [
+          "category"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-34650",
+            "category": "Monument",
+            "subj": "11th Mississippi Infantry Monument",
+            "pred": "category",
+            "obj": "Contributing property",
+            "text": "The 11th Mississippi Infantry Monument was established in 2000 and categorised as contributing property. It is located in Gettysburg, Adams County, Pennsylvania, United States."
+          },
+          {
+            "example_id": "web_nlg_en-train-34681",
+            "category": "Monument",
+            "subj": "11th Mississippi Infantry Monument",
+            "pred": "category",
+            "obj": "Contributing property",
+            "text": "The 11th Mississippi Infantry Monument is located in Adams County, Pennsylvania. It was established in 2000 and it is categorized as a Contributing Property. Adams County has Cumberland County (Pa) to its north; Maryland's Frederick County to its north east and Carroll County, Maryland to its southeast."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "champions": {
+      "predicate": "champions",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "organization",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "SportsTeam": 1
+        },
+        "candidate_factors": [
+          "champions"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-validation-1017",
+            "edge_index": 2,
+            "category": "SportsTeam",
+            "subj": "Campeonato Brasileiro Série C",
+            "pred": "champions",
+            "obj": "Vila Nova Futebol Clube",
+            "text": "Agremiação Sportiva Arapiraquense play at their ground Estadio Municipal Coaracy da Mata Fonseca in the Campeonato Brasileiro Série C league. The champions of this league are Vila Nova Futebol Clube."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "class": {
+      "predicate": "class",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "MeanOfTransportation": 1
+        },
+        "candidate_factors": [
+          "class"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-validation-270",
+            "edge_index": 0,
+            "category": "MeanOfTransportation",
+            "subj": "Alfa Romeo 164",
+            "pred": "class",
+            "obj": "Executive car",
+            "text": "The Alfa Romeo 164 is an executive class car."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "colour": {
+      "predicate": "colour",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "person",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "Politician": 1
+        },
+        "candidate_factors": [
+          "colour"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-validation-1321",
+            "edge_index": 2,
+            "category": "Politician",
+            "subj": "New Democracy (Greece)",
+            "pred": "colour",
+            "obj": "Blue",
+            "text": "Adonis Georgiadis, a member of the Greek New Democracy Party (the party's colour is blue), was in office while Antonis Samaras was Prime Minister. Konstantinos Mitsotakis was the successor to Antonis Samaras."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "diameter": {
+      "predicate": "diameter",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "MeanOfTransportation": 1
+        },
+        "candidate_factors": [
+          "diameter"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-validation-1559",
+            "edge_index": 4,
+            "category": "MeanOfTransportation",
+            "subj": "Ariane 5",
+            "pred": "diameter",
+            "obj": "5.4 (metres)",
+            "text": "The Ariane 5 had its first voyage August 11, 2005 and its last flight on December 18, 2009. It was manufactured by Airbus Defence and Space and launched from the Guiana Space Centre. Its diameter is 5.4 metres."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "discovered": {
+      "predicate": "discovered",
+      "components": [
+        {
+          "factor": "astronomical_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "quantity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "expansion_rule",
+      "confidence": 0.68,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "CelestialBody": 1
+        },
+        "candidate_factors": [
+          "discovered"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-validation-1183",
+            "edge_index": 3,
+            "category": "CelestialBody",
+            "subj": "107 Camilla",
+            "pred": "discovered",
+            "obj": "2001-03-01",
+            "text": "N.R. Pogson was born in Nottingham and died in Chennai. He discovered the 107 Camilla asteroid on the 1st March 2001."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "district": {
+      "predicate": "district",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "Monument": 1
+        },
+        "candidate_factors": [
+          "district"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-validation-1635",
+            "edge_index": 3,
+            "category": "Monument",
+            "subj": "14th New Jersey Volunteer Infantry Monument",
+            "pred": "district",
+            "obj": "Monocacy National Battlefield",
+            "text": "The 14th New Jersey Volunteer Infantry Monument is located at the Monocacy National Battlefield near Frederick, Frederick County, Maryland. The monument was established 1907-07-11 and belongs to the category of Historic districts in the United States. The monument has been provided by the National Park Service."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "elevationAboveTheSeaLevel": {
+      "predicate": "elevationAboveTheSeaLevel",
+      "components": [
+        {
+          "factor": "transport_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "quantity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "expansion_rule",
+      "confidence": 0.68,
+      "evidence": {
+        "count": 3,
+        "categories": {
+          "Airport": 2,
+          "City": 1
+        },
+        "candidate_factors": [
+          "elevation",
+          "above",
+          "the",
+          "sea",
+          "level"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-22599",
+            "category": "Airport",
+            "subj": "Antwerp International Airport",
+            "pred": "elevationAboveTheSeaLevel",
+            "obj": "12.0",
+            "text": "Antwerp International airport, operated by Flemish Government and owned by the Flemish Region, has a runway length of 1510.0 and is 12 metres above sea level."
+          },
+          {
+            "example_id": "web_nlg_en-train-3401",
+            "category": "City",
+            "subj": "Amarillo, Texas",
+            "pred": "elevationAboveTheSeaLevel",
+            "obj": "1099.0",
+            "text": "Amarillo Texas is elevated 1099.0 above sea level."
+          },
+          {
+            "example_id": "web_nlg_en-train-14697",
+            "category": "Airport",
+            "subj": "Adolfo Suárez Madrid–Barajas Airport",
+            "pred": "elevationAboveTheSeaLevel",
+            "obj": "610.0",
+            "text": "The Adolfo Suárez Madrid–Barajas Airport is in San Sebastián de los Reyes, Spain, and has an elevation of 610.0 metres above sea level."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "finalFlight": {
+      "predicate": "finalFlight",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "MeanOfTransportation": 1
+        },
+        "candidate_factors": [
+          "final",
+          "flight"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-validation-1559",
+            "edge_index": 0,
+            "category": "MeanOfTransportation",
+            "subj": "Ariane 5",
+            "pred": "finalFlight",
+            "obj": "2009-12-18",
+            "text": "The Ariane 5 had its first voyage August 11, 2005 and its last flight on December 18, 2009. It was manufactured by Airbus Defence and Space and launched from the Guiana Space Centre. Its diameter is 5.4 metres."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "firstAired": {
+      "predicate": "firstAired",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "creative_work",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 3,
+        "categories": {
+          "ComicsCharacter": 3
+        },
+        "candidate_factors": [
+          "first",
+          "aired"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-25671",
+            "category": "ComicsCharacter",
+            "subj": "Bananaman",
+            "pred": "firstAired",
+            "obj": "1983-10-03",
+            "text": "Bananaman was created by Steve Bright and starred Tim Brooke-Taylor. It was first aired on 3 October 1983, being broadcast by the BBC."
+          },
+          {
+            "example_id": "web_nlg_en-train-25653",
+            "category": "ComicsCharacter",
+            "subj": "Bananaman",
+            "pred": "firstAired",
+            "obj": "1983-10-03",
+            "text": "Bananaman was first broadcast by the BBC on 3 October 1983. It was created by Steve Bright and starred Jill Shilling."
+          },
+          {
+            "example_id": "web_nlg_en-train-32174",
+            "category": "ComicsCharacter",
+            "subj": "Bananaman",
+            "pred": "firstAired",
+            "obj": "1983-10-03",
+            "text": "Bananaman first aired on the BBC on October 3rd, 1983 and broadcast its last episode on April 15th, 1986. Steve Bright created the series which starred Bill Oddie."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "followedBy": {
+      "predicate": "followedBy",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "creative_work",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "WrittenWork": 1
+        },
+        "candidate_factors": [
+          "followed",
+          "by"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-7433",
+            "category": "WrittenWork",
+            "subj": "Above the Veil",
+            "pred": "followedBy",
+            "obj": "Into Battle (novel)",
+            "text": "The novel Into Battle followed Above the Veil."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "formerName": {
+      "predicate": "formerName",
+      "components": [
+        {
+          "factor": "astronomical_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "quantity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "expansion_rule",
+      "confidence": 0.68,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "CelestialBody": 1
+        },
+        "candidate_factors": [
+          "former",
+          "name"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-17224",
+            "category": "CelestialBody",
+            "subj": "(66063) 1998 RO1",
+            "pred": "formerName",
+            "obj": "1999 SN5",
+            "text": "The celestial body known as (66063) 1998 RO1 was formerly called 1999 SN5. It has an orbital period of 360.29 days and an epoch date of 2013-11-04."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "founder": {
+      "predicate": "founder",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "organization",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 2,
+        "categories": {
+          "University": 2
+        },
+        "candidate_factors": [
+          "founder"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-21505",
+            "category": "University",
+            "subj": "Bangalore",
+            "pred": "founder",
+            "obj": "Kempe Gowda I",
+            "text": "Kempe Gowda is the founder of Bangalore, the location of the Acharya Institute of Technology whose President is B M Reddy."
+          },
+          {
+            "example_id": "web_nlg_en-train-35308",
+            "category": "University",
+            "subj": "Bangalore",
+            "pred": "founder",
+            "obj": "Kempe Gowda I",
+            "text": "The Visvesvaraya Technological University affiliated Acharya Institute of Technology in Bangalore, Karnataka was given the 'Technical Campus' status by the All India Council for Technical Education in Mumbai. Karnataka has the Arabian Sea to its west. Bangalore was founded by Kempe Gowda I."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "foundingDate": {
+      "predicate": "foundingDate",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "organization",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "time",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "Company": 1
+        },
+        "candidate_factors": [
+          "founding",
+          "date"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-18427",
+            "category": "Company",
+            "subj": "Chinabank",
+            "pred": "foundingDate",
+            "obj": "1920-08-16",
+            "text": "Chinabank, founded on 16th August, 1920, has 5594 workers who provide banking services to customers."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "genus": {
+      "predicate": "genus",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "creative_work",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "Food": 1
+        },
+        "candidate_factors": [
+          "genus"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-validation-229",
+            "edge_index": 0,
+            "category": "Food",
+            "subj": "Avocado",
+            "pred": "genus",
+            "obj": "Persea",
+            "text": "The genus of the avocado is persea."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "hasToItsNortheast": {
+      "predicate": "hasToItsNortheast",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "organization",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "University": 1
+        },
+        "candidate_factors": [
+          "has",
+          "to",
+          "its",
+          "northeast"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-34808",
+            "category": "University",
+            "subj": "Karnataka",
+            "pred": "hasToItsNortheast",
+            "obj": "Telangana",
+            "text": "The city of Bangalore in the state of Karnataka, India which lies southwest of Telangana is the location of the Acharya Institute of Technology affiliated to the Visvesvaraya Technological University. The Institute was given Technical Campus status by the All India Council for Technical Education based in Mumbai."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "headquarter": {
+      "predicate": "headquarter",
+      "components": [
+        {
+          "factor": "location_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "expansion_rule",
+      "confidence": 0.68,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "Airport": 1
+        },
+        "candidate_factors": [
+          "headquarter"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-validation-33",
+            "edge_index": 0,
+            "category": "Airport",
+            "subj": "Port Authority of New York and New Jersey",
+            "pred": "headquarter",
+            "obj": "Four World Trade Center",
+            "text": "Port Authority of New York and New Jersey headquarter is Four World Trade Center."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "height": {
+      "predicate": "height",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "person",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "Athlete": 1
+        },
+        "candidate_factors": [
+          "height"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-validation-1135",
+            "edge_index": 2,
+            "category": "Athlete",
+            "subj": "Alan Martin (footballer)",
+            "pred": "height",
+            "obj": "185.42 (centimetres)",
+            "text": "Alan Martin is a footballer who is 185.42 cm in height and was born on 1 January 1989. He plays for both Hamilton Academical FC and Crewe Alexandra FC."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "higher": {
+      "predicate": "higher",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "person",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "Astronaut": 1
+        },
+        "candidate_factors": [
+          "higher"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-1544",
+            "category": "Astronaut",
+            "subj": "Distinguished Service Medal (United States Navy)",
+            "pred": "higher",
+            "obj": "Department of Commerce Gold Medal",
+            "text": "Distinguished Service Medal from United States Navy ranks higher than Department of Commerce Gold Medal."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "inOfficeWhilePrimeMinister": {
+      "predicate": "inOfficeWhilePrimeMinister",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "person",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "Politician": 1
+        },
+        "candidate_factors": [
+          "in",
+          "office",
+          "while",
+          "prime",
+          "minister"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-validation-1321",
+            "edge_index": 0,
+            "category": "Politician",
+            "subj": "Adonis Georgiadis",
+            "pred": "inOfficeWhilePrimeMinister",
+            "obj": "Antonis Samaras",
+            "text": "Adonis Georgiadis, a member of the Greek New Democracy Party (the party's colour is blue), was in office while Antonis Samaras was Prime Minister. Konstantinos Mitsotakis was the successor to Antonis Samaras."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "largestCity": {
+      "predicate": "largestCity",
+      "components": [
+        {
+          "factor": "location_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "expansion_rule",
+      "confidence": 0.68,
+      "evidence": {
+        "count": 4,
+        "categories": {
+          "Monument": 2,
+          "City": 2
+        },
+        "candidate_factors": [
+          "largest",
+          "city"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-35266",
+            "category": "Monument",
+            "subj": "Turkey",
+            "pred": "largestCity",
+            "obj": "Istanbul",
+            "text": "The Turkish leader (official title President of Turkey) is Ahmet Davutoglu. Pietro Canonica designed the Ataturk Monument in Izmir and it was inaugurated on 27th of July, 1932. Turkey's largest City is Istanbul and the currency is the Turkish lira."
+          },
+          {
+            "example_id": "web_nlg_en-train-31885",
+            "category": "City",
+            "subj": "Washington (state)",
+            "pred": "largestCity",
+            "obj": "Seattle",
+            "text": "Auburn (Pierce County, U.S.) and Seattle, are both located in the state of Washington. Seattle is the largest city in the state of Washington, and the capital of the United States is Washington, D.C."
+          },
+          {
+            "example_id": "web_nlg_en-train-3832",
+            "category": "City",
+            "subj": "United States",
+            "pred": "largestCity",
+            "obj": "New York City",
+            "text": "New York City is the largest city of the United States."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "launchSite": {
+      "predicate": "launchSite",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "MeanOfTransportation": 1
+        },
+        "candidate_factors": [
+          "launch",
+          "site"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-validation-1559",
+            "edge_index": 3,
+            "category": "MeanOfTransportation",
+            "subj": "Ariane 5",
+            "pred": "launchSite",
+            "obj": "Guiana Space Centre",
+            "text": "The Ariane 5 had its first voyage August 11, 2005 and its last flight on December 18, 2009. It was manufactured by Airbus Defence and Space and launched from the Guiana Space Centre. Its diameter is 5.4 metres."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "legislature": {
+      "predicate": "legislature",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "Monument": 1
+        },
+        "candidate_factors": [
+          "legislature"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-35230",
+            "category": "Monument",
+            "subj": "Azerbaijan",
+            "pred": "legislature",
+            "obj": "National Assembly (Azerbaijan)",
+            "text": "Baku is the capital city of Azerbaijan where the legislature is the National Assembly and the leader is Artur Rasizade. The city is the location of the Baku Turkish Martyrs' memorial designed by Huseyin Butuner and Hilmi Guner in red granite and white marble. The memorial commemorates the soldiers of the Ottoman army who were killed in the Battle of Baku."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "libraryofCongressClassification": {
+      "predicate": "libraryofCongressClassification",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "creative_work",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "WrittenWork": 1
+        },
+        "candidate_factors": [
+          "libraryof",
+          "congress",
+          "classification"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-validation-1366",
+            "edge_index": 1,
+            "category": "WrittenWork",
+            "subj": "A Severed Wasp",
+            "pred": "libraryofCongressClassification",
+            "obj": "PS3523.E55 S4 1982",
+            "text": "A Severed Wasp is available in print, with The Library of Congress Classification PS3523.E55 S4 1982. Its ISBN number is 0-374-26131-8, and its OCLC number is 8805735."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "longName": {
+      "predicate": "longName",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "organization",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "Company": 1
+        },
+        "candidate_factors": [
+          "long",
+          "name"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-validation-220",
+            "edge_index": 0,
+            "category": "Company",
+            "subj": "United States",
+            "pred": "longName",
+            "obj": "United States of America",
+            "text": "The full name of the United States is the United States of America."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "maidenFlight": {
+      "predicate": "maidenFlight",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "MeanOfTransportation": 1
+        },
+        "candidate_factors": [
+          "maiden",
+          "flight"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-validation-1559",
+            "edge_index": 1,
+            "category": "MeanOfTransportation",
+            "subj": "Ariane 5",
+            "pred": "maidenFlight",
+            "obj": "2005-08-11",
+            "text": "The Ariane 5 had its first voyage August 11, 2005 and its last flight on December 18, 2009. It was manufactured by Airbus Defence and Space and launched from the Guiana Space Centre. Its diameter is 5.4 metres."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "manager": {
+      "predicate": "manager",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "person",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 4,
+        "categories": {
+          "Athlete": 2,
+          "SportsTeam": 2
+        },
+        "candidate_factors": [
+          "manager"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-24044",
+            "category": "Athlete",
+            "subj": "FC Terek Grozny",
+            "pred": "manager",
+            "obj": "Rashid Rakhimov",
+            "text": "Aleksandr Prudnikov plays for FC Terek Grozny whose base is in Grozny and is managed by Rashid Rakhimov. He also plays for the Alania Vladikavkaz club."
+          },
+          {
+            "example_id": "web_nlg_en-train-6670",
+            "category": "SportsTeam",
+            "subj": "AEK Athens F.C.",
+            "pred": "manager",
+            "obj": "Gus Poyet",
+            "text": "AEK Athens are managed by Gus Poyet."
+          },
+          {
+            "example_id": "web_nlg_en-train-21181",
+            "category": "SportsTeam",
+            "subj": "A.S. Livorno Calcio",
+            "pred": "manager",
+            "obj": "Christian Panucci",
+            "text": "A.S. Livorno Calcio are managed by Christian Panucci who played football for Genoa C.F.C. and the Italy national football team."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "motto": {
+      "predicate": "motto",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "organization",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "University": 1
+        },
+        "candidate_factors": [
+          "motto"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-validation-1024",
+            "edge_index": 1,
+            "category": "University",
+            "subj": "Acharya Institute of Technology",
+            "pred": "motto",
+            "obj": "Nurturing Excellence",
+            "text": "The Acharya Institute of Technology is located in Bangalore, India and its motto is: \"Nurturing Excellence\"."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "nativeName": {
+      "predicate": "nativeName",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 2,
+        "categories": {
+          "Monument": 2
+        },
+        "candidate_factors": [
+          "native",
+          "name"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-33392",
+            "category": "Monument",
+            "subj": "Baku Turkish Martyrs' Memorial",
+            "pred": "nativeName",
+            "obj": "Türk Şehitleri Anıtı",
+            "text": "Turk Sehitleri Aniti is the local name of the red granite and white marble Baku Turkish Martyrs memorial. The memorial is located in Baku, Azerbaijan where the leader is Artur Rasizade. It is dedicated to the memory of the Ottoman army soldiers killed in the battle of Baku."
+          },
+          {
+            "example_id": "web_nlg_en-train-12759",
+            "category": "Monument",
+            "subj": "Baku Turkish Martyrs' Memorial",
+            "pred": "nativeName",
+            "obj": "Türk Şehitleri Anıtı",
+            "text": "The Baku Turkish Martyrs' Memorial is known in Turkish as Turk Sehitleri Aniti and the designers are Hüseyin Bütüner and Hilmi Güner."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "nearestCity": {
+      "predicate": "nearestCity",
+      "components": [
+        {
+          "factor": "location_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "expansion_rule",
+      "confidence": 0.68,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "Monument": 1
+        },
+        "candidate_factors": [
+          "nearest",
+          "city"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-validation-1635",
+            "edge_index": 4,
+            "category": "Monument",
+            "subj": "Monocacy National Battlefield",
+            "pred": "nearestCity",
+            "obj": "Frederick, Maryland",
+            "text": "The 14th New Jersey Volunteer Infantry Monument is located at the Monocacy National Battlefield near Frederick, Frederick County, Maryland. The monument was established 1907-07-11 and belongs to the category of Historic districts in the United States. The monument has been provided by the National Park Service."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "netIncome": {
+      "predicate": "netIncome",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "organization",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 3,
+        "categories": {
+          "Company": 3
+        },
+        "candidate_factors": [
+          "net",
+          "income"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-4212",
+            "category": "Company",
+            "subj": "Hypermarcas",
+            "pred": "netIncome",
+            "obj": "108600000",
+            "text": "Hypermarcas has a net income of 108,600,000."
+          },
+          {
+            "example_id": "web_nlg_en-train-34634",
+            "category": "Company",
+            "subj": "Hypermarcas",
+            "pred": "netIncome",
+            "obj": "108600000",
+            "text": "Hypermarcas is an S.A. corporation which produces pharmaceutical drugs and healthcare products. They employ 10,252 people and own the subsidiary Mantecorp. Their net income is $108,600,000."
+          },
+          {
+            "example_id": "web_nlg_en-train-4113",
+            "category": "Company",
+            "subj": "AmeriGas",
+            "pred": "netIncome",
+            "obj": "211200000",
+            "text": "AmeriGas earns 211200000 of net income."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "numberOfEmployees": {
+      "predicate": "numberOfEmployees",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "organization",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "quantity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 4,
+        "categories": {
+          "Company": 4
+        },
+        "candidate_factors": [
+          "number",
+          "of",
+          "employees"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-34634",
+            "category": "Company",
+            "subj": "Hypermarcas",
+            "pred": "numberOfEmployees",
+            "obj": "10252",
+            "text": "Hypermarcas is an S.A. corporation which produces pharmaceutical drugs and healthcare products. They employ 10,252 people and own the subsidiary Mantecorp. Their net income is $108,600,000."
+          },
+          {
+            "example_id": "web_nlg_en-train-18427",
+            "category": "Company",
+            "subj": "Chinabank",
+            "pred": "numberOfEmployees",
+            "obj": "5594",
+            "text": "Chinabank, founded on 16th August, 1920, has 5594 workers who provide banking services to customers."
+          },
+          {
+            "example_id": "web_nlg_en-train-25865",
+            "category": "Company",
+            "subj": "Trane",
+            "pred": "numberOfEmployees",
+            "obj": "29000",
+            "text": "The company Trane's industry is building materials. It has 29,000 employees. Trane is in Europe in Ireland."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "owningOrganisation": {
+      "predicate": "owningOrganisation",
+      "components": [
+        {
+          "factor": "organizational_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "organization",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "expansion_rule",
+      "confidence": 0.68,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "Monument": 1
+        },
+        "candidate_factors": [
+          "owning",
+          "organisation"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-validation-1635",
+            "edge_index": 5,
+            "category": "Monument",
+            "subj": "14th New Jersey Volunteer Infantry Monument",
+            "pred": "owningOrganisation",
+            "obj": "National Park Service",
+            "text": "The 14th New Jersey Volunteer Infantry Monument is located at the Monocacy National Battlefield near Frederick, Frederick County, Maryland. The monument was established 1907-07-11 and belongs to the category of Historic districts in the United States. The monument has been provided by the National Park Service."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "populationDensity": {
+      "predicate": "populationDensity",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "organization",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "quantity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "Company": 1
+        },
+        "candidate_factors": [
+          "population",
+          "density"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-validation-1520",
+            "edge_index": 4,
+            "category": "Company",
+            "subj": "Brazil",
+            "pred": "populationDensity",
+            "obj": "23.8",
+            "text": "Hypermarcas was founded January 1, 2001 as a pharmaceutical company primarily focusing on cosmetics. It's located in Brazil, which has as population density of 23.8."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "president": {
+      "predicate": "president",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "organization",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 3,
+        "categories": {
+          "University": 2,
+          "WrittenWork": 1
+        },
+        "candidate_factors": [
+          "president"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-21505",
+            "category": "University",
+            "subj": "Acharya Institute of Technology",
+            "pred": "president",
+            "obj": "B.M. Reddy",
+            "text": "Kempe Gowda is the founder of Bangalore, the location of the Acharya Institute of Technology whose President is B M Reddy."
+          },
+          {
+            "example_id": "web_nlg_en-train-28736",
+            "category": "University",
+            "subj": "Acharya Institute of Technology",
+            "pred": "president",
+            "obj": "B.M. Reddy",
+            "text": "The Acharya Institute of Technology is located in Bangalore, India. Its president is B.M. Reddy and it was established in 2000."
+          },
+          {
+            "example_id": "web_nlg_en-train-14486",
+            "category": "WrittenWork",
+            "subj": "Cornell University",
+            "pred": "president",
+            "obj": "Elizabeth Garrett",
+            "text": "Cornell University, with president Elizabeth Garrett, is the publisher of the Administrative Science Quarterly."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "publisher": {
+      "predicate": "publisher",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "creative_work",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 3,
+        "categories": {
+          "WrittenWork": 3
+        },
+        "candidate_factors": [
+          "publisher"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-7559",
+            "category": "WrittenWork",
+            "subj": "American Journal of Mathematics",
+            "pred": "publisher",
+            "obj": "Johns Hopkins University Press",
+            "text": "American Journal of Mathematics is published by the Johns Hopkins University Press."
+          },
+          {
+            "example_id": "web_nlg_en-train-14486",
+            "category": "WrittenWork",
+            "subj": "Administrative Science Quarterly",
+            "pred": "publisher",
+            "obj": "Cornell University",
+            "text": "Cornell University, with president Elizabeth Garrett, is the publisher of the Administrative Science Quarterly."
+          },
+          {
+            "example_id": "web_nlg_en-train-21986",
+            "category": "WrittenWork",
+            "subj": "Administrative Science Quarterly",
+            "pred": "publisher",
+            "obj": "Cornell University",
+            "text": "Cornell University, Ithaca, New York, publishes Administrative Science Quarterly and is affiliated with the Association of American Universities."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "recordLabel": {
+      "predicate": "recordLabel",
+      "components": [
+        {
+          "factor": "creative_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "person",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "organization",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "expansion_rule",
+      "confidence": 0.68,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "Artist": 1
+        },
+        "candidate_factors": [
+          "record",
+          "label"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-8632",
+            "category": "Artist",
+            "subj": "Alison O'Donnell",
+            "pred": "recordLabel",
+            "obj": "Deram Records",
+            "text": "Alison O'Donnell is signed with the pop music genre record label, Deram Records."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "revenue": {
+      "predicate": "revenue",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "organization",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "Company": 1
+        },
+        "candidate_factors": [
+          "revenue"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-validation-1657",
+            "edge_index": 6,
+            "category": "Company",
+            "subj": "Hypermarcas",
+            "pred": "revenue",
+            "obj": "1800000000",
+            "text": "Hypermarcas is a pharmaceutical company which produces healthcare products. Located in Sao Paulo, they employ 10,252 people, and own the subsidiary Mantecorp. They make $1,800,000,000 a year and have a net income of 108,600,000."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "runwayName": {
+      "predicate": "runwayName",
+      "components": [
+        {
+          "factor": "transport_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "measurement",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "expansion_rule",
+      "confidence": 0.68,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "Airport": 1
+        },
+        "candidate_factors": [
+          "runway",
+          "name"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-14852",
+            "category": "Airport",
+            "subj": "Allama Iqbal International Airport",
+            "pred": "runwayName",
+            "obj": "18L/36R",
+            "text": "The 18L/36R runway in Allama Iqbal International airport in Pakistan, has a length of 3310.0."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "selectedByNasa": {
+      "predicate": "selectedByNasa",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "person",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 5,
+        "categories": {
+          "Astronaut": 5
+        },
+        "candidate_factors": [
+          "selected",
+          "by",
+          "nasa"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-34525",
+            "category": "Astronaut",
+            "subj": "Elliot See",
+            "pred": "selectedByNasa",
+            "obj": "1962",
+            "text": "Former NASA Astronaut Elliot See has died in Saint Louis. The American was born in Dallas and graduated from the University of Texas in Austin before being chosen by NASA in 1962."
+          },
+          {
+            "example_id": "web_nlg_en-train-35079",
+            "category": "Astronaut",
+            "subj": "Elliot See",
+            "pred": "selectedByNasa",
+            "obj": "1962",
+            "text": "Elliot See, a US national, was born in Dallas and graduated from the University of Texas at Austin. He flew as a test pilot and was selected by NASA in 1962. He died on 28 February 1966 in St Louis."
+          },
+          {
+            "example_id": "web_nlg_en-train-30541",
+            "category": "Astronaut",
+            "subj": "Alan Bean",
+            "pred": "selectedByNasa",
+            "obj": "1963",
+            "text": "Retired NASA test pilot Alan Bean was a student at UT Austin. He received his B.S. in 1955. Alan Bean was born in Wheeler, Texas and was chosen by NASA in 1963."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "series": {
+      "predicate": "series",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "creative_work",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "ComicsCharacter": 1
+        },
+        "candidate_factors": [
+          "series"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-10975",
+            "category": "ComicsCharacter",
+            "subj": "Baymax",
+            "pred": "series",
+            "obj": "Big Hero 6 (film)",
+            "text": "The film Big Hero 6, which stars Damon Wayans Jr, has a character called Baymax."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "shipBeam": {
+      "predicate": "shipBeam",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "place",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "MeanOfTransportation": 1
+        },
+        "candidate_factors": [
+          "ship",
+          "beam"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-train-32935",
+            "category": "MeanOfTransportation",
+            "subj": "AIDAstella",
+            "pred": "shipBeam",
+            "obj": "32.2",
+            "text": "The AIDAstella, built by Meyer Werft, is currently in service and has a 32.2 m. beam and is 253260.0 millimetres long. AIDA Cruises operates this vessel."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    },
+    "spokenIn": {
+      "predicate": "spokenIn",
+      "components": [
+        {
+          "factor": "entity_relation",
+          "role": "predicate_meaning",
+          "weight": 0.5,
+          "rationale": null
+        },
+        {
+          "factor": "creative_work",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "entity",
+          "role": "object_domain",
+          "weight": 0.3,
+          "rationale": null
+        }
+      ],
+      "source": "fallback_rule",
+      "confidence": 0.45,
+      "evidence": {
+        "count": 1,
+        "categories": {
+          "WrittenWork": 1
+        },
+        "candidate_factors": [
+          "spoken",
+          "in"
+        ],
+        "examples": [
+          {
+            "example_id": "web_nlg_en-validation-1614",
+            "edge_index": 0,
+            "category": "WrittenWork",
+            "subj": "English language",
+            "pred": "spokenIn",
+            "obj": "Great Britain",
+            "text": "A Severed Wasp is from the United States which like Great Britain speaks English. The capital of the US is Washington D.C and one ethnic group is the African Americans."
+          }
+        ],
+        "expanded_from_missing_report": true,
+        "missing_edge_count": 1
+      }
+    }
+  },
+  "metadata": {
+    "synthetic": true,
+    "warning": "Synthetic LLM adjudication; not a human expert gold reference.",
+    "adjudicator_models": [
+      "meta-llama/llama-3.1-70b-instruct"
+    ],
+    "expanded": true,
+    "expansion_source": "coverage_missing_predicates",
+    "added_predicate_count": 92,
+    "added_predicates": [
+      "birthDate",
+      "ground",
+      "numberOfMembers",
+      "mediaType",
+      "occupation",
+      "product",
+      "status",
+      "alternativeName",
+      "dedicatedTo",
+      "designer",
+      "dishVariation",
+      "industry",
+      "isbnNumber",
+      "manufacturer",
+      "material",
+      "oclcNumber",
+      "operator",
+      "owner",
+      "party",
+      "relatedMeanOfTransportation",
+      "runwayLength",
+      "season",
+      "successor",
+      "author",
+      "background",
+      "backupPilot",
+      "broadcastedBy",
+      "builder",
+      "cityServed",
+      "course",
+      "discoverer",
+      "escapeVelocity",
+      "fullName",
+      "hasToItsWest",
+      "ingredient",
+      "keyPerson",
+      "numberOfPages",
+      "numberOfStudents",
+      "office",
+      "periapsis",
+      "state",
+      "subsidiary",
+      "type",
+      "academicStaffSize",
+      "activeYearsStartYear",
+      "anthem",
+      "assembly",
+      "award",
+      "buildingStartDate",
+      "category",
+      "champions",
+      "class",
+      "colour",
+      "diameter",
+      "discovered",
+      "district",
+      "elevationAboveTheSeaLevel",
+      "finalFlight",
+      "firstAired",
+      "followedBy",
+      "formerName",
+      "founder",
+      "foundingDate",
+      "genus",
+      "hasToItsNortheast",
+      "headquarter",
+      "height",
+      "higher",
+      "inOfficeWhilePrimeMinister",
+      "largestCity",
+      "launchSite",
+      "legislature",
+      "libraryofCongressClassification",
+      "longName",
+      "maidenFlight",
+      "manager",
+      "motto",
+      "nativeName",
+      "nearestCity",
+      "netIncome",
+      "numberOfEmployees",
+      "owningOrganisation",
+      "populationDensity",
+      "president",
+      "publisher",
+      "recordLabel",
+      "revenue",
+      "runwayName",
+      "selectedByNasa",
+      "series",
+      "shipBeam",
+      "spokenIn"
+    ],
+    "skipped_existing_predicates": [],
+    "missing_report_predicate_count": 92,
+    "dataset": "webnlg",
+    "domain": "general_rdf",
+    "resource_status": "fixed_inventory_for_submission_pilot",
+    "coverage_target": "current WebNLG development split",
+    "notes": [
+      "Fixed WebNLG resource after LEM-03.",
+      "Not a universal DBpedia predicate ontology."
+    ]
+  }
+}

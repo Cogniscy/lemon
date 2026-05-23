@@ -18,7 +18,9 @@ Development & 100 & 308 & 3.08 & 119 & 16 \\
 \end{table}
 
 \subsection{Predicate decomposition resources}
-A seed factor inventory was built from training predicates, node labels, categories, and predicate contexts. LLM-assisted candidate generation was then evaluated against the seed reference with two models. This step tests whether general LLMs can propose plausible factor decompositions under a fixed schema; it is not human validation.
+LEM-03 fixes the predicate-factor inventories used by the final experiments. The resource is stored as a deterministic JSON decomposition set: a controlled factor vocabulary plus one weighted decomposition per predicate. WebNLG uses the current fixed development inventory. DrugProt adds a biomedical inventory for chemical--gene/protein relations, including activation, inhibition, agonist, antagonist, regulator, substrate, product, and part-of predicates. BC5CDR uses a compact document-level inventory for the chemical-induced disease relation. The biomedical inventories make polarity, directionality, participant roles, and evidence form explicit, which is needed for the perturbation and ablation studies.
+
+\input{tables/table_factor_inventory}
 
 \begin{table}[t]
 \centering

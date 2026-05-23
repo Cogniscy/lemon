@@ -1,0 +1,393 @@
+{
+  "schema_version": "lem03-bc5cdr-v1",
+  "factors": [
+    {
+      "id": "biomedical_entity",
+      "label": "Biomedical entity",
+      "level": "scientific",
+      "description": "Generic biomedical entity or concept.",
+      "allowed_roles": [
+        "subject_domain",
+        "object_domain",
+        "value_domain",
+        "background"
+      ],
+      "parents": []
+    },
+    {
+      "id": "chemical",
+      "label": "Chemical or drug",
+      "level": "scientific",
+      "description": "Chemical compound, drug, or pharmacological substance.",
+      "allowed_roles": [
+        "subject_domain",
+        "object_domain",
+        "value_domain",
+        "background"
+      ],
+      "parents": [
+        "biomedical_entity"
+      ]
+    },
+    {
+      "id": "gene_or_protein",
+      "label": "Gene or protein",
+      "level": "scientific",
+      "description": "Gene, protein, gene product, or miRNA target.",
+      "allowed_roles": [
+        "subject_domain",
+        "object_domain",
+        "value_domain",
+        "background"
+      ],
+      "parents": [
+        "biomedical_entity"
+      ]
+    },
+    {
+      "id": "disease",
+      "label": "Disease",
+      "level": "scientific",
+      "description": "Disease, disorder, clinical condition, or pathological outcome.",
+      "allowed_roles": [
+        "subject_domain",
+        "object_domain",
+        "value_domain",
+        "background"
+      ],
+      "parents": [
+        "biomedical_entity"
+      ]
+    },
+    {
+      "id": "biomedical_relation",
+      "label": "Biomedical relation",
+      "level": "abstract_relation",
+      "description": "Generic typed relation between biomedical entities.",
+      "allowed_roles": [
+        "predicate_meaning",
+        "modifier",
+        "background"
+      ],
+      "parents": []
+    },
+    {
+      "id": "regulation_relation",
+      "label": "Regulation relation",
+      "level": "scientific",
+      "description": "Regulatory relation between a chemical and a gene or protein.",
+      "allowed_roles": [
+        "predicate_meaning",
+        "modifier",
+        "background"
+      ],
+      "parents": [
+        "biomedical_relation"
+      ]
+    },
+    {
+      "id": "direct_regulation_relation",
+      "label": "Direct regulation",
+      "level": "scientific",
+      "description": "Direct chemical regulation of a gene or protein.",
+      "allowed_roles": [
+        "predicate_meaning",
+        "modifier",
+        "background"
+      ],
+      "parents": [
+        "regulation_relation"
+      ]
+    },
+    {
+      "id": "indirect_regulation_relation",
+      "label": "Indirect regulation",
+      "level": "scientific",
+      "description": "Indirect chemical regulation of a gene or protein.",
+      "allowed_roles": [
+        "predicate_meaning",
+        "modifier",
+        "background"
+      ],
+      "parents": [
+        "regulation_relation"
+      ]
+    },
+    {
+      "id": "activation_relation",
+      "label": "Activation",
+      "level": "scientific",
+      "description": "Activation or positive regulation of a gene or protein by a chemical.",
+      "allowed_roles": [
+        "predicate_meaning",
+        "modifier",
+        "background"
+      ],
+      "parents": [
+        "regulation_relation"
+      ]
+    },
+    {
+      "id": "inhibition_relation",
+      "label": "Inhibition",
+      "level": "scientific",
+      "description": "Inhibition or negative regulation of a gene or protein by a chemical.",
+      "allowed_roles": [
+        "predicate_meaning",
+        "modifier",
+        "background"
+      ],
+      "parents": [
+        "regulation_relation"
+      ]
+    },
+    {
+      "id": "agonist_relation",
+      "label": "Agonist relation",
+      "level": "scientific",
+      "description": "Chemical acts as an agonist for a gene or protein target.",
+      "allowed_roles": [
+        "predicate_meaning",
+        "modifier",
+        "background"
+      ],
+      "parents": [
+        "biomedical_relation"
+      ]
+    },
+    {
+      "id": "antagonist_relation",
+      "label": "Antagonist relation",
+      "level": "scientific",
+      "description": "Chemical acts as an antagonist for a gene or protein target.",
+      "allowed_roles": [
+        "predicate_meaning",
+        "modifier",
+        "background"
+      ],
+      "parents": [
+        "biomedical_relation"
+      ]
+    },
+    {
+      "id": "substrate_relation",
+      "label": "Substrate relation",
+      "level": "scientific",
+      "description": "Chemical is a substrate in relation to a gene or protein product.",
+      "allowed_roles": [
+        "predicate_meaning",
+        "modifier",
+        "background"
+      ],
+      "parents": [
+        "biomedical_relation"
+      ]
+    },
+    {
+      "id": "product_relation",
+      "label": "Product relation",
+      "level": "scientific",
+      "description": "Chemical is a product in relation to a gene or protein product.",
+      "allowed_roles": [
+        "predicate_meaning",
+        "modifier",
+        "background"
+      ],
+      "parents": [
+        "biomedical_relation"
+      ]
+    },
+    {
+      "id": "part_whole_relation",
+      "label": "Part-whole relation",
+      "level": "abstract_relation",
+      "description": "Part-of or structural membership relation.",
+      "allowed_roles": [
+        "predicate_meaning",
+        "modifier",
+        "background"
+      ],
+      "parents": [
+        "biomedical_relation"
+      ]
+    },
+    {
+      "id": "chemical_induced_disease_relation",
+      "label": "Chemical-induced disease relation",
+      "level": "scientific",
+      "description": "Document-level relation where a chemical induces, causes, or contributes to a disease.",
+      "allowed_roles": [
+        "predicate_meaning",
+        "modifier",
+        "background"
+      ],
+      "parents": [
+        "biomedical_relation"
+      ]
+    },
+    {
+      "id": "positive_polarity",
+      "label": "Positive polarity",
+      "level": "abstract_relation",
+      "description": "The relation expresses activation, up-regulation, agonism, or production.",
+      "allowed_roles": [
+        "modifier",
+        "predicate_meaning",
+        "background"
+      ],
+      "parents": []
+    },
+    {
+      "id": "negative_polarity",
+      "label": "Negative polarity",
+      "level": "abstract_relation",
+      "description": "The relation expresses inhibition, down-regulation, antagonism, or blocking.",
+      "allowed_roles": [
+        "modifier",
+        "predicate_meaning",
+        "background"
+      ],
+      "parents": []
+    },
+    {
+      "id": "neutral_biochemical_role",
+      "label": "Neutral biochemical role",
+      "level": "scientific",
+      "description": "The relation describes a biochemical role without simple positive or negative polarity.",
+      "allowed_roles": [
+        "modifier",
+        "predicate_meaning",
+        "background"
+      ],
+      "parents": []
+    },
+    {
+      "id": "causal_polarity",
+      "label": "Causal polarity",
+      "level": "abstract_relation",
+      "description": "The relation expresses causation or induction rather than mere co-mention.",
+      "allowed_roles": [
+        "modifier",
+        "predicate_meaning",
+        "background"
+      ],
+      "parents": []
+    },
+    {
+      "id": "chemical_to_gene_or_protein_direction",
+      "label": "Chemical to gene/protein direction",
+      "level": "scientific",
+      "description": "The chemical is the acting or participating source and the gene/protein is the target.",
+      "allowed_roles": [
+        "modifier",
+        "predicate_meaning",
+        "background"
+      ],
+      "parents": []
+    },
+    {
+      "id": "chemical_to_disease_direction",
+      "label": "Chemical to disease direction",
+      "level": "scientific",
+      "description": "The chemical is the cause or exposure and the disease is the outcome.",
+      "allowed_roles": [
+        "modifier",
+        "predicate_meaning",
+        "background"
+      ],
+      "parents": []
+    },
+    {
+      "id": "direct_evidence",
+      "label": "Direct evidence",
+      "level": "abstract_relation",
+      "description": "The text supports the relation with direct lexical or local evidence.",
+      "allowed_roles": [
+        "modifier",
+        "predicate_meaning",
+        "background"
+      ],
+      "parents": []
+    },
+    {
+      "id": "indirect_evidence",
+      "label": "Indirect evidence",
+      "level": "abstract_relation",
+      "description": "The text supports the relation by indirect or mediated evidence.",
+      "allowed_roles": [
+        "modifier",
+        "predicate_meaning",
+        "background"
+      ],
+      "parents": []
+    },
+    {
+      "id": "document_level_evidence",
+      "label": "Document-level evidence",
+      "level": "abstract_relation",
+      "description": "The relation may be supported across a document rather than by one sentence.",
+      "allowed_roles": [
+        "modifier",
+        "predicate_meaning",
+        "background"
+      ],
+      "parents": []
+    }
+  ],
+  "decompositions": {
+    "chemical_disease_interaction": {
+      "predicate": "chemical_disease_interaction",
+      "components": [
+        {
+          "factor": "chemical",
+          "role": "subject_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "disease",
+          "role": "object_domain",
+          "weight": 0.2,
+          "rationale": null
+        },
+        {
+          "factor": "chemical_induced_disease_relation",
+          "role": "predicate_meaning",
+          "weight": 0.3,
+          "rationale": null
+        },
+        {
+          "factor": "causal_polarity",
+          "role": "modifier",
+          "weight": 0.15,
+          "rationale": null
+        },
+        {
+          "factor": "document_level_evidence",
+          "role": "modifier",
+          "weight": 0.1,
+          "rationale": null
+        },
+        {
+          "factor": "chemical_to_disease_direction",
+          "role": "modifier",
+          "weight": 0.05,
+          "rationale": null
+        }
+      ],
+      "source": "expert",
+      "confidence": 0.86,
+      "evidence": {
+        "domain": "bc5cdr",
+        "factor_template": "chemical_induced_disease_document_relation"
+      }
+    }
+  },
+  "metadata": {
+    "dataset": "bc5cdr",
+    "domain": "biomedical",
+    "resource_status": "fixed_inventory_for_submission_pilot",
+    "relation_family": "chemical-induced disease",
+    "relation_type_count": 1
+  }
+}
