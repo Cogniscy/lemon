@@ -118,8 +118,8 @@ The deterministic \lemonscore{} proxy is most informative when the factor invent
 The compact ablation in Table~\ref{tab:ablation} confirms that the factor groups are not interchangeable. Removing participant-role factors produces the largest sensitivity loss, especially on WebNLG and DrugProt, where argument structure is central to relation meaning. Removing polarity or evidence factors also reduces sensitivity in the biomedical setting. Label-only scoring can be harsh when surface cues disappear, but it cannot identify whether the damage concerns roles, direction, polarity, or evidence.
 
 \subsection{RQ6: LLM reliability probe}
-As an exploratory reliability check, we ran three 45-item judge batches (135 judgments) with \texttt{google/gemini-2.0-flash-001}, \texttt{openai/gpt-4o-mini}, and \texttt{meta-llama/llama-3.1-70b-instruct}. Each judge saw the source edge, factor inventory, and perturbed text, and returned JSON-schema constrained labels: covered, partial, or absent.
+As an exploratory reliability check, we ran three 45-item judge batches sampled from the prepared probe pool (135 judgments) with Gemini 2.0 Flash, GPT-4o-mini, and Llama-3.1-70B. Each judge saw the source edge, factor inventory, and perturbed text, and returned JSON-schema constrained labels: covered, partial, or absent.
 
 \input{tables/table_llm_reliability}
 
-Table~\ref{tab:llm-reliability} shows that LLM judges often recover factors from residual context. The mean factor score is high (0.809), while agreement with deterministic perturbation labels is moderate (0.561). Agreement is lowest for argument swap and node deletion, so we treat LLM judging as a diagnostic complement rather than human validation.
+Table~\ref{tab:llm-reliability} shows that LLM judges often recover factors from residual context. The mean factor score is high (0.809), while agreement with deterministic perturbation labels is moderate (0.561). Pairwise agreement on overlapping factor judgments is also moderate (0.597), with the weakest agreement for argument swap and node deletion. We therefore treat LLM judging as a diagnostic complement rather than human validation.

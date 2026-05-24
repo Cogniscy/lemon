@@ -16,21 +16,5 @@ Recent text-to-KG work has renewed interest in evaluating whether extracted grap
 \subsection{Behavioral testing and metric calibration}
 Evaluation metrics should be tested not only by correlation with human judgments, but also by whether they respond correctly to controlled changes. CheckList introduced behavioral tests for NLP models, including invariance tests, where label-preserving perturbations should not change predictions, and directional expectation tests, where perturbations should change predictions in a prescribed direction \cite{ribeiro2020checklist}. Perturbation CheckLists for NLG metrics apply the same idea to automatic metric evaluation \cite{sai2021perturbation}. He et al. use synthetic stress tests to expose blind spots of model-based NLG metrics \cite{he2023blindspots}. Our calibration follows this methodology: relation deletion is a directional test, while entity aliasing and predicate paraphrase templates are invariance-style checks whose quality is explicitly marked.
 
-\begin{table}[t]
-\centering
-\caption{Positioning of \lemonscore{} relative to related evaluation families.}
-\label{tab:positioning}
-\scriptsize
-\begin{tabularx}{\textwidth}{p{2.1cm}p{2.3cm}YYp{1.4cm}}
-\toprule
-Family & Representative methods & Granularity & Missing diagnostic dimension & Direction \\
-\midrule
-Surface/reference & BLEU, METEOR, chrF++, TER, BERTScore, BLEURT & sentence-level holistic & source-predicate roles & KG$\rightarrow$Text \\
-Source-aware & PARENT, Data-QuestEval, AlignScore & n-gram, question, sentence & explicit within-predicate factors & KG$\rightarrow$Text \\
-Triple-level & FactSpotter & binary triple & which part of the predicate failed & KG$\rightarrow$Text \\
-Atomic fact & FActScore, VERISCORE & text-derived atomic claims & source predicate decomposition & Text$\rightarrow$KB \\
-Node/edge & KGGen/MINE & node and edge retention & weighted predicate factors & Text$\rightarrow$KG \\
-\lemonscore{} & this work & weighted factors inside predicates & provisional resource, not human gold & bidirectional \\
-\bottomrule
-\end{tabularx}
-\end{table}
+Overall, existing metrics provide sentence-level similarity, source-aware coverage, binary triple checking, text-derived atomic facts, or node/edge retention. \lemonscore{} targets the missing layer between a whole predicate label and a full graph: weighted factors inside source predicates, used in both KG$\rightarrow$Text and Text$\rightarrow$KG directions.
+

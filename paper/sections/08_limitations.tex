@@ -1,5 +1,5 @@
 \section{Limitations}
-The main limitation is the absence of human expert validation. The factor inventories are deterministic resources based on predicate labels, schema constraints, rules, and development-time LLM candidates. The three-judge LLM probe checks residual recoverability, but it is not human gold. Prior work reports LLM-judge biases, so future work should add expert annotation and inter-annotator agreement \cite{zheng2023mtbench,gu2024llmjudge,gilardi2024llmjudges}.
+The main limitation is the absence of human expert validation. The factor inventories are deterministic resources based on predicate labels, schema constraints, rules, and development-time LLM candidates. The three-judge LLM probe checks residual recoverability, but it is not human gold. Prior LLM-as-judge work shows that model judges can scale evaluation but can also exhibit preference and reasoning biases; future work should add expert annotation and inter-annotator agreement \cite{liu2023geval,zheng2023mtbench}.
 
 A second limitation is lexical evidence. The deterministic scorer can find labels and known cues, but it can miss implicit relations, long-range entailment, and paraphrases outside the cue dictionary. Future versions should add embedding, entailment, or QA-based evidence while preserving the factor-level audit trail.
 

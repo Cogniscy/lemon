@@ -1,5 +1,5 @@
 \section{Experiments}
-The experiments are organized by the five research questions from the introduction. All scoring runs are reproducible from JSONL inputs and fixed JSON factor inventories. No LLM calls are made in the deterministic perturbation scoring reported in RQ5.
+The experiments are organized by the six research questions from the introduction. Deterministic scoring runs are reproducible from JSONL inputs and fixed JSON factor inventories. No LLM calls are made in the deterministic perturbation scoring reported in RQ5; LLM judging is isolated in RQ6.
 
 \subsection{RQ1: Forward factor-level semantic coverage}
 We first score WebNLG development texts using predicate decompositions and lexical cues. We then run an error-driven resource expansion: missing predicates are identified, rule-based or fallback decompositions are added, lexical cues are expanded, and coverage is recomputed. This measures how much of the initial low score comes from missing resources rather than from the text itself.
@@ -17,3 +17,6 @@ We inject deterministic noise into text and reconstructed graphs. Destructive pe
 The final perturbation files cover WebNLG, DrugProt, and BC5CDR. The operators keep the source graph fixed and change only the text, which lets us test whether a metric reacts to the intended semantic damage rather than to a change in the reference graph. The final scoring uses five operators: node deletion, relation-cue deletion, argument swap, polarity flip, and relation blur. Polarity flips are most informative for DrugProt and BC5CDR, where relation labels explicitly encode activation, inhibition, regulation, or causality.
 
 We score the shared perturbation files with deterministic baselines. The goal is not to reproduce external systems such as FactSpotter or KGGen/MINE, but to provide local comparison points with the same inputs. We report entity recall, label match, a binary triple-style match, a \minebase{} node/edge harmonic score, a label-only LEMON variant, and the full deterministic \lemonscore{} proxy based on the fixed factor inventories and perturbation metadata. The same scoring layer is used for the compact ablation study.
+
+\subsection{RQ6: Exploratory LLM factor judging}
+To test whether deterministic perturbation labels agree with model-based semantic recovery, we run a small LLM reliability probe. We sample perturbed instances from WebNLG, DrugProt, and BC5CDR and ask three independent LLM judges to label each semantic factor as covered, partially covered, or absent. The judges are Gemini 2.0 Flash, GPT-4o-mini, and Llama-3.1-70B. The prompts use JSON-schema constrained outputs through OpenRouter. The probe is reported as diagnostic evidence, not as human validation.
