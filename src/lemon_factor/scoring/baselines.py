@@ -222,15 +222,25 @@ def _changed(record: PerturbedGraphTextRecord) -> bool:
     return any(operation.changed for operation in record.operations)
 
 
-def _lemon_full_proxy(
+def lemon_factor_proxy_score(
     record: PerturbedGraphTextRecord,
     edge_predicate: str,
     inventory: PredicateDecompositionSet,
+    *,
+    excluded_groups: set[str] | frozenset[str] | None = None,
+    unweighted: bool = False,
 ) -> float:
-    """Deterministic factor score used for perturbation baselines.
+    """Return a deterministic factor-retention score for one edge.
 
-    The score uses the fixed inventory and the perturbation metadata. It is a
-    proxy for the expected factor damage, not an LLM or human judgment.
+    This score is used for local perturbation and ablation tests. It does not
+    inspect the text with an LLM. Instead, it uses the fixed predicate-factor
+    inventory and the perturbation metadata that identifies which factor groups
+    were intentionally damaged.
+
+    ``excluded_groups`` implements factor-group ablations. Removed groups are
+    treated as unobserved and therefore retained by default. Thus, if a
+    perturbation damages only the removed group, the ablated score becomes less
+    sensitive, as expected.
     """
 
     decomposition = inventory.decompositions.get(edge_predicate)
@@ -238,13 +248,35 @@ def _lemon_full_proxy(
         return 0.0
     if not _changed(record):
         return 1.0
+
+    excluded = set(excluded_groups or set())
+    raw_components = [
+        (_component_group(component.factor, component.role), component.weight)
+        for component in decomposition.components
+    ]
+    if not raw_components:
+        return 0.0
+    components = [
+        (group, 1.0 / len(raw_components) if unweighted else weight)
+        for group, weight in raw_components
+    ]
+
     damaged = _target_groups(record)
     retained = 0.0
-    for component in decomposition.components:
-        group = _component_group(component.factor, component.role)
-        if group not in damaged:
-            retained += component.weight
+    for group, weight in components:
+        if group in excluded or group not in damaged:
+            retained += weight
     return max(0.0, min(1.0, retained))
+
+
+def _lemon_full_proxy(
+    record: PerturbedGraphTextRecord,
+    edge_predicate: str,
+    inventory: PredicateDecompositionSet,
+) -> float:
+    """Deterministic full-factor score used for perturbation baselines."""
+
+    return lemon_factor_proxy_score(record, edge_predicate, inventory)
 
 
 def score_edge(

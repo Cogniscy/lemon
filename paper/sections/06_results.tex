@@ -63,29 +63,7 @@ Graph--text token Jaccard & KG$\leftrightarrow$Text & no & no & 0.6233 & corpus 
 \end{table}
 
 \subsection{RQ3: Relation information is harder than node information}
-The deterministic \minebase{} composite score is 0.8028, but this aggregate hides a strong node/edge gap. On the locked 50-fact subset (Table~\ref{tab:mine-subset}), node information is 0.9600, while edge information and deterministic fact recoverability are both 0.5400. The LLM-judged fact recoverability score is 0.5200, with 0.9800 agreement with the deterministic fact decision and full parse success. These numbers indicate that WebNLG texts tend to preserve entity mentions more reliably than relation recoverability. They also show why the partial-credit composite score and the binary fact score must not be treated as interchangeable.
-
-\begin{table}[t]
-\centering
-\caption{MINE-style score semantics on the fixed 50-fact subset.}
-\label{tab:mine-subset}
-\scriptsize
-\begin{tabular}{lr}
-\toprule
-Metric & Value \\
-\midrule
-Facts & 50 \\
-Deterministic node information & 0.9600 \\
-Deterministic edge information & 0.5400 \\
-Deterministic composite node/edge score & 0.7500 \\
-Deterministic fact recoverability & 0.5400 \\
-LLM fact recoverability & 0.5200 \\
-Judge agreement with deterministic & 0.9800 \\
-Parse success rate & 1.0000 \\
-Mean judge confidence & 0.5417 \\
-\bottomrule
-\end{tabular}
-\end{table}
+The deterministic \minebase{} composite score is 0.8028, but this aggregate hides a strong node/edge gap. On the locked 50-fact subset, node information is 0.9600, while edge information and deterministic fact recoverability are both 0.5400; the partial-credit composite is 0.7500. A separate LLM fact check gives a close score of 0.5200 and agrees with the deterministic fact decision on 0.9800 of the cases. These values indicate that WebNLG texts tend to preserve entity mentions more reliably than relation recoverability, and that partial-credit node/edge scores and binary fact scores should not be treated as interchangeable.
 
 \subsection{RQ4: Perturbation calibration}
 Table~\ref{tab:calibration} reports targeted calibration summaries after separating text-side and graph-side perturbations. Destructive text perturbations produce a monotonic Forward \lemonscore{} decrease, while destructive graph perturbations produce monotonic decreases in Reverse \lemonscore{} and MINE-style recoverability. This supports the expected directional behavior of the metrics.
@@ -134,3 +112,7 @@ Table~\ref{tab:scoring-final} reports compact deterministic scores on the shared
 \input{tables/table_scoring_final_compact}
 
 The deterministic \lemonscore{} proxy is most informative when the factor inventory contains the tested semantic dimension. This is why WebNLG polarity flip is not penalized strongly: many WebNLG predicates in the current pilot do not encode polarity. In DrugProt and BC5CDR, polarity and direction are part of the task semantics, so argument swap and polarity flip reduce \lemonscore{} full more clearly. The result supports the main diagnostic claim: factor inventories make the tested meaning dimensions explicit, while entity preservation alone can hide relation-level damage.
+
+\input{tables/table_ablation}
+
+The compact ablation in Table~\ref{tab:ablation} confirms that the factor groups are not interchangeable. Removing participant-role factors produces the largest sensitivity loss, especially on WebNLG and DrugProt, where argument structure is central to relation meaning. Removing polarity or evidence factors also reduces sensitivity in the biomedical setting. Label-only scoring can be harsh when surface cues disappear, but it cannot tell whether the damage concerns roles, direction, polarity, or evidence.
