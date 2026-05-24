@@ -1,13 +1,13 @@
 \begin{table}[t]
 \centering
-\small
-\caption{Exploratory LLM reliability probe. Judges are Gemini 2.0 Flash, GPT-4o-mini, and Llama-3.1-70B. Mean score treats covered, partial, and absent factor judgments as 1, 0.5, and 0; agreement is computed only on overlapping factor judgments.}
+\scriptsize
+\caption{Exploratory LLM reliability probe. Judges are Gemini 2.0 Flash, GPT-4o-mini, and Llama-3.1-70B. Mean score treats covered, partial, and absent factor judgments as 1, 0.5, and 0; agreements are computed only on overlapping factor judgments.}
 \label{tab:llm-reliability}
-\begin{tabular}{lrrrr}
+\begin{tabular}{lrrrrr}
 \toprule
-Probe & Items & Judges & Mean score & Agreement \\
+Probe & Items & Judges & Mean score & Pairwise agr. & Det. agr. \\
 \midrule
-LLM factor judging & 45 & 3 & 0.809 & 0.597 \\
+LLM factor judging & 45 & 3 & 0.809 & 0.597 & 0.561 \\
 \bottomrule
 \end{tabular}
 \end{table}

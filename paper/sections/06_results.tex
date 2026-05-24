@@ -1,104 +1,29 @@
 \section{Results}
-\subsection{RQ1: Forward coverage and resource completeness}
-The first WebNLG run separates two sources of error: missing evaluation resources and missing information in the text. Before expansion, the factor dictionary covered only part of the development predicates, so 140 of 308 edges could be scored and the missing decomposition rate was 0.5455. After adding deterministic decompositions and lexical cues, all development edges had predicate decompositions and Forward \lemonscore{} increased from 0.3683 to 0.7915 (Table~\ref{tab:coverage}). The increase should not be read as a claim that all texts are faithful. It shows that factor-level evaluation requires explicit predicate resources before it can diagnose text quality.
+\subsection{From entity overlap to relation factors}
+The first WebNLG pass shows why predicate resources matter before an evaluation metric can be trusted. With the initial factor dictionary, only 140 of 308 development edges could be scored, and the missing decomposition rate was 0.5455. After deterministic decomposition and cue expansion, all 308 edges had predicate factors and Forward \lemonscore{} rose from 0.3683 to 0.7915. This increase is not a claim that all WebNLG texts are faithful. It shows that factor-level evaluation requires explicit predicate resources before it can diagnose text quality.
 
-\begin{table}[t]
-\centering
-\caption{Forward \lemonscore{} before and after decomposition and cue expansion.}
-\label{tab:coverage}
-\scriptsize
-\begin{tabular}{lrrr}
-\toprule
-Metric & Initial & Expanded & Delta \\
-\midrule
-Scored edges & 140 & 308 & +168 \\
-Missing decomposition rate & 0.5455 & 0.0000 & -0.5455 \\
-Predicate cue coverage & 0.3149 & 0.6526 & +0.3377 \\
-\lemonscore{} coverage & 0.3683 & 0.7915 & +0.4232 \\
-Low-coverage edges & 191 & 41 & -150 \\
-\bottomrule
-\end{tabular}
-\end{table}
+Lexical controls isolate what the factor score adds. Exact entity-label overlap is already high at 0.9215 and does not change under predicate-resource expansion. Token cosine and Jaccard are also fixed because the underlying graph--text strings do not change. The factor score changes because it checks relation roles, predicate meanings, and lexical evidence. The added signal is therefore not a different way of counting entity mentions; it is a relation-level check that becomes available once predicates have decompositions.
 
-The lexical controls make the distinction clearer. Exact entity-label overlap is already high and does not change after predicate-resource expansion; token cosine and Jaccard also remain fixed. The factor score changes because it is the only score in Table~\ref{tab:baselines} that uses predicate decompositions and relation cues. In other words, the added signal is not a different way of counting entity mentions, but a check of relation-level content.
+The reverse run gives a second check on the same representation. A deterministic lexical pseudo-extractor recovered 390 of 408 nodes and 196 of 308 edges from the WebNLG texts. Reverse \lemonscore{} reached 0.7789, close to the expanded Forward score of 0.7915. This does not evaluate a general-purpose extraction system; it shows that the same predicate factors can be used coherently in both directions.
 
-\begin{table}[t]
-\centering
-\caption{Baseline comparison on the WebNLG development sample.}
-\label{tab:baselines}
-\scriptsize
-\begin{tabular}{lrrr}
-\toprule
-Method & Initial & Expanded & Delta \\
-\midrule
-Exact entity-label overlap & 0.9215 & 0.9215 & 0.0000 \\
-Predicate lexical cue coverage & 0.3149 & 0.6526 & +0.3377 \\
-Graph--text token cosine & 0.7357 & 0.7357 & 0.0000 \\
-Graph--text token Jaccard & 0.6233 & 0.6233 & 0.0000 \\
-\lemonscore{} coverage & 0.3683 & 0.7915 & +0.4232 \\
-\bottomrule
-\end{tabular}
-\end{table}
+The MINE-style comparison explains why this matters. Its deterministic node/edge composite is 0.8028, but the aggregate is dominated by node recovery. On the locked 50-fact subset, node information is 0.9600, while edge information and deterministic fact recoverability are both 0.5400. A separate LLM fact check gives a close score of 0.5200 and agrees with the deterministic fact decision on 0.9800 of cases. The consistent pattern is that entity mentions are easier to preserve and recover than the relations that connect them.
 
-\subsection{RQ2: Bidirectionality}
-The same predicate factors can be used from graph to text and back from text to graph. The reverse experiment recovered 390 of 408 nodes and 196 of 308 edges. Reverse \lemonscore{} reached 0.7789, close to the expanded Forward \lemonscore{} score of 0.7915 (Table~\ref{tab:bidirectional}). The gap is small, but its interpretation is bounded by the setup: the reconstructed graph is produced by a deterministic lexical pseudo-extractor. The result therefore supports the representation, not the quality of a general-purpose extraction system.
+A relation-deletion sanity check makes the same point more directly. Removing relation evidence changes exact entity-label coverage by only -0.0020, while Forward \lemonscore{} drops by -0.2106. Predicate cue coverage and MINE fact recoverability fall by -0.3636 and -0.3539. Preserving the entities is therefore not the same as preserving the predicate; relation-aware scores are needed to see this failure mode.
 
-\begin{table}[t]
-\centering
-\caption{Bidirectional comparison on the WebNLG development sample.}
-\label{tab:bidirectional}
-\scriptsize
-\begin{tabular}{llcccl}
-\toprule
-Method & Direction & Factors & Retrieval & Score & Diagnostic level \\
-\midrule
-Forward \lemonscore{} & KG$\rightarrow$Text & yes & no & 0.7915 & factor/edge/example \\
-Reverse \lemonscore{} & Text$\rightarrow$KG & yes & no & 0.7789 & factor/edge/example \\
-MINE-style composite node/edge & Text$\rightarrow$KG & no & yes & 0.8028 & node/edge/fact \\
-MINE-style LLM fact recoverability & Text$\rightarrow$KG & no & yes & 0.5200 & fact/subgraph \\
-Graph--text token cosine & KG$\leftrightarrow$Text & no & no & 0.7357 & corpus \\
-Graph--text token Jaccard & KG$\leftrightarrow$Text & no & no & 0.6233 & corpus \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\subsection{RQ3: Relation information is harder than node information}
-The \minebase{} comparison explains why high graph--text overlap can still hide semantic loss. The deterministic composite node/edge score is 0.8028, but this aggregate is dominated by node recovery. On the locked 50-fact subset, node information is 0.9600, while edge information and deterministic fact recoverability are both 0.5400; the partial-credit composite is 0.7500. A separate LLM fact check gives a close score of 0.5200 and agrees with the deterministic fact decision on 0.9800 of the cases. The consistent pattern is that entity mentions are easier to preserve and recover than the relations that connect them.
-
-\subsection{RQ4: Perturbation calibration}
-The controlled perturbations turn this observation into a direct sanity check. If a relation phrase is deleted, the entity names should mostly remain, but a relation-aware metric should fall. This is what Table~\ref{tab:relation-deletion} shows: exact entity-label coverage changes by only -0.0020, while Forward \lemonscore{} drops by -0.2106. Predicate cue coverage and MINE fact recoverability fall even more sharply because they depend directly on the recoverability of relation evidence. The table therefore gives the central construct-validity signal: preserving the entities is not the same as preserving the predicate.
-
-\begin{table}[t]
-\centering
-\caption{Relation deletion sanity check. Delta is final minus baseline.}
-\label{tab:relation-deletion}
-\scriptsize
-\begin{tabular}{lrrr}
-\toprule
-Metric & Baseline & Final & Delta \\
-\midrule
-Exact label coverage & 0.9215 & 0.9194 & -0.0020 \\
-Forward \lemonscore{} & 0.7915 & 0.5808 & -0.2106 \\
-Predicate cue coverage & 0.6526 & 0.2890 & -0.3636 \\
-MINE fact recoverability & 0.6364 & 0.2825 & -0.3539 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\subsection{RQ5: Cross-domain deterministic scoring}
-The cross-domain perturbation files allow the same question to be asked on WebNLG, DrugProt, and BC5CDR: which metrics react when a controlled edit damages the meaning of the relation? Table~\ref{tab:perturbation-sensitivity-drop} reports mean score drops, where larger values mean stronger sensitivity to the perturbation. Small or unchanged drops are not missing computations; they show that the metric is insensitive to that kind of damage.
+\subsection{Cross-domain perturbation sensitivity}
+The cross-domain perturbation files ask which metrics react when controlled edits damage relation meaning in WebNLG, DrugProt, and BC5CDR. Table~\ref{tab:perturbation-sensitivity-drop} reports mean score drops. Larger values mean stronger sensitivity to the perturbation. Small values are not missing computations; they indicate that the metric is insensitive to that kind of semantic damage.
 
 \input{tables/table_perturbation_sensitivity_drop}
 
-The pattern is consistent with the intended diagnostic roles. Entity recall drops less under relation-focused edits because the entity strings often remain in the text. Triple-style and node/edge scores react more strongly because they require relation or edge evidence, but they still collapse the error into one coarse decision. \lemonscore{} separates the response by factor inventory. It reacts strongly to argument swap and polarity flip when those dimensions are encoded in the inventory, while the WebNLG polarity flip has little effect because most WebNLG predicates in this sample do not encode polarity. This is a feature of the formulation: the metric can only diagnose semantic dimensions that the inventory makes explicit.
+The aggregate pattern is interpretable. Entity recall drops least because entity strings often remain even when the relation is damaged. Triple-style and node/edge scores react more strongly because they require relation or edge evidence, but they collapse the error into one coarse decision. \lemonscore{} is less useful as a single harshness number than as a diagnostic decomposition: it reacts to argument swap and polarity flip when those dimensions are encoded in the inventory, and it remains quiet when a semantic dimension is absent from the factor schema. This is the intended behavior. The metric can diagnose only those predicate dimensions that the inventory makes explicit.
 
 \input{tables/table_ablation_gain}
 
-The ablation table makes the role of decomposition visible. Removing participant-role factors produces the largest positive gain for the full model over the ablated variant, which means that role factors are the main source of sensitivity to argument and node-level damage. Removing evidence, polarity, or direction has smaller but interpretable effects, mostly in the biomedical setting. Label-only scoring can produce large drops when surface relation labels disappear, but it cannot say whether the damage concerns roles, direction, polarity, or evidence. The full factor score is therefore more diagnostic even when it is not always the harshest scalar score.
+The ablation results show which parts of the factor representation drive sensitivity. Removing participant-role factors produces the largest positive gain for the full model over the ablated variant, so roles are the main source of sensitivity to argument and node-level damage. Removing evidence, polarity, or direction has smaller but interpretable effects, mostly in biomedical predicates where these factors are explicit. Label-only scoring can produce a larger scalar drop when surface labels disappear, but it cannot say whether the damage concerns roles, direction, polarity, or evidence. The full factor score is therefore more diagnostic, even when it is not always the largest scalar response.
 
-\subsection{RQ6: LLM reliability probe}
-The LLM reliability probe tests a different question: whether model judges recover the same factors that deterministic perturbation labels mark as damaged. We ran three 45-item judge batches sampled from the prepared probe pool (135 judgments) with Gemini 2.0 Flash, GPT-4o-mini, and Llama-3.1-70B. Each judge saw the source edge, factor inventory, and perturbed text, and returned JSON-schema constrained labels: covered, partial, or absent.
+\subsection{LLM factor judging as a complementary view}
+The LLM probe evaluates semantic recoverability rather than deterministic damage. Each judge saw the source edge, factor inventory, and perturbed text, then labeled each factor as covered, partial, or absent. Table~\ref{tab:llm-reliability} summarizes the three judge batches.
 
 \input{tables/table_llm_reliability}
 
-Table~\ref{tab:llm-reliability} shows that LLM factor scores remain relatively high. The mean judged factor score is 0.809, while agreement with deterministic perturbation labels is moderate, and pairwise agreement on overlapping factor judgments is 0.597. This does not invalidate the deterministic perturbations. It shows that the two views measure different things. The perturbation layer records intended damage introduced by a controlled edit; the LLM judges estimate how much of the original factor remains recoverable from the residual context. This distinction is most useful for the later interpretation of limitations and future work: factor-level evaluation can expose the damage, while semantic judging can reveal when context still makes the damaged relation inferable.
+The mean LLM factor score is 0.809, pairwise agreement on overlapping factor judgments is 0.597, and agreement with deterministic perturbation labels is 0.561. The moderate agreement is informative. The deterministic perturbation layer records intended damage introduced by a controlled edit. The LLM judges estimate how much of the original factor remains recoverable from residual context. The two signals therefore answer different questions: one provides auditable stress tests, while the other reveals when context still makes a damaged relation inferable. This distinction is important for interpreting the method. \lemonscore{} exposes relation-level failure modes; model-based judging can help decide which of those failures remain semantically recoverable.
