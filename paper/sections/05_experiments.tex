@@ -1,11 +1,11 @@
 \section{Experiments}
-The experiments are organized by the six research questions from the introduction. Deterministic scoring runs are reproducible from JSONL inputs and fixed JSON factor inventories. No LLM calls are made in the deterministic perturbation scoring reported in RQ5; LLM judging is isolated in RQ6.
+The experiments follow the six research questions as a single evaluation path. We first establish whether predicate-factor coverage adds information beyond lexical overlap, then test whether the same representation can be used in reverse, and finally stress the metrics with controlled perturbations across general-domain and biomedical data. Deterministic scoring runs use JSONL inputs and fixed JSON factor inventories. No LLM calls are made in the deterministic perturbation scoring reported in RQ5; LLM judging is isolated in RQ6.
 
 \subsection{RQ1: Forward factor-level semantic coverage}
 We first score WebNLG development texts using predicate decompositions and lexical cues. We then run an error-driven resource expansion: missing predicates are identified, rule-based or fallback decompositions are added, lexical cues are expanded, and coverage is recomputed. This measures how much of the initial low score comes from missing resources rather than from the text itself.
 
 \subsection{RQ2: Bidirectional factor recoverability}
-To test whether the factor representation is bidirectional, we reconstruct a graph from each WebNLG text with a deterministic lexical pseudo-extractor and compute Reverse \lemonscore{}. This score is compared with expanded Forward \lemonscore{}. A small forward--reverse gap would suggest that the same factor schema can support both KG$\rightarrow$Text coverage and Text$\rightarrow$KG recoverability.
+To test whether the factor representation is bidirectional, we reconstruct a graph from each WebNLG text with a deterministic lexical pseudo-extractor and compute Reverse \lemonscore{}. This score is compared with expanded Forward \lemonscore{}. A small forward--reverse gap suggests that the same factor schema can support both KG$\rightarrow$Text coverage and Text$\rightarrow$KG recoverability.
 
 \subsection{RQ3: MINE-style node/edge information retention}
 We compare Reverse \lemonscore{} with a \minebase{} baseline inspired by KGGen's Measure of Information in Nodes and Edges. The deterministic variant reports node information, edge information, and a composite node/edge score. A previously locked 50-fact subset is also used to show how binary fact recoverability differs from a partial-credit node/edge composite. These values are reported as diagnostic baselines, not as a reproduction of the KGGen/MINE benchmark.

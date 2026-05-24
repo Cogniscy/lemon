@@ -14,7 +14,7 @@ where \(f_i\) is a semantic factor, \(r_i\) is its role, and \(w_i>0\) is a sali
 For example, \textit{birthPlace} receives a person-like subject factor, a biographical predicate factor, and a place-like object factor. In the biomedical inventories, \textit{chemical\_inhibits\_gene\_or\_protein} receives chemical and gene/protein role factors, an inhibition factor, negative polarity, directionality, and evidence-form factors. A text that mentions both entities but omits the relation cue should therefore receive partial credit, not full coverage. This is the key distinction from whole-triple binary scoring.
 
 \subsection{Forward LEMON: KG$\rightarrow$Text coverage}
-For an edge \(e\), text \(T\), and component \((f_i,r_i,w_i)\), an evidence function \(E(f_i,r_i,e,T)\in[0,1]\) estimates whether the component is expressed. In the deterministic pilot, entity and domain factors are supported by normalized label or token evidence, while relation factors are supported by predicate cues and factor cues. The edge-level forward score is:
+For an edge \(e\), text \(T\), and component \((f_i,r_i,w_i)\), an evidence function \(E(f_i,r_i,e,T)\in[0,1]\) estimates whether the component is expressed. In the deterministic implementation, entity and domain factors are supported by normalized label or token evidence, while relation factors are supported by predicate cues and factor cues. The edge-level forward score is:
 \[
 S_F(e,T)=\frac{\sum_i w_i E(f_i,r_i,e,T)}{\sum_i w_i}.
 \]
@@ -23,7 +23,7 @@ Example-level and corpus-level scores are averages over edges with available dec
 \subsection{Reverse LEMON: Text$\rightarrow$KG recoverability}
 The reverse direction first constructs a deterministic reconstructed graph \(\hat{G}(T)\) from the text using entity-label evidence and predicate lexical cues. Reverse \lemonscore{} then compares each gold edge with its best recovered counterpart. Subject and object recovery contribute through node/domain evidence; predicate recovery contributes through overlap between the gold predicate's factors and the recovered edge evidence. The reverse score therefore asks whether the source predicate's semantic factors survive the text-to-graph reconstruction.
 
-The current reconstructed graph is a lexical pseudo-extractor, not a full KG extraction model. This choice makes the pilot reproducible and keeps the focus on metric behavior rather than extractor quality. Future work can replace \(\hat{G}(T)\) with KGGen, GraphRAG-style extraction, OpenIE, or domain-specific extractors.
+The current reconstructed graph is a lexical pseudo-extractor, not a full KG extraction model. This choice makes the experiment reproducible and keeps the focus on metric behavior rather than extractor quality. Future work can replace \(\hat{G}(T)\) with KGGen, GraphRAG-style extraction, OpenIE, or domain-specific extractors.
 
 \subsection{MINE-style node/edge baseline}
 To compare factor-level recoverability with node/edge information retention, we implement a \minebase{} baseline inspired by KGGen's MINE. Each gold triple is treated as a fact, and the reconstructed graph is searched for matching or related nodes and edges. The deterministic score separates node information, edge information, and a composite partial-credit node/edge score. We report it as a local baseline rather than a reproduction of the original benchmark.
