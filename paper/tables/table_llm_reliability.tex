@@ -1,17 +1,13 @@
-\begin{table}[h!]
+\begin{table}[t]
 \centering
-\caption{Exploratory LLM factor-judging probe. Scores map covered, partial, and absent to 1, 0.5, and 0; pairwise agreement is computed on overlapping factor decisions.}
+\small
+\caption{Exploratory LLM reliability probe. Mean score treats covered, partial, and absent factor judgments as 1, 0.5, and 0. Agreement is computed only on overlapping factor judgments.}
 \label{tab:llm-reliability}
-\scriptsize
-\begin{tabular}{lrrr}
+\begin{tabular}{lrrrr}
 \toprule
-Subset & Mean & Pair & Det. \\
+Probe & Batches & Judges & Mean score & Agreement \\
 \midrule
-All judged factors & 0.809 & 0.597 & 0.561 \\
-Argument swap & 0.765 & 0.386 & 0.432 \\
-Node deletion & 0.731 & 0.502 & 0.408 \\
-Polarity flip & 0.857 & 0.766 & 0.694 \\
-Relation blur & 0.907 & 0.730 & 0.647 \\
+LLM factor judging & 3 $\times$ 45 & 3 & 0.809 & 0.597 \
 \bottomrule
 \end{tabular}
 \end{table}
