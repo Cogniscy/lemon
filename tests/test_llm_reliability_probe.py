@@ -93,7 +93,10 @@ def test_mock_judgments_and_summarizer(tmp_path: Path) -> None:
     assert mock_report["judgments"] == 2
     first = LLMProbeJudgment.model_validate_json(judgments.read_text(encoding="utf-8").splitlines()[0])
     assert first.decisions
-    summary = summarize(items, [str(judgments)], out=tmp_path / "summary.json")
+    summary_without_mock = summarize(items, [str(judgments)], out=tmp_path / "summary_without_mock.json")
+    assert summary_without_mock["status"] == "no_judgments"
+    assert summary_without_mock["judgment_count"] == 0
+    summary = summarize(items, [str(judgments)], out=tmp_path / "summary.json", include_mock=True)
     assert summary["status"] == "passed"
     assert summary["judgment_count"] == 2
     assert summary["summary"]

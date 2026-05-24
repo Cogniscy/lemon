@@ -47,7 +47,12 @@ def _expand_judgment_paths(patterns: Iterable[str]) -> list[Path]:
     return unique
 
 
-def _read_judgments(paths: list[str]) -> list[LLMProbeJudgment]:
+def _is_mock_judgment(judgment: LLMProbeJudgment) -> bool:
+    transport = str(judgment.metadata.get("transport") or "").casefold() if judgment.metadata else ""
+    return judgment.judge_id.casefold().startswith("mock") or transport == "mock"
+
+
+def _read_judgments(paths: list[str], *, include_mock: bool = False) -> list[LLMProbeJudgment]:
     judgments: list[LLMProbeJudgment] = []
     for path in _expand_judgment_paths(paths):
         if not path.exists():
@@ -57,7 +62,9 @@ def _read_judgments(paths: list[str]) -> list[LLMProbeJudgment]:
                 if not line.strip():
                     continue
                 try:
-                    judgments.append(LLMProbeJudgment.model_validate_json(line))
+                    judgment = LLMProbeJudgment.model_validate_json(line)
+                    if include_mock or not _is_mock_judgment(judgment):
+                        judgments.append(judgment)
                 except Exception as exc:  # pragma: no cover
                     raise ValueError(f"Invalid judgment at {path}:{line_no}") from exc
     return judgments
@@ -106,15 +113,16 @@ def _pairwise_agreement(decisions_by_judge: dict[str, dict[str, str]]) -> float 
     return _mean(agreements)
 
 
-def summarize(items_path: str | Path, judgment_paths: list[str], *, out: str | Path | None = None, examples_out: str | Path | None = None) -> dict[str, Any]:
+def summarize(items_path: str | Path, judgment_paths: list[str], *, out: str | Path | None = None, examples_out: str | Path | None = None, include_mock: bool = False) -> dict[str, Any]:
     items = _read_items(items_path)
-    judgments = _read_judgments(judgment_paths)
+    judgments = _read_judgments(judgment_paths, include_mock=include_mock)
     if not judgments:
         report = {
             "status": "no_judgments",
             "item_count": len(items),
             "judgment_count": 0,
             "judge_count": 0,
+            "include_mock": include_mock,
             "summary": [],
             "deterministic_agreement": [],
             "examples": [],
@@ -199,6 +207,7 @@ def summarize(items_path: str | Path, judgment_paths: list[str], *, out: str | P
         "item_count": len(items),
         "judgment_count": len(judgments),
         "judge_count": len(judges),
+        "include_mock": include_mock,
         "summary": summary,
         "deterministic_agreement": deterministic_agreement,
         "examples": examples,
@@ -236,8 +245,9 @@ def main() -> None:
     parser.add_argument("--judgments", nargs="+", required=True, help="Judgment JSONL file(s) or glob patterns")
     parser.add_argument("--out", required=True, help="Summary JSON output")
     parser.add_argument("--examples-out", default=None, help="Optional Markdown disagreement examples")
+    parser.add_argument("--include-mock", action="store_true", help="Include mock_* judgments in the summary. Default: exclude them.")
     args = parser.parse_args()
-    report = summarize(args.items, args.judgments, out=args.out, examples_out=args.examples_out)
+    report = summarize(args.items, args.judgments, out=args.out, examples_out=args.examples_out, include_mock=args.include_mock)
     print(json.dumps({"out": args.out, "status": report["status"], "judgments": report["judgment_count"]}, ensure_ascii=False, indent=2))
 
 
