@@ -1,0 +1,50 @@
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[
+  font=\footnotesize,
+  box/.style={draw=black!75, rounded corners=1.2pt, align=center, inner sep=3.5pt, line width=0.45pt},
+  bluebox/.style={draw=blue!55!black, rounded corners=1.2pt, align=center, inner sep=3.5pt, line width=0.55pt},
+  arrow/.style={-{Latex[length=2mm]}, line width=0.45pt, black!80},
+  dashedarrow/.style={-{Latex[length=2mm]}, line width=0.45pt, dashed, black!75}
+]
+
+% Panel A: decomposition
+\node[font=\bfseries\small, anchor=west] at (0,0) {(A) Predicate-factor decomposition};
+\node[box, minimum width=2.75cm, minimum height=0.7cm] (p) at (1.55,-1.10) {\begin{tabular}{c}\texttt{chemical\_inhibits}\\[-0.3mm]\texttt{gene\_or\_protein}\end{tabular}};
+
+\node[bluebox, minimum width=2.05cm, minimum height=0.42cm] (f1) at (4.35,-0.42) {participants};
+\node[bluebox, minimum width=2.05cm, minimum height=0.42cm, below=0.10cm of f1] (f2) {entity types};
+\node[bluebox, minimum width=2.05cm, minimum height=0.42cm, below=0.10cm of f2] (f3) {relation class};
+\node[bluebox, minimum width=2.05cm, minimum height=0.42cm, below=0.10cm of f3] (f4) {polarity / direction};
+
+\node[box, align=left, minimum width=3.85cm, minimum height=1.95cm] (ex) at (8.65,-1.12) {actor: chemical\\target: gene/protein\\relation: inhibition\\polarity: negative\\direction: chemical $\to$ protein\\evidence: ``inhibits};
+
+\draw[arrow] (p.east) -- (f3.west);
+\foreach \x in {f1,f2,f3,f4}{\draw[arrow] (\x.east) -- (ex.west |- \x.east);}
+
+% Separator
+\draw[black!35] (0,-2.72) -- (11.2,-2.72);
+
+% Panel B: bidirectional evaluation
+\node[font=\bfseries\small, anchor=west] at (0,-3.00) {(B)};
+\node[circle, draw=black!75, minimum size=0.68cm, inner sep=0pt] (d) at (3.35,-3.90) {Drug X};
+\node[circle, draw=black!75, minimum size=0.68cm, inner sep=0pt] (r) at (6.05,-3.90) {Protein Y};
+\draw[arrow] (d) -- node[above, font=\scriptsize] {inhibits} (r);
+\node[font=\scriptsize, above=0.07cm of d] {source graph $G$};
+
+\node[bluebox, minimum width=2.25cm, minimum height=0.50cm] (pf) at (4.70,-4.80) {predicate $\to$ factors};
+\draw[arrow] (4.70,-4.20) -- (pf.north);
+
+\node[box, minimum width=2.35cm, minimum height=0.95cm] (fw) at (2.25,-5.85) {\textbf{Forward LEMON}\\graph $\to$ text\\coverage};
+\node[box, minimum width=2.35cm, minimum height=0.95cm] (rv) at (7.15,-5.85) {\textbf{Reverse LEMON}\\text $\to$ graph\\recoverability};
+\draw[arrow] (pf.south) |- (fw.north);
+\draw[dashedarrow] (pf.south) |- (rv.north);
+
+\node[box, minimum width=3.10cm, minimum height=0.85cm] (diag) at (4.70,-6.95) {diagnostics: agreement,\\missing factors, asymmetric errors};
+\draw[arrow] (fw.south) |- (diag.west);
+\draw[dashedarrow] (rv.south) |- (diag.east);
+
+\end{tikzpicture}
+\caption{Predicate-factor evaluation for graph--text alignment. Panel (A) shows how a relation predicate is decomposed into checkable semantic factors. Panel (B) shows how the same factor representation supports forward graph-to-text coverage and reverse text-to-graph recoverability.}
+\label{fig:predicate-factor-eval}
+\end{figure}

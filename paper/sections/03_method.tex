@@ -1,6 +1,8 @@
 \section{Method}
 \subsection{Problem setting}
-Let a graph--text pair be \((G,T)\), where \(G\) is a set of directed edges \(e=(s,p,o)\) and \(T\) is a verbalization. The forward task asks whether the text covers the information in the graph. The reverse task asks whether a graph reconstructed from the text, denoted \(\hat{G}(T)\), preserves the information in the original graph. \lemonscore{} uses the same predicate-level semantic representation in both directions.
+Let a graph--text pair be \((G,T)\), where \(G\) is a set of directed edges \(e=(s,p,o)\) and \(T\) is a verbalization. The forward task asks whether the text covers the information in the graph. The reverse task asks whether a graph reconstructed from the text, denoted \(\hat{G}(T)\), preserves the information in the original graph. \lemonscore{} uses the same predicate-level semantic representation in both directions (Fig.~\ref{fig:predicate-factor-eval}).
+
+\input{figures/figure_predicate_factor_evaluation}
 
 \subsection{Predicate factorization}
 Each predicate \(p\) is mapped to a weighted decomposition:
@@ -24,25 +26,7 @@ The reverse direction first constructs a deterministic reconstructed graph \(\ha
 The current reconstructed graph is a lexical pseudo-extractor, not a full KG extraction model. This choice makes the pilot reproducible and keeps the focus on metric behavior rather than extractor quality. Future work can replace \(\hat{G}(T)\) with KGGen, GraphRAG-style extraction, OpenIE, or domain-specific extractors.
 
 \subsection{MINE-style node/edge baseline}
-To compare factor-level recoverability with node/edge information retention, we implement a \minebase{} baseline inspired by KGGen's MINE. Each gold triple is treated as a fact. The reconstructed graph is searched for matching or related nodes and edges. The deterministic score separates node information, edge information, and a composite partial-credit node/edge score. A stabilized LLM-judged variant receives a gold fact and a compact retrieved subgraph and returns a binary fact-recoverability judgment. We report these quantities separately because a partial-credit node/edge composite and a binary fact judgment are not the same metric.
+To compare factor-level recoverability with node/edge information retention, we implement a \minebase{} baseline inspired by KGGen's MINE. Each gold triple is treated as a fact, and the reconstructed graph is searched for matching or related nodes and edges. The deterministic score separates node information, edge information, and a composite partial-credit node/edge score. We report it as a local baseline rather than a reproduction of the original benchmark.
 
 \subsection{Controlled perturbation calibration}
 A metric that measures semantic alignment should degrade under meaning-destroying perturbations and remain comparatively stable under meaning-preserving perturbations. We therefore create deterministic perturbations of both text and reconstructed graphs. Text-side destructive perturbations include relation phrase deletion, object swaps, and predicate swaps. Graph-side destructive perturbations include node drops, edge drops, and predicate swaps. Preserving perturbations include alias-like rewrites and template paraphrases, which are flagged as clean or weak-template depending on their reliability. All perturbed files and operation-level manifests are saved, enabling audit of each injected change.
-
-\begin{table}[t]
-\centering
-\caption{Bidirectional evaluation pipeline.}
-\label{tab:pipeline}
-\scriptsize
-\begin{tabularx}{\textwidth}{p{2.6cm}Y Y}
-\toprule
-Stage & Input and operation & Output \\
-\midrule
-Predicate factors & source predicate \(p\) is decomposed into weighted factors & role-aware semantic representation \\
-Forward LEMON & compare factors of \(G\) with evidence in \(T\) & KG$\rightarrow$Text coverage and missing-factor trace \\
-Reverse LEMON & reconstruct \(\hat{G}(T)\), compare gold and recovered factors & Text$\rightarrow$KG recoverability trace \\
-MINE-style & retrieve nodes/edges for gold facts from \(\hat{G}(T)\) & node, edge, composite, and fact-recoverability scores \\
-Calibration & inject controlled text/graph perturbations & monotonicity and invariance diagnostics \\
-\bottomrule
-\end{tabularx}
-\end{table}
