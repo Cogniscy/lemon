@@ -1,10 +1,10 @@
 \section{Results}
-\subsection{RQ1: Forward coverage and resource expansion}
-The initial factor dictionary covered only part of the WebNLG development predicates. As a result, the first coverage run scored 140 of 308 edges and produced a missing decomposition rate of 0.5455. Error-driven expansion reduced the missing rate to zero and increased \lemonscore{} coverage from 0.3683 to 0.7915 (Table~\ref{tab:coverage}). This increase is not presented as proof that all texts are faithful; it shows that factor-level evaluation is sensitive to the completeness of predicate decompositions and lexical evidence.
+\subsection{RQ1: Forward coverage and resource completeness}
+The initial factor dictionary covered only part of the WebNLG development predicates. As a result, the first coverage run scored 140 of 308 edges and produced a missing decomposition rate of 0.5455. Resource expansion reduced the missing rate to zero and increased \lemonscore{} coverage from 0.3683 to 0.7915 (Table~\ref{tab:coverage}). This increase is not presented as evidence that all texts are faithful. It shows that factor-level evaluation depends on explicit predicate decompositions and lexical evidence resources.
 
 \begin{table}[t]
 \centering
-\caption{Forward \lemonscore{} before and after error-driven decomposition and cue expansion.}
+\caption{Forward \lemonscore{} before and after decomposition and cue expansion.}
 \label{tab:coverage}
 \scriptsize
 \begin{tabular}{lrrr}
@@ -20,7 +20,7 @@ Low-coverage edges & 191 & 41 & -150 \\
 \end{tabular}
 \end{table}
 
-The comparison with lexical controls (Table~\ref{tab:baselines}) clarifies the signal. Exact entity-label overlap is already high and unchanged by expansion. Graph--text token cosine and Jaccard are also unchanged. \lemonscore{}, in contrast, changes because it uses predicate decompositions and role-aware evidence. This supports the interpretation that \lemonscore{} measures a different diagnostic layer than surface overlap.
+The comparison with lexical controls (Table~\ref{tab:baselines}) clarifies the signal. Exact entity-label overlap is already high and unchanged by expansion. Graph--text token cosine and Jaccard are also unchanged. \lemonscore{} changes because it uses predicate decompositions and role-aware evidence. This supports the interpretation that \lemonscore{} measures a different diagnostic layer than surface overlap.
 
 \begin{table}[t]
 \centering
@@ -63,7 +63,7 @@ Graph--text token Jaccard & KG$\leftrightarrow$Text & no & no & 0.6233 & corpus 
 \end{table}
 
 \subsection{RQ3: Relation information is harder than node information}
-The full deterministic \minebase{} composite score is 0.8028, but this aggregate hides a strong node/edge gap. On the locked 50-fact subset (Table~\ref{tab:mine-subset}), node information is 0.9600, while edge information and deterministic fact recoverability are both 0.5400. The LLM-judged fact recoverability score is 0.5200, with 0.9800 agreement with the deterministic fact decision and 100\% parse success. These numbers indicate that WebNLG texts tend to preserve entity mentions more reliably than relation recoverability. They also show why the partial-credit composite score and the binary LLM fact score must not be treated as interchangeable.
+The deterministic \minebase{} composite score is 0.8028, but this aggregate hides a strong node/edge gap. On the locked 50-fact subset (Table~\ref{tab:mine-subset}), node information is 0.9600, while edge information and deterministic fact recoverability are both 0.5400. The LLM-judged fact recoverability score is 0.5200, with 0.9800 agreement with the deterministic fact decision and full parse success. These numbers indicate that WebNLG texts tend to preserve entity mentions more reliably than relation recoverability. They also show why the partial-credit composite score and the binary fact score must not be treated as interchangeable.
 
 \begin{table}[t]
 \centering
@@ -127,3 +127,10 @@ MINE fact recoverability & 0.6364 & 0.2825 & -0.3539 \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+\subsection{RQ5: Cross-domain deterministic scoring}
+Table~\ref{tab:scoring-final} reports compact deterministic scores on the shared perturbation files for WebNLG, DrugProt, and BC5CDR. The full WebNLG and biomedical tables are generated as separate repository artifacts. Entity recall remains relatively high for relation blur and polarity changes, especially in BC5CDR, because the same biomedical entities are still present. Triple-style and MINE-style scores are lower when the relation cue or edge evidence is damaged, but they do not identify which semantic component was affected.
+
+\input{tables/table_scoring_final_compact}
+
+The deterministic \lemonscore{} proxy is most informative when the factor inventory contains the tested semantic dimension. This is why WebNLG polarity flip is not penalized strongly: many WebNLG predicates in the current pilot do not encode polarity. In DrugProt and BC5CDR, polarity and direction are part of the task semantics, so argument swap and polarity flip reduce \lemonscore{} full more clearly. The result supports the main diagnostic claim: factor inventories make the tested meaning dimensions explicit, while entity preservation alone can hide relation-level damage.

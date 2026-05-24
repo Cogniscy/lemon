@@ -1,14 +1,21 @@
 \section{Experiments}
-The experiments are organized by the four research questions from the introduction rather than by development stage.
+The experiments are organized by the five research questions from the introduction. All scoring runs are reproducible from JSONL inputs and fixed JSON factor inventories. No LLM calls are made in the deterministic perturbation scoring reported in RQ5.
 
 \subsection{RQ1: Forward factor-level semantic coverage}
-We first score WebNLG development texts using the synthetic adjudicated predicate decompositions and seed lexical cues. We then run an error-driven expansion: missing predicates are identified, rule-based or fallback decompositions are added, lexical cues are expanded, and coverage is recomputed. This measures how much of the initial low score comes from missing resources rather than from the text itself.
+We first score WebNLG development texts using predicate decompositions and lexical cues. We then run an error-driven resource expansion: missing predicates are identified, rule-based or fallback decompositions are added, lexical cues are expanded, and coverage is recomputed. This measures how much of the initial low score comes from missing resources rather than from the text itself.
 
 \subsection{RQ2: Bidirectional factor recoverability}
 To test whether the factor representation is bidirectional, we reconstruct a graph from each WebNLG text with a deterministic lexical pseudo-extractor and compute Reverse \lemonscore{}. This score is compared with expanded Forward \lemonscore{}. A small forward--reverse gap would suggest that the same factor schema can support both KG$\rightarrow$Text coverage and Text$\rightarrow$KG recoverability.
 
 \subsection{RQ3: MINE-style node/edge information retention}
-We compare Reverse \lemonscore{} with a \minebase{} baseline inspired by KGGen's Measure of Information in Nodes and Edges. The deterministic variant reports node information, edge information, and a composite node/edge score. The LLM-judged variant evaluates binary fact recoverability on a fixed 50-fact subset using compact JSON-constrained judgments. We report parse success, deterministic agreement, and confidence to avoid treating LLM judgments as unqualified gold.
+We compare Reverse \lemonscore{} with a \minebase{} baseline inspired by KGGen's Measure of Information in Nodes and Edges. The deterministic variant reports node information, edge information, and a composite node/edge score. A previously locked 50-fact subset is also used to show how binary fact recoverability differs from a partial-credit node/edge composite. These values are reported as diagnostic baselines, not as a reproduction of the KGGen/MINE benchmark.
 
 \subsection{RQ4: Controlled perturbation calibration}
-We inject deterministic noise into text and reconstructed graphs. Destructive perturbations should reduce relevant scores; preserving perturbations should produce smaller changes. All perturbed examples, reconstructed graphs, and operation-level manifests are stored under a separate perturbation directory. To avoid misleading averages, text-side perturbations are used primarily to calibrate Forward \lemonscore{}, while graph-side perturbations are used primarily to calibrate Reverse \lemonscore{} and MINE-style recoverability.
+We inject deterministic noise into text and reconstructed graphs. Destructive perturbations should reduce relevant scores; preserving perturbations should produce smaller changes. Text-side perturbations are used primarily to calibrate Forward \lemonscore{}, while graph-side perturbations are used primarily to calibrate Reverse \lemonscore{} and MINE-style recoverability.
+
+\subsection{RQ5: Cross-domain deterministic baseline scoring}
+The final perturbation files cover WebNLG, DrugProt, and BC5CDR. The operators keep the source graph fixed and change only the text, which lets us test whether a metric reacts to the intended semantic damage rather than to a change in the reference graph. Table~\ref{tab:perturbation-design} summarizes the five operators used in the final scoring runs. Polarity flips are most informative for DrugProt and BC5CDR, where relation labels explicitly encode activation, inhibition, regulation, or causality.
+
+\input{tables/table_perturbation_design}
+
+We score the shared perturbation files with deterministic baselines. The goal is not to reproduce external systems such as FactSpotter or KGGen/MINE, but to provide local comparison points with the same inputs. We report entity recall, label match, a binary triple-style match, a \minebase{} node/edge harmonic score, a label-only LEMON variant, and the full deterministic \lemonscore{} proxy based on the fixed factor inventories and perturbation metadata. This scoring layer is also the basis for the later ablation study.

@@ -1,28 +1,12 @@
 \section{Limitations}
-The main limitation is the absence of human expert validation. The current factor decompositions are produced by rules, LLM candidates, and synthetic LLM adjudication. They should be read as a bootstrap resource, not as expert gold. Work on LLM-as-a-judge evaluation reports systematic biases, so the factor schema and adjudicated decompositions require future expert annotation and inter-annotator agreement studies \cite{zheng2023mtbench,gu2024llmjudge,gilardi2024llmjudges}.
+The main limitation is the absence of human expert validation. The current factor inventories are deterministic resources based on predicate labels, schema constraints, rules, and development-time LLM candidates. They should be read as bootstrap resources, not as expert gold. Work on LLM-as-a-judge evaluation reports systematic biases, so future factor schemas and coverage judgments require expert annotation and inter-annotator agreement studies \cite{zheng2023mtbench,gu2024llmjudge,gilardi2024llmjudges}.
 
 A second limitation is lexical evidence. The deterministic scorer can find labels and known cues, but it can miss implicit relations, long-range entailment, and paraphrases outside the cue dictionary. Future versions should add embedding, entailment, or QA-based evidence while preserving the factor-level audit trail.
 
-A third limitation is the reverse pipeline. The reconstructed graph is produced by a lexical pseudo-extractor, not by a full text-to-KG system. Likewise, our MINE-style baseline adapts KGGen's node/edge information idea to WebNLG graph--text pairs; it is not a reproduction of the original MINE benchmark. The deterministic MINE-style composite score, deterministic fact recoverability, and LLM fact recoverability measure related but distinct quantities.
+A third limitation is the reverse pipeline. The reconstructed graph is produced by a lexical pseudo-extractor, not by a full text-to-KG system. Likewise, our MINE-style baseline adapts KGGen's node/edge information idea to graph--text pairs; it is not a reproduction of the original MINE benchmark. The deterministic MINE-style composite score, deterministic fact recoverability, and LLM fact recoverability measure related but distinct quantities.
 
-A fourth limitation is perturbation validity. The controlled perturbations are deterministic and auditable, but some meaning-preserving perturbations are template-like. They support initial construct-validity checks, especially relation deletion, but they do not prove robustness to the full range of natural paraphrase. Larger studies should use curated paraphrase sets and human validation of perturbation labels.
+A fourth limitation is perturbation validity. The controlled perturbations are deterministic and auditable, but they are still template-like. They support initial construct-validity checks, especially relation deletion, argument swap, and polarity flip, but they do not prove robustness to the full range of natural paraphrase. Larger studies should use curated paraphrase sets and human validation of perturbation labels.
 
-Finally, the present experiments are WebNLG-only and use a small stratified pilot. This is appropriate for framework development, but it does not justify broad claims about domain transfer. Biomedical and other domain-specific experiments require domain-specific factor inventories, explicit entity and relation mapping, and a separate reliability analysis. In the repository plan, DrugProt and BC5CDR are treated as transfer diagnostics, not as evidence for a new state-of-the-art biomedical relation extraction system.
+Finally, the biomedical experiments are transfer diagnostics, not biomedical relation extraction systems. DrugProt and BC5CDR are used to test whether the same predicate-factor format can express domain-specific roles, directionality, and polarity. The experiments do not claim state-of-the-art DrugProt or BC5CDR performance, and they do not replace official end-to-end biomedical evaluation protocols.
 
-\begin{table}[t]
-\centering
-\caption{Terminological distinctions used to avoid overclaiming.}
-\label{tab:terminology}
-\scriptsize
-\begin{tabularx}{\textwidth}{p{3.0cm}YY}
-\toprule
-Term & Meaning & Status in this pilot \\
-\midrule
-Human gold & expert factor judgments under annotation guidelines & not collected \\
-Seed/rule reference & decompositions from rules and schema constraints & used for bootstrapping \\
-Synthetic LLM adjudication & LLM-generated or LLM-adjudicated decompositions & provisional, not expert validation \\
-MINE-style adaptation & WebNLG adaptation of node/edge information retention & not full KGGen/MINE reproduction \\
-Deterministic MINE-style score & lexical node/edge recoverability without LLM judgment & transparent baseline \\
-\bottomrule
-\end{tabularx}
-\end{table}
+For this reason, we distinguish four resource types in the paper: human gold, which is not collected; seed or rule-based factor inventories, which form the deterministic resource; synthetic LLM adjudication, which is provisional development material; and MINE-style adaptation, which is a local node/edge baseline rather than the original benchmark.

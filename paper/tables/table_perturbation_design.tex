@@ -1,0 +1,17 @@
+\begin{table}[t]
+\centering
+\caption{Controlled perturbation operators. The operators keep the source graph fixed and alter the text so that factor-level sensitivity can be tested.}
+\label{tab:perturbation-design}
+\scriptsize
+\begin{tabularx}{\linewidth}{lYY}
+\toprule
+Variant & Target factor groups & Expected effect \\
+\midrule
+Node deletion & Entity presence; participant roles & Removes one endpoint mention and should reduce node and role evidence. \\
+Edge deletion & Predicate meaning; evidence form & Removes a relation cue while preserving the graph, so entity overlap may stay high. \\
+Argument swap & Directionality; participant roles & Swaps subject and object mentions and should damage role assignment. \\
+Polarity flip & Polarity; predicate meaning & Replaces positive, negative, or causal cues with conflicting cues. \\
+Relation blur & Predicate specificity; evidence form & Replaces a specific relation cue with a broad cue such as \emph{affects} or \emph{is associated with}. \\
+\bottomrule
+\end{tabularx}
+\end{table}

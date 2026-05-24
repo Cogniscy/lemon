@@ -1,6 +1,6 @@
 \section{Data and Experimental Resources}
 \subsection{WebNLG pilot}
-The experiments use a stratified English WebNLG pilot. The train split contains 200 examples and the development split contains 100 examples. Both splits cover 16 WebNLG categories. The development set contains 308 graph edges. The pilot is intentionally small: it validates the end-to-end scoring pipeline, exposes interpretable failure modes, and allows manual inspection of perturbation manifests before scaling to larger WebNLG subsets or domain-specific graphs.
+The WebNLG experiments use a stratified English pilot built from RDF-to-text examples. The train split contains 200 examples and the development split contains 100 examples. Both splits cover 16 WebNLG categories. The development set contains 308 graph edges. The pilot is intentionally small: it validates the end-to-end scoring pipeline, exposes interpretable failure modes, and keeps all perturbation manifests auditable before scaling to larger graph--text resources.
 
 \begin{table}[t]
 \centering
@@ -17,44 +17,12 @@ Development & 100 & 308 & 3.08 & 119 & 16 \\
 \end{tabular}
 \end{table}
 
-\subsection{Predicate decomposition resources}
-LEM-03 fixes the predicate-factor inventories used by the final experiments. The resource is stored as a deterministic JSON decomposition set: a controlled factor vocabulary plus one weighted decomposition per predicate. WebNLG uses the current fixed development inventory. DrugProt adds a biomedical inventory for chemical--gene/protein relations, including activation, inhibition, agonist, antagonist, regulator, substrate, product, and part-of predicates. BC5CDR uses a compact document-level inventory for the chemical-induced disease relation. The biomedical inventories make polarity, directionality, participant roles, and evidence form explicit, which is needed for the perturbation and ablation studies.
+\subsection{Biomedical transfer resources}
+The biomedical transfer checks use two relation extraction corpora converted into the same graph--text JSONL format. DrugProt provides chemical--gene/protein relations with a rich label set, including inhibition, activation, agonist, antagonist, regulator, substrate, product, and part-of relations. In the current processed subset, the train split contains 500 abstracts, 3588 edges, 12 observed predicate types, and an average text length of 1729.5 characters. BC5CDR provides document-level chemical-induced disease relations. The converted train and development splits each contain 500 documents, with 985 and 961 CID edges respectively. These resources are used as transfer diagnostics only; we do not train or claim a new biomedical relation extraction system.
+
+\subsection{Predicate-factor inventories}
+The final experiments use fixed JSON predicate-factor inventories. Each inventory contains a controlled factor vocabulary and one weighted decomposition per predicate. WebNLG uses the fixed development inventory. DrugProt adds biomedical factors for chemical actor, gene/protein target, relation family, polarity, directionality, and evidence form. BC5CDR uses a compact document-level inventory for the chemical-induced disease relation, where the central factors are chemical exposure, disease outcome, causality, document-level evidence, and direction from chemical to disease. The validator checks that predicate coverage is complete for the current evaluation files and that weights sum to one for each predicate.
 
 \input{tables/table_factor_inventory}
 
-\begin{table}[t]
-\centering
-\caption{LLM decomposition candidate quality against the seed reference. This is a sanity check, not human validation.}
-\label{tab:llm}
-\scriptsize
-\begin{tabular}{lrrrrr}
-\toprule
-Model & Items & Factor P & Factor R & Factor F1 & Role Acc. \\
-\midrule
-Claude 3.5 Haiku & 19 & 0.754 & 0.807 & 0.775 & 0.596 \\
-Llama 3.1 70B Instruct & 19 & 0.798 & 0.798 & 0.795 & 0.614 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-A synthetic adjudicator was applied to 29 predicates. It modified 19 decisions, accepted 10 seed decisions, and produced a mean confidence of 0.830. LLM candidate coverage was 0.621 because 18 of the 29 adjudicated predicates had LLM candidates. The resulting resource is useful for developing the framework, but it remains synthetic and provisional.
-
-\begin{table}[t]
-\centering
-\caption{Synthetic adjudication diagnostics.}
-\label{tab:adjudication}
-\scriptsize
-\begin{tabular}{lr}
-\toprule
-Metric & Value \\
-\midrule
-Items & 29 \\
-LLM candidate coverage & 0.621 \\
-Predicates with LLM candidates & 18 \\
-Predicates without LLM candidates & 11 \\
-Mean confidence & 0.830 \\
-Modified decisions & 19 \\
-Accepted seed decisions & 10 \\
-\bottomrule
-\end{tabular}
-\end{table}
+The inventories are deterministic resources. Earlier LLM-generated decomposition candidates are kept in the repository as development material, but they are not treated as expert gold and are not used as the main evidence in the deterministic scoring tables below.
