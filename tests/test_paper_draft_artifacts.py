@@ -3,10 +3,17 @@ from pathlib import Path
 
 def test_paper_draft_contains_requested_authors():
     main = Path("paper/main.tex").read_text(encoding="utf-8")
-    assert "Tomilov A.A." in main
-    assert "Gineva D." in main
-    assert "Tirskih D." in main
+    for expected in [
+        "Anton Tomilov",
+        "Daria Gineva",
+        "Danil Tirskikh",
+        "Olesia Koroteeva",
+        "Yuri Matveev",
+    ]:
+        assert expected in main
+    assert "STC-Innovation" in main
     assert "ITMO University" in main
+    assert "affiliation to be confirmed" not in main
 
 
 def test_paper_draft_sections_exist():

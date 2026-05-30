@@ -65,7 +65,7 @@ Use only verified values and label the chart as a normalized diagnostic profile,
 
 After the layer/profile table is stable, compare against vector-space similarity on controlled perturbation pairs. The current reproducible baseline is an offline character n-gram cosine; a dense sentence-transformer backend remains optional when model dependencies are available. The point is not to beat embeddings globally, but to show where vector similarity can remain topically high despite relation-level damage.
 
-Radar extension status: MINE-style node/edge and offline Vector cosine traces are included because they share the perturbation-drop scale. Dense embedding traces remain optional and should be added only after the dense backend is explicitly run and materialized.
+Diagnostic-profile extension status: MINE-style node/edge and offline Vector cosine traces are included because they share the perturbation-drop scale. Dense embedding traces remain optional and should be added only after the dense backend is explicitly run and materialized.
 
 ### 5. Expert validation
 
@@ -96,7 +96,7 @@ latexmk -pdf -interaction=nonstopmode main.tex
 ```
 
 
-## LEM-19 radar diagnostic profile
+## LEM-19 diagnostic perturbation profile
 
 Status: implemented as a compact Results figure based on `reports/radar_diagnostic_profile_values.json`. The figure is a diagnostic perturbation-sensitivity profile, not an accuracy leaderboard.
 
@@ -105,7 +105,7 @@ Status: implemented as a compact Results figure based on `reports/radar_diagnost
 Status: implemented in `scripts/run_embedding_baseline.py` and `reports/embedding_baseline_perturbation.json`. The default backend is an offline character n-gram vector cosine for reproducibility; dense sentence-transformer cosine can be run explicitly with `--backend sentence-transformers` when the optional model dependency and model files are available.
 
 
-## LEM-21 radar with MINE-style and Vector cosine traces
+## LEM-21 diagnostic profile with MINE-style and Vector cosine traces
 
 Status: implemented as an extension of `reports/radar_diagnostic_profile_values.json` and `paper/figures/figure_radar_diagnostic_profile.*`. The figure now includes LEMON-Factor, MINE-style node/edge, triple match, entity recall, and Vector cosine. Vector cosine refers to the offline character n-gram baseline unless a dense backend report is explicitly generated.
 
@@ -117,9 +117,19 @@ Status: prepared as `annotation/expert_validation_sample.csv` with 50 review row
 
 ## LEM-24 paper audit and layout
 
-Status: implemented. The paper narrative was tightened around the relation-level failure mode, the abstract/introduction/results/conclusion were edited for a more direct scientific voice, the radar caption remains explicitly non-leaderboard, and the references now include recent LLM graph-to-text work. The PDF remains at 15 pages with no undefined references or citations.
+Status: implemented. The paper narrative was tightened around the relation-level failure mode, the abstract/introduction/results/conclusion were edited for a more direct scientific voice, the diagnostic-profile caption remains explicitly non-leaderboard, and the references now include recent LLM graph-to-text work. The PDF remains at 15 pages with no undefined references or citations.
 
 
 ## LEM-25 reproducibility and submission-readiness pack
 
-Status: implemented. The default reproduction path is now documented in `docs/REPRODUCIBILITY.md`, and final submission checks are collected in `docs/SUBMISSION_CHECKLIST.md`. Python scripts should be run from the repository root. The default local path regenerates the expert-validation CSV, the offline vector baseline, the radar profile, the pytest suite, and the LNCS PDF. Remote LLM/OpenRouter runs and returned expert annotations remain outside the default path.
+Status: implemented. The default reproduction path is now documented in `docs/REPRODUCIBILITY.md`, and final submission checks are collected in `docs/SUBMISSION_CHECKLIST.md`. Python scripts should be run from the repository root. The default local path regenerates the expert-validation CSV, the offline vector baseline, the diagnostic profile, the pytest suite, and the LNCS PDF. Remote LLM/OpenRouter runs and returned expert annotations remain outside the default path.
+
+
+## LEM-26 diagnostic profile redesign
+
+Status: implemented. The earlier spider/radar figure was replaced by an annotated matrix heatmap. The underlying perturbation-drop values are unchanged, but the figure now uses a linear scale and explicit cell values. The text states that larger drops indicate stronger scalar sensitivity, not necessarily a better metric.
+
+
+## LEM-27 formal submission cleanup
+
+Status: implemented. The author block now uses final author names and affiliations supplied for submission: Anton Tomilov at STC-Innovation and Daria Gineva, Danil Tirskikh, Olesia Koroteeva, and Yuri Matveev at ITMO University. A reviewer-facing submission package and a formal-cleanup report were generated. Expert-validation results remain pending until the linguist workbook is returned.

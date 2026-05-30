@@ -1,6 +1,6 @@
 # Submission checklist
 
-This checklist is for the SPECOM/LNCS paper package. It separates paper readiness from later expert-validation integration.
+This checklist is for the SPECOM/LNCS paper package. It separates paper readiness from later expert-validation integration. The LEM-27 formal pass filled the author block and created a reviewer-facing submission package; final conference portal metadata should still be checked manually before upload.
 
 ## Paper scope
 
@@ -18,7 +18,7 @@ This checklist is for the SPECOM/LNCS paper package. It separates paper readines
 - [ ] No undefined references remain in the final log.
 - [ ] The PDF has 15 pages or fewer.
 - [ ] Figures and tables are legible in the rendered PDF.
-- [ ] The radar caption states that the profile is based on perturbation drops, not accuracy.
+- [ ] The diagnostic-profile figure caption states that the profile is based on perturbation drops, not accuracy.
 - [ ] The author block has no placeholders before final submission.
 - [ ] Affiliations and acknowledgements match the submission metadata.
 
@@ -26,7 +26,7 @@ This checklist is for the SPECOM/LNCS paper package. It separates paper readines
 
 - [ ] `python -m pytest -q` passes.
 - [ ] `python scripts/run_embedding_baseline.py` regenerates the vector baseline report.
-- [ ] `python scripts/make_radar_profile.py` regenerates the radar JSON and figures.
+- [ ] `python scripts/make_radar_profile.py` regenerates the diagnostic-profile JSON and figures.
 - [ ] `docs/REPRODUCIBILITY.md` matches the current command sequence.
 - [ ] Known LaTeX warnings are documented and do not affect visible output.
 
@@ -40,10 +40,10 @@ This checklist is for the SPECOM/LNCS paper package. It separates paper readines
 
 ## Final package split
 
-Recommended final artifacts:
+Recommended final artifacts after the LEM-27 cleanup:
 
 ```text
-paper_submission/        PDF and required LaTeX source files
+paper_submission/        PDF and required LaTeX source files, generated as `lemon_specom_submission_package.zip`
 reproducibility_pack/    code, reports, resources, tests, docs
 internal_review_pack/    expert-validation workbook and returned annotations
 ```
