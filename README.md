@@ -51,6 +51,8 @@ tests/                   Pytest test suite
 Key documentation:
 
 - `docs/ROADMAP.md` - current near-term roadmap.
+- `docs/REPRODUCIBILITY.md` - exact local commands, expected outputs, and known warnings.
+- `docs/SUBMISSION_CHECKLIST.md` - paper/package checks before SPECOM submission.
 - `docs/CLAIMS_AND_METRICS_AUDIT.md` - safe wording for claims and metric caveats.
 - `docs/LINGUIST_VALIDATION.md` - compact task description for expert predicate validation.
 - `docs/annotation_guidelines.md` - older, broader annotation notes.
@@ -70,32 +72,27 @@ Run the test suite:
 python -m pytest -q
 ```
 
-Build the paper:
-
-```bash
-cd paper
-latexmk -pdf -interaction=nonstopmode main.tex
-```
-
-Regenerate the radar profile from the repository root:
-
-```bash
-python scripts/make_radar_profile.py
-```
-
-Run the offline vector-space perturbation baseline from the repository root:
+Regenerate the vector baseline and radar profile from the repository root:
 
 ```bash
 python scripts/run_embedding_baseline.py
 ```
 
-Local check:
+```bash
+python scripts/make_radar_profile.py
+```
+
+Build the paper:
 
 ```bash
-python -m pytest -q
 cd paper
+```
+
+```bash
 latexmk -pdf -interaction=nonstopmode main.tex
 ```
+
+For the complete command sequence, expected outputs, and known warnings, see `docs/REPRODUCIBILITY.md`. For final paper/package checks, see `docs/SUBMISSION_CHECKLIST.md`.
 
 ## Reproducing the current paper artifacts
 
@@ -141,23 +138,32 @@ The current draft supports a restricted graph-text fidelity claim:
 
 ## Expert validation
 
-The next human-facing step is a lightweight linguistic review of predicate factors. Use:
+A compact expert-validation pack is available for a 2--3 day review. The easiest reviewer-facing version is the Excel folder:
 
 ```text
-docs/LINGUIST_VALIDATION.md
-annotation/linguist_predicate_review_template.csv
+annotation/linguist_review_pack/
+annotation/linguist_review_pack/expert_validation_form.xlsx
 ```
 
-The goal is simple: check whether each predicate decomposition is correct, sufficiently complete, and understandable for graph-text semantic fidelity evaluation.
+The workbook contains 50 predicate-factor rows: 36 WebNLG, 12 DrugProt, and 2 BC5CDR examples. The expert only fills the yellow columns and checks whether the proposed factors are correct, sufficient, and role/direction/polarity-safe. The general protocol is documented in `docs/EXPERT_VALIDATION_PACK.md`. The source CSV remains available at `annotation/expert_validation_sample.csv`; the older minimal template remains available at `annotation/linguist_predicate_review_template.csv`.
 
 ## Near-term development sequence
 
-1. Fix narrow paper positioning and documentation.
-2. Add a compact layer/profile table.
-3. Derive radar/spider chart values from verified layer/profile numbers.
-4. Add a vector-space perturbation baseline and keep dense sentence-transformer runs optional.
-5. Extend the radar cautiously with MINE-style and vector/embedding traces if the common scale remains defensible.
-6. Integrate expert validation results if available before final SPECOM compaction.
-7. Keep the final paper within the 15-page SPECOM/LNCS constraint.
+Completed stabilization steps:
+
+1. Narrow paper positioning and documentation.
+2. Compact layer/profile table.
+3. Radar/spider chart based on perturbation-drop values.
+4. Offline vector-space perturbation baseline.
+5. Radar extension with MINE-style and Vector cosine traces.
+6. Expert-validation workbook prepared for a 2--3 day review.
+7. Paper narrative/style audit while preserving the 15-page limit.
+8. Reproducibility and submission-readiness documentation.
+
+Remaining before submission:
+
+1. Final author/affiliation and acknowledgement metadata.
+2. Final PDF/source package check.
+3. Optional integration of compact expert rates if the linguist review returns in time.
 
 Future work may generalize this into an LLM-assisted layered semantic graph metric for text-text comparison, but the current paper should remain a controlled graph-text fidelity study.

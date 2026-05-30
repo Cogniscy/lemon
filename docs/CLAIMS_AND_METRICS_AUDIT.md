@@ -18,9 +18,9 @@ LEMON-Factor is a **source-driven, factor-level diagnostic metric for graph-text
 | LEMON-Factor transfers across domains. | Partially supported. | WebNLG, DrugProt, BC5CDR reports. | "The same inventory format is applied to open-domain and biomedical graph-text data." | Do not claim universal cross-domain validity. |
 | MINE-style baseline is included. | Supported as an adapted baseline. | `reports/mine1_like_lemon_pilot.json`, `reports/mine_external_inspection.*` | "MINE-style" or "MINE-inspired node/edge baseline." | Do not claim a reproduction of the KGGen/MINE benchmark. |
 | LLM judges validate the metric. | Not supported. | `reports/llm_reliability_summary_3judges.json`, `reports/paper_llm_reliability_compact.json` | "LLM judges provide a complementary recoverability signal." | Do not present LLM judgments as expert validation or gold labels. |
-| Radar/spider chart shows the niche of the method. | Usable with caveat. | `reports/metric_radar_comparison.json` | "Normalized diagnostic profile, not absolute accuracy." | Do not compare heterogeneous axes as if they were a single benchmark score. |
+| Diagnostic profile figure shows the niche of the method. | Usable with caveat. | `reports/radar_diagnostic_profile_values.json`, `paper/figures/figure_radar_diagnostic_profile.*` | "Normalized perturbation-sensitivity profile, not absolute accuracy." | Do not present the figure as a leaderboard; Vector cosine is an offline char-ngram baseline unless a dense backend is explicitly run. |
 | Expert validation is done. | Not currently supported. | N/A | "Expert validation is planned / required in future work." | Do not imply human-validated inventories until the review is complete. |
-| Embedding baseline is complete. | Not currently supported in paper scope. | N/A | "Embedding baseline is future work / next experiment." | Do not claim empirical superiority over embeddings yet. |
+| Vector-space baseline is included. | Supported for the offline char-ngram backend. | `reports/embedding_baseline_perturbation.json`, `scripts/run_embedding_baseline.py` | "The offline vector-space baseline is a topical/lexical reference under controlled perturbations." | Do not treat it as a complete dense embedding benchmark or claim global superiority over embeddings. |
 | Pragmatic layer is handled. | Not supported. | N/A | "Pragmatics is outside the current scope." | Do not claim coverage of irony, implicature, presupposition, or stance. |
 
 ## Metric interpretation notes
@@ -46,17 +46,17 @@ The LLM probe compares deterministic perturbation labels with model-based factor
 
 ### Radar values
 
-The current radar JSON explicitly notes that values are normalized diagnostic properties. The figure should be used to illustrate a niche, not to claim a global ranking of metrics.
+The current diagnostic-profile JSON explicitly notes that values are normalized perturbation drops. The figure should be used to illustrate a niche, not to claim a global ranking of metrics.
 
 ### Layer/profile values
 
-`reports/layer_profile_values.json` is the source for the next radar/spider figure. Its values are diagnostic properties and perturbation drops, not absolute accuracy scores. The safe wording is:
+`reports/layer_profile_values.json` remains supporting context for the current diagnostic-profile figure. Its values are diagnostic properties and perturbation drops, not absolute accuracy scores. The safe wording is:
 
-> The radar figure visualizes the diagnostic niche of LEMON-Factor under controlled perturbations.
+> The diagnostic-profile figure visualizes the niche of LEMON-Factor under controlled perturbations.
 
 Avoid:
 
-> The radar figure proves that LEMON-Factor is globally more accurate than baseline systems.
+> The diagnostic-profile figure proves that LEMON-Factor is globally more accurate than baseline systems.
 
 The strongest layer claim currently supported is that role factors drive the largest ablation gain. Polarity should be reported only as inventory-dependent.
 
@@ -96,17 +96,17 @@ Avoid:
 
 ### Radar diagnostic profile figure
 
-`reports/radar_diagnostic_profile_values.json` and `paper/figures/figure_radar_diagnostic_profile.*` instantiate the radar figure used in the Results section. The values are mean drops under controlled perturbations, taken from `reports/paper_metric_sensitivity_drops.json` and documented against `reports/layer_profile_values.json`.
+`reports/radar_diagnostic_profile_values.json` and `paper/figures/figure_radar_diagnostic_profile.*` instantiate the diagnostic-profile figure used in the Results section. The values are mean drops under controlled perturbations, taken from `reports/paper_metric_sensitivity_drops.json` and documented against `reports/layer_profile_values.json`.
 
 Safe wording:
 
-> The radar profile visualizes diagnostic sensitivity to controlled semantic perturbations. Larger values mean stronger response to induced damage, not higher task accuracy.
+> The diagnostic-profile figure visualizes sensitivity to controlled semantic perturbations. Larger values mean stronger scalar response to induced damage, not higher task accuracy.
 
 Avoid:
 
-> The radar profile proves that LEMON-Factor is globally more accurate than entity, triple, or embedding metrics.
+> The diagnostic-profile figure proves that LEMON-Factor is globally more accurate than entity, triple, or embedding metrics.
 
-The figure can compare LEMON-Factor, entity recall, and triple matching because all plotted values use the same perturbation-drop scale. It still should not be treated as a general leaderboard: triple matching is a coarse detector, while LEMON-Factor is intended to provide an auditable factor-level explanation of the response.
+The figure can compare LEMON-Factor, MINE-style node/edge, triple matching, entity recall, and Vector cosine because all plotted values use the same perturbation-drop scale. It still should not be treated as a general leaderboard: triple matching and MINE-style scoring are coarse detectors, Vector cosine is an offline character n-gram baseline unless a dense backend is explicitly materialized, while LEMON-Factor is intended to provide an auditable factor-level explanation of the response.
 
 ### Vector-space perturbation baseline
 
@@ -120,6 +120,36 @@ Avoid:
 
 > LEMON-Factor universally outperforms embedding models.
 
-Future radar extension:
+Current diagnostic-profile extension:
 
-> MINE-style node/edge and vector/embedding traces may be added to the radar only if all plotted values use the same perturbation-drop scale and the caption states that the figure is a diagnostic profile, not an accuracy leaderboard.
+> MINE-style node/edge and Vector cosine traces are included only because all plotted values use the same perturbation-drop scale. The caption must continue to state that the figure is a diagnostic profile, not an accuracy leaderboard. Dense embedding traces should be added only after an explicit dense backend run.
+
+### Expert validation pack
+
+`annotation/expert_validation_sample.csv` is a compact 50-row sample for reviewing predicate-factor decompositions across WebNLG, DrugProt, and BC5CDR. A reviewer-facing Excel form is collected in `annotation/linguist_review_pack/expert_validation_form.xlsx` together with short instructions. It is intended as a feasible 2--3 day review package.
+
+Safe wording:
+
+> We prepared a compact expert-validation protocol for predicate-factor inventories and, if completed, report aggregate accept/missing/wrong-factor and direction/polarity issue rates.
+
+Avoid:
+
+> The full factor inventory is expert-validated.
+
+The sample strengthens readiness for human validation but does not by itself provide validation results.
+
+
+
+### LEM-24 paper style and submission-readiness audit
+
+The paper text was revised to keep the narrative centered on a single failure mode: entity names can survive while predicate meaning is lost. The safe scope remains unchanged: LEMON-Factor is a graph-text diagnostic layer for relation-level fidelity, not a general text-text similarity metric.
+
+Safe additions:
+
+> Future work should validate predicate inventories with domain experts and connect the factor trace to stronger paraphrase, dense embedding, entailment, QA, and text-to-KG evidence models.
+
+Avoid:
+
+> The current paper already reports expert validation or dense embedding results.
+
+The bibliography now includes recent LLM graph-to-text work as future-facing context, without changing the empirical claims.

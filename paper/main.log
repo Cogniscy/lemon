@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.5.30)  30 MAY 2026 20:33
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.5.30)  30 MAY 2026 22:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -690,32 +690,17 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 (C:\Users\tomil\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys.c
 fg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
-)) (sections/01_introduction.tex
-Overfull \hbox (6.33594pt too wide) in paragraph at lines 2--3
-\T1/cmr/m/n/10 Knowledge graphs ex-press in-for-ma-tion through typed re-la-tio
-ns. In an edge $\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 s; p; o\OT1/cmr/m/n/10 )$\T1/
-cmr/m/n/10 ,
+)) (sections/01_introduction.tex [1
+
+{C:/Users/tomil/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]) (sections/0
+2_related_work.tex
+Overfull \hbox (10.33084pt too wide) in paragraph at lines 15--1
+\T1/cmr/m/n/10 se-man-tic align-ment; fixed fac-tor in-ven-to-ries for WebNLG, 
+Drug-Prot, and BC5CDR;
  []
 
-[1
-
-{C:/Users/tomil/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
-Overfull \hbox (3.40564pt too wide) in paragraph at lines 6--7
-[]\T1/cmr/m/n/10 We ad-dress this gap with \T1/cmr/m/sc/10 LEMON-Factor\T1/cmr/
-m/n/10 , a source-driven di-ag-nos-tic frame-
- []
-
-
-Overfull \hbox (5.08824pt too wide) in paragraph at lines 10--11
-[]\T1/cmr/m/n/10 The frame-work is bidi-rec-tional. In the for-ward di-rec-tion
-, KG$\OMS/cmsy/m/n/10 !$\T1/cmr/m/n/10 Text, \T1/cmr/m/sc/10 LEMON-
- []
-
-) (sections/02_related_work.tex
-Underfull \vbox (badness 1102) has occurred while \output is active []
-
- [2]
-Overfull \hbox (15.14911pt too wide) in paragraph at lines 9--10
+[2]
+Overfull \hbox (15.14911pt too wide) in paragraph at lines 10--11
 \T1/cmr/m/n/10 Atomic fac-tu-al-ity met-rics de-com-pose gen-er-ated text into 
 ver-i-fi-able claims. FActScore
  []
@@ -736,67 +721,67 @@ Overfull \hbox (15.7323pt too wide) in paragraph at lines 32--1
  un-der meaning-preserving
  []
 
-[6]) (sections/05_experiments.tex [7]
-Overfull \hbox (9.76154pt too wide) in paragraph at lines 7--8
+[6]) (sections/05_experiments.tex
+Overfull \hbox (9.76154pt too wide) in paragraph at lines 8--9
 \T1/cmr/m/sc/10 Factor\T1/cmr/m/n/10 . The re-verse score is com-pared with ex-
 panded For-ward \T1/cmr/m/sc/10 LEMON-Factor\T1/cmr/m/n/10 .
  []
 
-
-Overfull \hbox (1.21173pt too wide) in paragraph at lines 12--13
+[7]
+Overfull \hbox (1.21173pt too wide) in paragraph at lines 13--14
 []\T1/cmr/m/n/10 Controlled per-tur-ba-tions are then in-jected into text and r
 e-con-structed graphs.
  []
 
-) (sections/06_results.tex [8] (tables/table_layer_profile.tex) [9]
-<figures/figure_radar_diagnostic_profile.pdf, id=55, 248.15504pt x 234.73875pt>
+) (sections/06_results.tex
+Overfull \hbox (7.46933pt too wide) in paragraph at lines 3--4
+\T1/cmr/m/n/10 The first WebNLG pass shows that pred-i-cate re-sources de-ter-m
+ine whether relation-
+ []
 
+[8] (tables/table_layer_profile.tex)
+<figures/figure_radar_diagnostic_profile.pdf, id=52, 251.2564pt x 244.02733pt>
 File: figures/figure_radar_diagnostic_profile.pdf Graphic file (type pdf)
 <use figures/figure_radar_diagnostic_profile.pdf>
 Package pdftex.def Info: figures/figure_radar_diagnostic_profile.pdf  used on i
 nput line 22.
-(pdftex.def)             Requested size: 236.04146pt x 223.29066pt.
+(pdftex.def)             Requested size: 236.04146pt x 229.25539pt.
 
-(tables/table_perturbation_sensitivity_drop.tex)
-(tables/table_ablation_gain.tex) [10] (tables/table_llm_reliability.tex))
-(sections/07_error_analysis.tex [11 <./figures/figure_radar_diagnostic_profile.
-pdf>]) (sections/08_limitations.tex [12]
-Overfull \hbox (3.43341pt too wide) in paragraph at lines 8--9
-[]\T1/cmr/m/n/10 The scope is also nar-rower than gen-eral se-man-tic sim-i-lar
--ity. \T1/cmr/m/sc/10 LEMON-Factor
- []
-
-) (sections/09_conclusion.tex [13]) (references_latex.tex
-Underfull \hbox (badness 1584) in paragraph at lines 9--10
+(tables/table_perturbation_sensitivity_drop.tex) [9]
+(tables/table_ablation_gain.tex) (tables/table_llm_reliability.tex))
+(sections/07_error_analysis.tex [10]) (sections/08_limitations.tex [11 <./figur
+es/figure_radar_diagnostic_profile.pdf>] [12]) (sections/09_conclusion.tex)
+(references_latex.tex [13]
+Underfull \hbox (badness 1584) in paragraph at lines 10--11
 []\T1/cmr/m/n/9 Rebuffel, C., Scialom, T., Soulier, L., Pi-wowarski, B., Lam-pr
 ier, S., Sta-
  []
 
 [14]
-Underfull \hbox (badness 10000) in paragraph at lines 16--17
+Underfull \hbox (badness 10000) in paragraph at lines 17--18
 []\T1/cmr/m/n/9 Opitz, J.: Smatch++: Stan-dard-ized and Ex-tended Eval-u-a-tion
  of
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 16--17
+Underfull \hbox (badness 10000) in paragraph at lines 17--18
 \T1/cmr/m/n/9 Se-man-tic Graphs. In: Find-ings of EACL, pp. 1595--1608 (2023).
  []
 
 
-Underfull \hbox (badness 7064) in paragraph at lines 18--19
+Underfull \hbox (badness 7064) in paragraph at lines 19--20
 []\T1/cmr/m/n/9 Miranda-Escalada, A., Mehryary, F., Lu-oma, J., et al.: Overvie
 w of
  []
 
 
-Underfull \hbox (badness 2435) in paragraph at lines 18--19
+Underfull \hbox (badness 2435) in paragraph at lines 19--20
 \T1/cmr/m/n/9 Drug-Prot BioCre-ative VII track: qual-ity eval-u-a-tion and larg
 e scale text
  []
 
 
-Underfull \hbox (badness 6461) in paragraph at lines 18--19
+Underfull \hbox (badness 6461) in paragraph at lines 19--20
 \T1/cmr/m/n/9 min-ing of drug-gene/protein re-la-tions. Database 2023, baad080 
 (2023).
  []
@@ -808,13 +793,13 @@ L3 programming layer <2025-12-24>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 14636 strings out of 467870
- 298126 string characters out of 5418355
- 699916 words of memory out of 5000000
- 43208 multiletter control sequences out of 15000+600000
+ 14637 strings out of 467870
+ 298141 string characters out of 5418355
+ 700522 words of memory out of 5000000
+ 43209 multiletter control sequences out of 15000+600000
  642822 words of font info for 73 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,10n,94p,1727b,836s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,10n,94p,1380b,836s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\tomil\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt
 0900.pk> <C:\Users\tomil\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi60
 0\ecrm0700.pk> <C:\Users\tomil\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec
@@ -839,9 +824,9 @@ ograms/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/tomil/AppData/L
 ocal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/tomil/Ap
 pData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users
 /tomil/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy9.pfb>
-Output written on main.pdf (15 pages, 298486 bytes).
+Output written on main.pdf (15 pages, 298698 bytes).
 PDF statistics:
- 635 PDF objects out of 1000 (max. 8388607)
+ 638 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  18 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,0 +1,3 @@
+predicate,domain,example_triple,example_text,proposed_factors,verdict,missing_or_wrong,direction_ok,polarity_ok,suggested_fix,comment
+birthPlace,WebNLG,Marie Curie -- birthPlace -- Warsaw,Marie Curie was born in Warsaw.,person-like subject; birth/biographical relation; place-like object,yes,,yes,n/a,,
+inhibits,DrugProt,Drug A -- inhibits -- Protein B,Drug A inhibits the activity of Protein B.,chemical actor; protein target; interaction; positive regulation,partly,positive regulation is wrong; should be negative regulation/suppression,yes,no,chemical actor; protein target; inhibitory interaction; negative regulation; directed effect,
