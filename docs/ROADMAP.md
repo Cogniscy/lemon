@@ -1,369 +1,98 @@
 # LEMON-Factor Roadmap
 
-## Scope
+## Current paper scope
 
-This roadmap turns the current LEMON idea into a SPECOM-oriented research prototype. The project does not optimize a text-to-KG extractor. It evaluates **graph–text meaning preservation** when explicit graphs, triples, or relation annotations are available.
+The SPECOM paper should stay focused on **graph-text semantic fidelity**. LEMON-Factor assumes that a source graph, relation annotation, or predicate inventory is available. It decomposes predicates into semantic factors and checks whether those factors are preserved in text and recoverable in a reconstructed graph.
 
-The planned contribution is an interpretable metric layer:
+Current safe claim:
 
-```text
-text + explicit graph
-      ↓
-unified GraphText representation
-      ↓
-train-only factor dictionary and decompositions
-      ↓
-LEMON-Factor semantic coverage on dev
-      ↓
-comparison with exact matching, embedding similarity, and MINE-style recoverability
-```
+> LEMON-Factor is a factor-level diagnostic metric for relation-level graph-text alignment.
 
-## Research claims to test
+Current unsafe claim:
 
-1. Complex terms and relations can be represented as weighted, role-aware semantic factor decompositions.
-2. Factor-based similarity can separate equivalent, near, related, and different graph/text concepts better than exact matching and raw embedding cosine.
-3. LEMON-Factor is complementary to MINE: MINE tests whether a fact can be inferred from a retrieved subgraph; LEMON-Factor tests which semantic components and roles are preserved.
-4. The method is useful for both clean KG/text benchmarks and biomedical relation datasets.
+> LEMON-Factor is a general text-text semantic similarity metric.
 
-## Roadmap overview
+## Near-term patch sequence
 
-| Stage | Name | Main output | Paper contribution |
-|---|---|---|---|
-| lemon-01 | Repository, data contract, pilot planning | Reproducible repo, GraphText schema, roadmap, first tests | Reproducibility and data representation sections |
-| lemon-02 | Dataset ingestion | WebNLG/BioRED/MINE loaders and pilot splits | Dataset table and experimental setup |
-| lemon-02.1 | Stratified WebNLG pilot | Category-balanced WebNLG train/dev JSONL | Less biased WebNLG pilot and stronger dataset table |
-| lemon-03 | Factor schema and inventory | Seed factor schema, train term/predicate inventory | Method: factor inventory |
-| lemon-04 | Factor decompositions | Initial factor dictionary and expert review templates | Method examples and annotation protocol |
-| lemon-05 | Similarity metrics | exact, token, embedding, factor, role-factor scorers | Metric definitions |
-| lemon-06 | Pair benchmark | Expert-labeled equivalent/near/related/different pairs | Experiment 1 |
-| lemon-07 | Graph-text coverage | LEMON-Factor graph/text coverage evaluator | Experiment 2 |
-| lemon-08 | MINE-compatible baseline | top-k retrieval, 2-hop expansion, judge protocol | Experiment 3 baseline |
-| lemon-09 | Results and disagreement analysis | tables, error cases, MINE vs LEMON comparison | Results and error analysis |
-| lemon-10 | SPECOM paper writing | LNCS draft, figures, tables, reproducibility notes | Submission-ready paper draft |
+| Patch | Goal | Main outputs |
+|---|---|---|
+| `lem17-positioning-docs` | Fix narrow positioning and onboarding docs. | README renovation, claims audit, linguist validation guide, minimal TeX positioning edits. |
+| `lem18-layer-profile` | Make the factor layers explicit. | Compact layer/profile table: entity, role, direction, polarity, evidence, causality. |
+| `lem19-radar` | Add a radar/spider figure with verified numbers. | Radar figure and caption using real normalized diagnostic values. |
+| `lem20-vector-baseline-deps` | Add a reproducible vector-space perturbation baseline and dependency hygiene. | Offline char-ngram cosine report, optional dense sentence-transformer backend, updated docs/tests. |
+| `lem21-expert-validation` | Integrate linguistic validation if available. | Expert accept/missing/wrong-factor rates and short discussion. |
+| `lem22-final-specom-compaction` | Fit the paper to SPECOM/LNCS limits. | Final 15-page paper draft and changed-file archive. |
 
-## Target datasets
+## What remains unchanged for now
 
-### WebNLG
+- No new universal semantic basis.
+- No pragmatics experiment.
+- No full LLM semantic parser.
+- No energy-based model section.
+- No general text-text similarity benchmark.
 
-Used as a clean graph-to-text benchmark with explicit DBpedia triples and text verbalizations. It supports controlled graph/text comparison without making extraction the central task.
+These are future-work directions. The current paper should remain a controlled graph-text diagnostic study.
 
-### BioRED
+## Planned improvements
 
-Used as the biomedical branch. It provides PubMed abstracts with biomedical entity and document-level relation annotations. It tests whether the factor approach is viable beyond open-domain RDF triples.
+### 1. Positioning and documentation
 
-### MINE / KGGen evaluation data
+- Keep the abstract, introduction, limitations, and conclusion consistent with the graph-text fidelity scope.
+- Use `MINE-style` or `MINE-inspired`, not `MINE reproduction`.
+- State that LLM judges are complementary recoverability probes, not expert validation.
 
-Used to reproduce a MINE-compatible fact recoverability baseline: fact embedding, node retrieval, 2-hop expansion, and binary inferability judgment.
+### 2. Layer/profile table
 
-## Unified GraphText representation
+Add a compact table that maps each factor layer to the failure mode it detects:
 
-Every dataset is converted into the same JSONL object shape:
+| Layer | Detects | Example |
+|---|---|---|
+| Entity/domain | missing participant type | place vs person |
+| Role | subject/object role preservation | argument swap |
+| Direction | source-to-target relation | chemical affects protein |
+| Polarity | activation/inhibition or positive/negative relation | inhibits vs activates |
+| Evidence | textual cue for relation | relation phrase deletion |
+| Causality | cause/effect relation | disease causes symptom |
 
-```json
-{
-  "id": "...",
-  "dataset": "webnlg|biored|mine",
-  "split": "train|dev|test|pilot",
-  "language": "en|ru|...",
-  "text": "...",
-  "nodes": [
-    {"id": "n1", "label": "...", "type": "..."}
-  ],
-  "edges": [
-    {"subj": "n1", "pred": "...", "obj": "n2", "evidence": "..."}
-  ],
-  "facts": [
-    {"id": "f1", "text": "...", "source": "gold|manual|derived|mine"}
-  ]
-}
-```
+### 3. Radar/spider figure
 
-## Evaluation blocks
+Use only verified values and label the chart as a normalized diagnostic profile, not an accuracy ranking. If values come from heterogeneous reports, the caption must say so.
 
-### Experiment 1: term/relation similarity
+### 4. Vector and embedding baselines
 
-Compare exact, token, embedding, factor, and role-aware factor similarity on expert-labeled pairs:
+After the layer/profile table is stable, compare against vector-space similarity on controlled perturbation pairs. The current reproducible baseline is an offline character n-gram cosine; a dense sentence-transformer backend remains optional when model dependencies are available. The point is not to beat embeddings globally, but to show where vector similarity can remain topically high despite relation-level damage.
 
-- equivalent
-- near
-- related
-- different
+Future radar extension: add MINE-style node/edge and vector/embedding traces only if all plotted methods share the same perturbation-drop scale and the caption remains explicit that the chart is diagnostic, not a leaderboard.
 
-### Experiment 2: graph-text meaning coverage
+### 5. Expert validation
 
-Use gold graphs and texts. Measure how much source-side semantics are covered by candidate graph-side semantics.
-
-### Experiment 3: MINE-style recoverability
-
-Run a MINE-compatible pipeline:
-
-1. Embed facts.
-2. Embed graph nodes.
-3. Retrieve top-k nodes.
-4. Expand retrieved nodes to a 2-hop subgraph.
-5. Judge whether the fact is inferable from the subgraph.
-6. Score recovered facts divided by all facts.
-
-## Expected paper tables
-
-1. Dataset statistics.
-2. Pair similarity results.
-3. Graph-text coverage results.
-4. MINE vs LEMON-Factor disagreement matrix.
-5. Error analysis categories.
-
-## Expert review points
-
-1. Factor decompositions: missing/extra factors, wrong roles, poor weights.
-2. Pair labels: equivalent / near / related / different.
-3. MINE judge validation: whether a fact is inferable from the retrieved subgraph.
-4. Error categories: retrieval failure, judge failure, missing factor, too generic factor, wrong role, numeric/unit mismatch.
-
-## Minimal publishable result
-
-The first publishable claim should stay modest:
-
-> Pilot results suggest that role-aware factorized semantic decomposition is an interpretable complement to MINE-style fact recoverability for graph–text meaning preservation evaluation.
-
-Avoid claiming that LEMON-Factor is a general theory of meaning or a replacement for MINE.
-
-
-## Milestone lemon-02 — WebNLG parquet ingestion
-
-**Goal:** establish the first real dataset pipeline by converting WebNLG parquet rows into the unified GraphText JSONL format.
-
-**Code deliverables:**
-- `datasets/webnlg_loader.py` for parquet loading through `refs/convert/parquet`;
-- `datasets/convert_webnlg.py` for record conversion;
-- `datasets/normalization.py` for stable IDs, label cleaning, and triple parsing;
-- `analysis/dataset_stats.py` for dataset statistics;
-- offline tests for the converter.
-
-**Paper deliverables:**
-- first dataset statistics table row;
-- reproducibility note for Hugging Face parquet loading;
-- conversion protocol paragraph for the Data section.
-
-**Exit criteria:** WebNLG pilot train/dev JSONL files are produced, validated by Pydantic, summarized by the stats module, and covered by tests.
-
-
-## Milestone lemon-02.1 — Stratified WebNLG pilot sampling
-
-**Goal:** replace first-row-only WebNLG pilot sampling with deterministic category-stratified sampling for experiments.
-
-**Code deliverables:**
-- `datasets/sampling.py` with `take_first` and `stratified_sample`;
-- `convert_webnlg.py` CLI flags `--stratify-category`, `--seed`, and `--min-per-category`;
-- expanded dataset statistics with category ratios and edge-count distribution;
-- offline tests for sampler, converter selection, and stats.
-
-**Paper deliverables:**
-- stronger WebNLG pilot description;
-- reproducible sampling protocol;
-- less biased Dataset Statistics table.
-
-**Exit criteria:** tests pass and `--stratify-category` creates train/dev files with multiple categories when the source split contains them.
-
-## Milestone lemon-03 — WebNLG factor inventory
-
-**Goal:** extract train-side predicate, node-label, category, and candidate-factor inventory from the stratified WebNLG pilot.
-
-**Code deliverables:**
-- `factors/candidates.py` for predicate-name candidate factors;
-- `factors/inventory.py` for aggregate train-side inventory;
-- `factors/inventory_cli.py` for CLI execution;
-- `analysis/inventory_stats.py` for paper-table export.
-
-**Paper deliverables:**
-- first predicate inventory table;
-- evidence that factorization starts from explicit graph predicates rather than raw text alone.
-
-**Exit criteria:** tests pass and WebNLG train inventory plus compact markdown table are generated.
-
-## Milestone lemon-04 — Seed semantic factor schema and decompositions
-
-**Goal:** map shallow candidate factors into a controlled semantic factor schema and build the first role-aware predicate decompositions.
-
-**Code deliverables:**
-- `factors/decomposition.py` for Pydantic schemas and validation;
-- `factors/seed_schema.py` for default seed factors;
-- `factors/seed_builder.py` for deterministic predicate decomposition rules;
-- `factors/review_export.py` for expert-review CSV;
-- `analysis/factor_schema_tables.py` for paper tables.
-
-**Paper deliverables:**
-- semantic factor schema table;
-- predicate-decomposition examples;
-- expert-review protocol for correcting factors and weights.
-
-**Exit criteria:** tests pass, seed schema/decomposition JSON files validate, review CSV and paper tables are generated.
-
-## lemon-05 — Optional LLM candidate generator
-
-Goal: add a model-agnostic OpenRouter-backed candidate generator for predicate decompositions. The deterministic `lemon-04` seed schema remains the reference. LLM output is evaluated by parse success, schema validity, factor F1, role accuracy, weight MAE, and expert acceptance.
-
-Code artifacts:
+Use `docs/LINGUIST_VALIDATION.md` and `annotation/linguist_predicate_review_template.csv`. Report simple rates only:
 
 ```text
-src/lemon_factor/llm/openrouter_client.py
-src/lemon_factor/llm/schema.py
-src/lemon_factor/llm/prompting.py
-src/lemon_factor/llm/decompose_predicates.py
-src/lemon_factor/llm/evaluate_decompositions.py
-configs/llm_models.yaml
+expert_accept_rate
+missing_or_wrong_factor_rate
+direction_error_rate
+polarity_error_rate
 ```
 
-Paper contribution: demonstrate that factor decompositions can be proposed by any LLM under a fixed schema/prompt protocol, while quality remains measurable and model-independent.
+## Reproducibility commands
 
+Use separate commands for local verification after code or paper changes:
 
-## LLM debug model policy
+```bash
+python -m pytest -q
+```
 
-For work before final result collection, use the one-model debug config in `configs/llm_models.yaml`. Full multi-model runs should use `configs/llm_models_full.yaml` and be reserved for final tables.
+```bash
+cd paper
+latexmk -pdf -interaction=nonstopmode main.tex
+```
 
-## lemon-06 — Synthetic LLM adjudication reference
 
-Create a temporary adjudicated predicate-decomposition reference by combining seed decompositions, LLM candidates, inventory evidence, and a stronger LLM adjudicator. The output is explicitly marked as synthetic and is used only until human expert validation is available.
+## LEM-19 radar diagnostic profile
 
-Artifacts:
+Status: implemented as a compact Results figure based on `reports/radar_diagnostic_profile_values.json`. The figure is a diagnostic perturbation-sensitivity profile, not an accuracy leaderboard.
 
-- `src/lemon_factor/llm/adjudicate_decompositions.py`
-- `src/lemon_factor/llm/adjudication_schema.py`
-- `src/lemon_factor/factors/disagreement.py`
-- `data/interim/webnlg_predicate_decompositions_synthetic_adjudicated.json`
-- `data/annotation/synthetic_adjudication_review.csv`
-- `paper/tables/table_synthetic_adjudication_stats.md`
+## LEM-20 vector-space perturbation baseline
 
-
-## lemon-06.1 — Model preflight for synthetic adjudication
-
-Adds OpenRouter model catalog checks and separate debug/full adjudicator configs. This prevents empty synthetic references caused by stale or unavailable model IDs before moving to LEMON-Factor coverage.
-
-
-## lemon-06.2 — Synthetic adjudication quality fixes
-
-Status: implemented. This patch prevents missing confidence from being displayed as false `0.00`, adds LLM candidate coverage diagnostics, and warns when synthetic adjudication includes predicates without LLM candidates. It makes the synthetic reference safer to use in `lemon-07`, while keeping it explicitly marked as non-human.
-
-## lemon-07 — LEMON-Factor graph-text coverage
-
-Status: implemented.
-
-Purpose: compute the first deterministic graph-text semantic coverage score on
-WebNLG dev using explicit graph edges and predicate decompositions. The stage
-exports corpus-level scores, edge-level diagnostics, and a paper-ready markdown
-table.
-
-
-## lemon-08 — Decomposition coverage expansion and error analysis
-
-Use the first WebNLG coverage results to find missing predicates, expand predicate decompositions and lexical cues, rerun coverage, and export before/after and error-analysis tables for the paper. This stage demonstrates the diagnostic loop of LEMON-Factor: coverage → missing predicates → dictionary expansion → improved coverage → categorized residual errors.
-
-## Milestone lemon-09 — Paper skeleton and baseline comparison
-
-**Goal:** connect the implemented metric pipeline to the SPECOM paper draft and add explicit baseline comparison tables.
-
-**Code deliverables:**
-- `baselines/text_similarity.py` for lightweight lexical graph-text baselines;
-- `analysis/baseline_comparison.py` for comparing exact labels, predicate cues, token similarity, and LEMON-Factor reports;
-- offline tests for the baseline module and CLI.
-
-**Paper deliverables:**
-- populated `paper/main.tex` and section drafts;
-- `paper/references.bib` with initial citations;
-- `paper/tables/table_webnlg_baseline_comparison.md`;
-- integration notes for the research brief.
-
-**Exit criteria:** tests pass, baseline comparison JSON/table are generated, and the paper skeleton clearly distinguishes lexical baselines, LEMON-Factor, and synthetic LLM adjudication limitations.
-
-## lemon-11 — Bidirectional LEMON and MINE-style node/edge baseline
-
-**Goal:** extend LEMON-Factor from KG→Text coverage to bidirectional graph-text alignment and add a MINE-style text→KG baseline.
-
-**Code deliverables:**
-
-- `reverse/reconstruct_graph.py` for deterministic text-to-KG pseudo-reconstruction;
-- `reverse/reverse_coverage.py` and `reverse/run_reverse_lemon.py` for Text→KG factor-level recoverability;
-- `mine_nodes_edges/retrieval.py`, `mine_nodes_edges/scoring.py`, and `mine_nodes_edges/run_mine_style.py` for deterministic MINE-style node/edge information retention;
-- `analysis/bidirectional_comparison.py` for Forward LEMON vs Reverse LEMON vs MINE-style comparison.
-
-**Paper contribution:** positions LEMON-Factor as a bidirectional representation-level framework and compares it with a current text-to-KG evaluation framing: information retained in nodes and edges.
-
-**Exit criteria:** tests pass; reconstructed graphs, reverse LEMON report, MINE-style report, and bidirectional comparison table are generated.
-
-## lemon-12 — LLM-judged MINE-style fact recoverability
-
-**Goal:** add an optional LLM judge to the MINE-style node/edge baseline. The judge receives a gold fact and a retrieved subgraph and decides whether the fact is recoverable from the retrieved nodes and edges.
-
-**Code deliverables:**
-
-- `mine_nodes_edges/judge_schema.py` for structured binary judgments;
-- `mine_nodes_edges/llm_judge.py` for prompt rendering, offline fixtures, and OpenRouter live calls;
-- `mine_nodes_edges/prompts/judge_fact_recoverability.md`;
-- updated `run_mine_style.py` with `--judge deterministic|offline|llm`;
-- updated bidirectional comparison with optional `--mine-style-llm`.
-
-**Paper contribution:** distinguishes deterministic node/edge hits from LLM-judged fact recoverability and places the result closer to KGGen's MINE evaluation framing.
-
-**Exit criteria:** tests pass without API key; dry-run/offline judge works; live judge produces valid JSON when `OPENROUTER_API_KEY` is set; comparison table includes deterministic and LLM-judged MINE-style rows.
-
-## lemon-12.1 — Stable LLM-judged MINE-style evaluation
-
-**Goal:** stabilize the LLM-judged MINE-style WebNLG adaptation before using it as an experimental result.
-
-**Code deliverables:** compact judge prompts, bounded judgment schema, fixed-subset support, retry-on-invalid-JSON, and detailed report diagnostics.
-
-**Paper contribution:** makes the LLM-judged MINE-style result reproducible on the same subset as deterministic MINE-style and reports parse success, retry statistics, and judge agreement.
-
-**Exit criteria:** tests pass without API key; dry-run works; live report includes requested/valid/failed judgments, retry counts, parse success rate, and deterministic score on the same subset.
-
-## lemon-12.2 — MINE-style score semantics cleanup
-
-**Goal:** make deterministic and LLM-judged MINE-style results comparable by explicitly separating score semantics.
-
-**Code deliverables:** report fields for composite node/edge score, deterministic fact recoverability, LLM fact recoverability, deterministic subset node/edge/fact diagnostics, and optional fixed-subset comparison table output.
-
-**Paper contribution:** prevents overclaiming by showing that deterministic MINE-style composite scoring and LLM-judged fact recoverability are different quantities.
-
-**Exit criteria:** tests pass; bidirectional comparison labels deterministic and LLM MINE-style rows distinctly; `table_webnlg_mine_style_subset_comparison.md` is generated.
-
-
-
-## lemon-13 — Controlled perturbation calibration
-
-Status: implemented. Adds deterministic meaning-destroying and meaning-preserving perturbation operators for text and reconstructed graphs, saves all noise-injected artifacts plus manifests under `data/perturbed/lemon13/`, and reports sensitivity slopes, Spearman noise-score correlations, monotonicity violations, and invariance deltas for Forward LEMON, Reverse LEMON, MINE-style scores, and lexical controls.
-
-## lemon-13.1 — Calibration report cleanup
-
-Status: implemented. Splits calibration summaries into text-side and graph-side views, adds direction-aware targeted metric summaries, marks perturbation quality (`clean`, `weak_template`, `precision_only`), and emits a relation deletion sanity-check table. This avoids averaging Forward LEMON over graph-only perturbations and avoids treating weak template paraphrases as fully validated meaning-preserving noise.
-
-## lemon-14 — Paper reframing
-
-Status: done. The paper draft was reframed as a bidirectional factor-level graph--text semantic alignment framework, integrating Forward/Reverse LEMON, MINE-style node/edge baseline, and controlled perturbation calibration.
-
-
-## lemon-15.1 — Biomedical dataset feasibility and converters
-
-Status: implemented.
-
-- Added GraphText converters for BC5CDR, ChemProt, and BioRED.
-- Added shared biomedical conversion helpers and dataset statistics.
-- Added fixture-based tests for all converters.
-- Added manifests for source/access/license notes.
-- Raw biomedical data is intentionally kept outside the repository.
-
-## lemon-15.1.1 — Biomedical converter UX and HF Parquet fallback
-
-Status: implemented. BC5CDR no longer depends on `trust_remote_code` as the primary HuggingFace route. Added `--source hf-parquet`, retained `--source bigbio` as a legacy alias, and replaced missing raw directory tracebacks for BC5CDR/ChemProt/BioRED with actionable messages.
-
-Next: `lemon-15.2` biomedical factor schema, decompositions, and lexical cues.
-
-## lemon-15.1.2 — Biomedical acquisition layer
-
-Status: implemented. Adds `biomedical_download.py`, direct acquisition support for BC5CDR and BioRED, a new DrugProt converter with Zenodo-backed acquisition, and `biomedical_sources_check.py`. ChemProt remains local/manual and is no longer a blocker for biomedical validation.
-
-Recommended biomedical trio after this patch:
-
-- BC5CDR: chemical--disease relations, direct GitHub mirror.
-- DrugProt: chemical--gene/protein relations, direct Zenodo record.
-- BioRED: multi-type document-level biomedical relations, direct NCBI GitHub repository.
-
-Exit criteria: tests pass; source check table is generated; direct commands either convert data or fail with actionable manual-download instructions.
+Status: implemented in `scripts/run_embedding_baseline.py` and `reports/embedding_baseline_perturbation.json`. The default backend is an offline character n-gram vector cosine for reproducibility; dense sentence-transformer cosine can be run explicitly with `--backend sentence-transformers` when the optional model dependency and model files are available.

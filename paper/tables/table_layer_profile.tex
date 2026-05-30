@@ -1,0 +1,18 @@
+\begin{table}[t]
+\centering
+\caption{Layer view of the current factor schema. The rows are diagnostic layers, not independent models.}
+\label{tab:layer-profile}
+\scriptsize
+\begin{tabularx}{\textwidth}{p{0.18\textwidth}p{0.42\textwidth}Y}
+\toprule
+Layer & What the layer tests & Scope and diagnostic use \\
+\midrule
+Entity/domain & Subject/object mention and coarse type support; stressed by node deletion. & Separates entity survival from relation preservation. \\
+Predicate cue & Lexical or factor evidence for the relation; stressed by relation cue deletion and relation blur. & Detects when entities remain but the relation is no longer expressed. \\
+Role/arg. & Which participant fills which predicate role; stressed by argument swap. & Identifies role reversals that entity-level scores may miss. \\
+Direction & Directed effect or source--target orientation. & Applies when the inventory encodes directional predicates, mainly in biomedical relations. \\
+Polarity & Activation, inhibition, causality, or negative regulation; stressed by polarity flip. & Applies only when polarity is explicit in the predicate inventory. \\
+Evidence & Residual textual support for a source factor. & Separates intended perturbation damage from remaining contextual recoverability. \\
+\bottomrule
+\end{tabularx}
+\end{table}

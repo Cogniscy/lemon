@@ -11,7 +11,20 @@ The MINE-style comparison explains why this matters. Its deterministic node/edge
 A relation-deletion sanity check makes the same point more directly. Removing relation evidence changes exact entity-label coverage by only -0.0020, while Forward \lemonscore{} drops by -0.2106. Predicate cue coverage and MINE fact recoverability fall by -0.3636 and -0.3539. Preserving the entities is therefore not the same as preserving the predicate; relation-aware scores are needed to see this failure mode.
 
 \subsection{Cross-domain perturbation sensitivity}
-The cross-domain perturbation files ask which metrics react when controlled edits damage relation meaning in WebNLG, DrugProt, and BC5CDR. Table~\ref{tab:perturbation-sensitivity-drop} reports mean score drops. Larger values mean stronger sensitivity to the perturbation. Small values are not missing computations; they indicate that the metric is insensitive to that kind of semantic damage.
+The cross-domain perturbation files ask which metrics react when controlled edits damage relation meaning in WebNLG, DrugProt, and BC5CDR. Before reporting scalar drops, Table~\ref{tab:layer-profile} summarizes the semantic layers that the current factor schema can audit. This layer view is intentionally limited: a perturbation can only be diagnosed when the corresponding factor is present in the inventory.
+
+\input{tables/table_layer_profile}
+
+Figure~\ref{fig:radar-diagnostic-profile} gives a compact view of the same diagnostic niche. It uses mean drops under controlled perturbations, so larger values mean stronger sensitivity to that kind of induced semantic damage. The figure should not be read as an absolute accuracy comparison: triple-style scores are often harsher scalar detectors, whereas \lemonscore{} is designed to attach the response to explicit predicate factors.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.68\linewidth]{figures/figure_radar_diagnostic_profile.pdf}
+\caption{Normalized diagnostic profile under controlled perturbations. Values are mean score drops, not absolute accuracy. Entity recall remains weakly sensitive to relation damage; triple matching is a strong coarse detector; \lemonscore{} supplies a factor-level diagnostic response tied to roles, polarity, direction, and evidence when these dimensions are encoded.}
+\label{fig:radar-diagnostic-profile}
+\end{figure}
+
+Table~\ref{tab:perturbation-sensitivity-drop} reports mean score drops. Larger values mean stronger sensitivity to the perturbation. Small values are not missing computations; they indicate that the metric is insensitive to that kind of semantic damage.
 
 \input{tables/table_perturbation_sensitivity_drop}
 

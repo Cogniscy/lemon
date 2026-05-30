@@ -1,5 +1,8 @@
 # Annotation Guidelines
 
+For the current SPECOM paper, prefer the compact linguist-facing protocol in `docs/LINGUIST_VALIDATION.md` and the template `annotation/linguist_predicate_review_template.csv`. The notes below are older, broader project guidelines kept for reference.
+
+
 This document defines the human expert input needed for LEMON-Factor pilot experiments.
 
 ## 1. Factor decomposition review
