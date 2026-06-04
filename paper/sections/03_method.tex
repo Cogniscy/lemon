@@ -1,17 +1,20 @@
 \section{Method}
 \subsection{Problem setting}
-Let a graph--text pair be \((G,T)\), where \(G\) is a set of directed edges \(e=(s,p,o)\) and \(T\) is a verbalization. The forward task asks whether the text covers the information in the graph. The reverse task asks whether a graph reconstructed from the text, denoted \(\hat{G}(T)\), preserves the information in the original graph. \lemonscore{} uses the same predicate-level semantic representation in both directions (Fig.~\ref{fig:predicate-factor-eval}).
-
-\input{figures/figure_predicate_factor_evaluation}
+Let a graph--text pair be \((G,T)\), where \(G\) is a set of directed edges \(e=(s,p,o)\) and \(T\) is a verbalization. The forward task asks whether the text covers the information in the graph. The reverse task asks whether a graph reconstructed from the text, denoted \(\hat{G}(T)\), preserves the information in the original graph. \lemonscore{} uses the same predicate-level semantic representation in both directions.
 
 \subsection{Predicate factorization}
 Each predicate \(p\) is mapped to a weighted decomposition:
 \[
 D(p)=\{(f_i,r_i,w_i)\}_{i=1}^{n},
 \]
-where \(f_i\) is a semantic factor, \(r_i\) is its role, and \(w_i>0\) is a salience weight. Roles include \textit{predicate meaning}, \textit{subject domain}, \textit{object domain}, \textit{value domain}, and modifier or background roles. The schema uses broad factors such as \textit{person}, \textit{place}, \textit{organization}, \textit{time}, \textit{quantity}, and relation factors such as \textit{biographical relation}, \textit{location relation}, \textit{part--whole relation}, \textit{political relation}, and \textit{creative relation}. This representation is intentionally coarser than a full ontology but richer than a single predicate label.
+where \(f_i\) is a semantic factor, \(r_i\) is its role, and \(w_i>0\) is a salience weight. Roles cover predicate meaning, subject and object domains, value domains, and modifiers such as direction, polarity, causality, or evidence. The representation is coarser than a full ontology but richer than a single predicate label. A text that keeps both entities but loses the relation cue should therefore receive partial credit rather than full coverage.
 
-For example, \textit{birthPlace} receives a person-like subject factor, a biographical predicate factor, and a place-like object factor. In the biomedical inventories, \textit{chemical\_inhibits\_gene\_or\_protein} receives chemical and gene/protein role factors, an inhibition factor, negative polarity, directionality, and evidence-form factors. A text that mentions both entities but omits the relation cue should therefore receive partial credit, not full coverage. This is the key distinction from whole-triple binary scoring.
+\subsection{Factor inventory construction and weights}
+The inventories are fixed before scoring. They are manually specified diagnostic resources built from predicate labels, argument roles, domain constraints, entity types, and lexical evidence cues. Weights are normalized salience priors: predicate-meaning factors usually receive the largest share; domain factors and modifiers receive smaller shares when they are part of the predicate meaning. These weights are auditable design choices, not learned parameters or expert-certified semantic constants; expert validation is prepared but not yet reported.
+
+Figure~\ref{fig:predicate-factor-eval} shows two worked examples using current inventory weights. The point is not that \lemonscore{} is always numerically higher than a coarse node/edge score, but that a coarse relation mismatch can be decomposed into different semantic causes.
+
+\input{figures/figure_predicate_factor_evaluation}
 
 \subsection{Forward LEMON: KG$\rightarrow$Text coverage}
 For an edge \(e\), text \(T\), and component \((f_i,r_i,w_i)\), an evidence function \(E(f_i,r_i,e,T)\in[0,1]\) estimates whether the component is expressed. In the deterministic implementation, entity and domain factors are supported by normalized label or token evidence, while relation factors are supported by predicate cues and factor cues. The edge-level forward score is:

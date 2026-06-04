@@ -1,58 +1,6 @@
 \begin{figure}[t]
 \centering
-\resizebox{0.92\linewidth}{!}{%
-\begin{tikzpicture}[
-  font=\footnotesize,
-  box/.style={draw=black!72, rounded corners=1.4pt, align=center, inner sep=4pt, line width=0.45pt, fill=white},
-  bluebox/.style={draw=blue!55!black, rounded corners=1.4pt, align=center, inner xsep=5pt, inner ysep=4pt, line width=0.55pt, fill=blue!3},
-  factor/.style={draw=blue!55!black, rounded corners=1pt, align=center, inner sep=2.7pt, line width=0.42pt, fill=blue!3, minimum width=2.05cm},
-  evalbox/.style={bluebox, text width=2.65cm, minimum width=2.95cm, minimum height=1.10cm},
-  arrow/.style={-{Latex[length=2mm]}, line width=0.5pt, black!82},
-  dashedarrow/.style={-{Latex[length=2mm]}, line width=0.5pt, dashed, black!72},
-  link/.style={arrow, shorten <=1.5pt, shorten >=5.0pt},
-  dashedlink/.style={dashedarrow, shorten <=1.5pt, shorten >=5.0pt}
-]
-
-% Source graph.
-\node[font=\footnotesize] at (0.95,2.78) {source graph $G$};
-\node[circle, draw=black!70, line width=0.45pt, minimum size=0.70cm, inner sep=0pt] (x) at (0.20,2.05) {X};
-\node[circle, draw=black!70, line width=0.45pt, minimum size=0.70cm, inner sep=0pt] (y) at (1.70,2.05) {Y};
-\draw[arrow] (x) -- node[above, font=\scriptsize] {inhibits} (y);
-
-% Predicate label.
-\node[bluebox, minimum width=2.05cm, minimum height=0.82cm] (pred) at (0.95,0.82)
-{predicate\\\texttt{inhibits}};
-\draw[arrow] (1.70,1.72) -- (1.15,1.15);
-
-% Semantic factors.
-\node[font=\footnotesize] at (4.00,2.78) {semantic factors};
-\node[factor] (f1) at (4.00,2.28) {participants};
-\node[factor] (f2) at (4.00,1.86) {entity types};
-\node[factor] (f3) at (4.00,1.44) {relation class};
-\node[factor] (f4) at (4.00,1.02) {polarity};
-\node[factor] (f5) at (4.00,0.60) {direction};
-\node[factor] (f6) at (4.00,0.18) {evidence};
-\node[draw=blue!40!black, rounded corners=1.8pt, fit=(f1)(f2)(f3)(f4)(f5)(f6), inner sep=3.0pt, line width=0.5pt] (facbox) {};
-
-% Forward and reverse checks.
-\node[evalbox] (fw) at (7.45,2.18)
-{\textbf{Forward LEMON}\\graph $\to$ text\\factor coverage};
-\node[evalbox] (rv) at (7.45,0.58)
-{\textbf{Reverse LEMON}\\text $\to$ graph\\recoverability};
-
-% Diagnostics.
-\node[box, text width=2.25cm, minimum height=1.48cm] (diag) at (10.55,1.38)
-{\textbf{diagnostics}\\agreement\\missing factors\\asymmetric errors};
-
-% Flow.
-\draw[link] (pred.east) -- (facbox.west |- pred.east);
-\draw[link] (facbox.east |- f2.east) -- (fw.west);
-\draw[dashedlink] (facbox.east |- f5.east) -- (rv.west);
-\draw[link] (fw.east) -- (diag.west |- fw.east);
-\draw[dashedlink] (rv.east) -- (diag.west |- rv.east);
-
-\end{tikzpicture}%
-}
-\caption{Predicate-factor evaluation for graph--text alignment. A source predicate is decomposed into semantic factors, which are checked as forward graph-to-text coverage and reverse text-to-graph recoverability. Solid arrows denote forward evidence checks; dashed arrows denote reverse recovery checks.}
+\includegraphics[width=0.98\linewidth]{figures/figure_factor_scoring_examples.pdf}
+\caption{Worked examples of factor-level scoring. The displayed weights come from the current predicate inventories. The \minebase{} view collapses both cases into a coarse relation mismatch, whereas \lemonscore{} assigns partial credit to preserved factors and localizes the failure to polarity or relation class. The examples illustrate scoring mechanics, not a separate benchmark.}
 \label{fig:predicate-factor-eval}
 \end{figure}

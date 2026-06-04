@@ -32,7 +32,7 @@ The pattern is simple. Entity recall drops least because entity strings often re
 
 \input{tables/table_ablation_gain}
 
-The ablation results identify what drives sensitivity. Removing participant-role factors produces the largest positive gain for the full model over the ablated variant, so roles are the main source of sensitivity to argument and node-level damage. Evidence, polarity, and direction have smaller effects, mostly in biomedical predicates where these factors are explicit. Label-only scoring can produce a larger scalar drop when surface labels disappear, but it cannot say whether the damage concerns roles, direction, polarity, or evidence.
+The ablation is an internal component analysis, not a ranking against \minebase{} or triple matching. It asks which factor groups drive \lemonscore{}'s diagnostic sensitivity. Removing participant-role factors produces the largest positive gain for the full model over the ablated variant, so roles are the main source of sensitivity to argument and node-level damage. Evidence, polarity, and direction have smaller effects, mostly in biomedical predicates where these factors are explicit. Label-only scoring can produce a larger scalar drop when surface labels disappear, but it cannot say whether the damage concerns roles, direction, polarity, or evidence.
 
 \subsection{LLM factor judging as a complementary view}
 The LLM probe evaluates semantic recoverability rather than deterministic damage. Each judge saw the source edge, factor inventory, and perturbed text, then labeled each factor as covered, partial, or absent. Table~\ref{tab:llm-reliability} summarizes the three judge batches.

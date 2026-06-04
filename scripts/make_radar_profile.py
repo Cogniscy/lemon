@@ -42,14 +42,6 @@ METHODS = [
     ("Vector cosine", "vector_cosine", "reports/embedding_baseline_perturbation.json"),
 ]
 
-ROW_TEXT_COLORS = {
-    "LEMON-Factor": "#0b4f8a",
-    "MINE-style": "#6a3d9a",
-    "Triple match": "#a61e1e",
-    "Entity recall": "#444444",
-    "Vector cosine": "#1d7f3f",
-}
-
 
 def _read_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
@@ -166,7 +158,7 @@ def plot(values: dict[str, Any], out_pdf: Path = OUT_PDF, out_png: Path = OUT_PN
 
     for idx, label in enumerate(ax.get_yticklabels()):
         method_name = method_names[idx]
-        label.set_color(ROW_TEXT_COLORS.get(method_name, "black"))
+        label.set_color("black")
         if method_name == "LEMON-Factor":
             label.set_fontweight("bold")
 

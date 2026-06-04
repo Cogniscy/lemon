@@ -133,3 +133,7 @@ Status: implemented. The earlier spider/radar figure was replaced by an annotate
 ## LEM-27 formal submission cleanup
 
 Status: implemented. The author block now uses final author names and affiliations supplied for submission: Anton Tomilov at STC-Innovation and Daria Gineva, Danil Tirskikh, Olesia Koroteeva, and Yuri Matveev at ITMO University. A reviewer-facing submission package and a formal-cleanup report were generated. Expert-validation results remain pending until the linguist workbook is returned.
+
+## LEM-28 final method clarity and worked examples
+
+Status: implemented. The Method section now includes a compact explanation of factor-inventory construction and weight semantics. The former generic predicate-factor figure was replaced by a vector worked-example figure showing current inventory weights for a polarity error and a relation-class loss. The diagnostic-profile heatmap keeps black method labels and retains the warning that higher drop means stronger scalar sensitivity, not a better metric. Ablation wording is now explicitly component analysis rather than method ranking.

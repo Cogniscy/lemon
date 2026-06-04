@@ -153,3 +153,17 @@ Avoid:
 > The current paper already reports expert validation or dense embedding results.
 
 The bibliography now includes recent LLM graph-to-text work as future-facing context, without changing the empirical claims.
+
+## LEM-28 factor-inventory and scalar-sensitivity clarification
+
+The current paper now treats predicate factors and weights as auditable diagnostic resources rather than expert-certified semantic constants. Safe wording:
+
+> The inventories are manually specified diagnostic resources built from predicate labels, argument roles, domain constraints, entity types, and lexical evidence cues. Weights are normalized salience priors and remain subject to expert validation.
+
+Unsafe wording:
+
+> The weights are linguistically validated gold parameters.
+
+The worked-example figure in `paper/figures/figure_factor_scoring_examples.*` is illustrative. It uses current inventory weights to show how a coarse mismatch can be decomposed into different semantic causes. It should not be used as a separate benchmark result.
+
+The ablation table should be interpreted as internal component analysis. It does not rank LEMON-Factor against MINE-style or triple matching; it shows which factor groups contribute to LEMON-Factor's own diagnostic sensitivity.
