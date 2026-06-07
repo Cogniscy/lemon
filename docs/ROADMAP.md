@@ -1,16 +1,16 @@
-# LEMON-Factor Roadmap
+# LEMON Roadmap
 
 ## Current paper scope
 
-The SPECOM paper should stay focused on **graph-text semantic fidelity**. LEMON-Factor assumes that a source graph, relation annotation, or predicate inventory is available. It decomposes predicates into semantic factors and checks whether those factors are preserved in text and recoverable in a reconstructed graph.
+The SPECOM paper should stay focused on **graph-text semantic fidelity**. LEMON assumes that a source graph, relation annotation, or predicate inventory is available. It decomposes predicates into semantic factors and checks whether those factors are preserved in text and recoverable in a reconstructed graph.
 
 Current safe claim:
 
-> LEMON-Factor is a factor-level diagnostic metric for relation-level graph-text alignment.
+> LEMON is a factor-level diagnostic metric for relation-level graph-text alignment.
 
 Current unsafe claim:
 
-> LEMON-Factor is a general text-text semantic similarity metric.
+> LEMON is a general text-text semantic similarity metric.
 
 ## Near-term patch sequence
 
@@ -107,7 +107,7 @@ Status: implemented in `scripts/run_embedding_baseline.py` and `reports/embeddin
 
 ## LEM-21 diagnostic profile with MINE-style and Vector cosine traces
 
-Status: implemented as an extension of `reports/radar_diagnostic_profile_values.json` and `paper/figures/figure_radar_diagnostic_profile.*`. The figure now includes LEMON-Factor, MINE-style node/edge, triple match, entity recall, and Vector cosine. Vector cosine refers to the offline character n-gram baseline unless a dense backend report is explicitly generated.
+Status: implemented as an extension of `reports/radar_diagnostic_profile_values.json` and `paper/figures/figure_radar_diagnostic_profile.*`. The figure now includes LEMON, MINE-style node/edge, triple match, entity recall, and Vector cosine. Vector cosine refers to the offline character n-gram baseline unless a dense backend report is explicitly generated.
 
 
 ## LEM-22 expert validation pack
@@ -137,3 +137,7 @@ Status: implemented. The author block now uses final author names and affiliatio
 ## LEM-28 final method clarity and worked examples
 
 Status: implemented. The Method section now includes a compact explanation of factor-inventory construction and weight semantics. The former generic predicate-factor figure was replaced by a vector worked-example figure showing current inventory weights for a polarity error and a relation-class loss. The diagnostic-profile heatmap keeps black method labels and retains the warning that higher drop means stronger scalar sensitivity, not a better metric. Ablation wording is now explicitly component analysis rather than method ranking.
+
+## LEM-31 refined worked-example figure
+
+Status: implemented. The paper-facing worked-example figure was replaced with the refined vector version supplied for final submission. The generator script now reproduces that figure under the standard `paper/figures/figure_factor_scoring_examples.*` paths. No narrative or numerical results were changed.

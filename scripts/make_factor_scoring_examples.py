@@ -17,7 +17,9 @@ LINE = '#222222'
 GRID = '#666666'
 
 # Keep output explicit for reproducible TeX inclusion.
-OUT_DIR = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
+OUT_DIR = ROOT / 'paper' / 'figures'
+OUT_DIR.mkdir(parents=True, exist_ok=True)
 OUT_PDF = OUT_DIR / 'figure_factor_scoring_examples.pdf'
 OUT_PNG = OUT_DIR / 'figure_factor_scoring_examples.png'
 
