@@ -24,7 +24,6 @@ def test_paper_draft_sections_exist():
         "04_data.tex",
         "05_experiments.tex",
         "06_results.tex",
-        "07_error_analysis.tex",
         "08_limitations.tex",
         "09_conclusion.tex",
     ]
@@ -48,10 +47,10 @@ def test_paper_bibliography_contains_key_related_work():
 
 def test_method_clarifies_factor_inventory_weights_and_examples():
     method = Path("paper/sections/03_method.tex").read_text(encoding="utf-8")
-    assert "Factor inventory construction and weights" in method
+    assert "Predicate factors and weights" in method
     assert "manually specified diagnostic resources" in method
     assert "auditable design choices" in method
-    assert "expert validation is prepared but not yet reported" in method
+    assert "expert results are not included" in method
 
     figure = Path("paper/figures/figure_predicate_factor_evaluation.tex").read_text(encoding="utf-8")
     assert "figure_factor_scoring_examples.pdf" in figure
@@ -64,3 +63,11 @@ def test_diagnostic_profile_uses_black_method_labels():
     script = Path("scripts/make_radar_profile.py").read_text(encoding="utf-8")
     assert "ROW_TEXT_COLORS" not in script
     assert 'label.set_color("black")' in script
+
+
+def test_paper_draft_uses_lemon_name_and_repo():
+    main = Path("paper/main.tex").read_text(encoding="utf-8")
+    assert "LEMON: Factor-Level Semantic Alignment" in main
+    assert "Linguistically Enriched Measure of Ontological Normalization" in main
+    assert "https://github.com/Cogniscy/lemon" in main
+    assert "LEMON-Factor:" not in main

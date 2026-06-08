@@ -4,18 +4,18 @@ This file lists the claims that are safe for the SPECOM paper and the caveats th
 
 ## Safe positioning
 
-LEMON-Factor is a **source-driven, factor-level diagnostic metric for graph-text semantic fidelity**. It assumes that an explicit source graph, relation annotation, or predicate inventory is available. It is best framed as a restricted instance of layered semantic comparison, not as a general text-text semantic similarity system.
+LEMON is a **source-driven, factor-level diagnostic metric for graph-text semantic fidelity**. It assumes that an explicit source graph, relation annotation, or predicate inventory is available. It is best framed as a restricted instance of layered semantic comparison, not as a general text-text semantic similarity system.
 
 ## Claim audit table
 
 | Claim | Status | Evidence / files | Safe wording | Risk if overstated |
 |---|---|---|---|---|
-| LEMON-Factor opens predicate labels into semantic factors. | Supported by method and inventories. | `resources/factors/*`, `reports/factor_inventory_*.json`, `paper/sections/03_method.tex` | "Predicate labels are represented as weighted factor bundles." | Do not claim the factors are universal semantic primitives. |
+| LEMON opens predicate labels into semantic factors. | Supported by method and inventories. | `resources/factors/*`, `reports/factor_inventory_*.json`, `paper/sections/03_method.tex` | "Predicate labels are represented as weighted factor bundles." | Do not claim the factors are universal semantic primitives. |
 | Forward and reverse scoring use the same factor schema. | Supported on WebNLG. | `reports/scoring_webnlg.json`, `paper/tables/table_webnlg_final.tex`, `paper/tables/table_webnlg_reverse_lemon.md` | "The same factor representation supports KG->Text coverage and controlled Text->KG recoverability diagnostics." | Do not call the reverse pipeline a full text-to-KG extractor. |
-| Forward and Reverse LEMON-Factor are close on WebNLG. | Supported. | Forward `0.7915`; Reverse `0.7789`; see paper results. | "The small gap suggests coherence of the factor schema in both directions." | Do not interpret this as state-of-the-art graph reconstruction. |
-| Relation deletion exposes the weakness of entity-only coverage. | Strongly supported. | `paper/tables/table_webnlg_relation_deletion_sanity.md`, `paper/sections/06_results.tex` | "Entity-label coverage changes by only -0.0020 while Forward LEMON-Factor drops by -0.2106." | Keep the perturbation setting explicit; this is a controlled sanity check. |
-| LEMON-Factor detects polarity. | Conditionally supported. | Biomedical inventories and perturbation reports. | "LEMON-Factor reacts to polarity perturbations when polarity is encoded in the factor inventory." | Do not say it generally detects polarity in all datasets; WebNLG polarity is not encoded. |
-| LEMON-Factor transfers across domains. | Partially supported. | WebNLG, DrugProt, BC5CDR reports. | "The same inventory format is applied to open-domain and biomedical graph-text data." | Do not claim universal cross-domain validity. |
+| Forward and Reverse LEMON are close on WebNLG. | Supported. | Forward `0.7915`; Reverse `0.7789`; see paper results. | "The small gap suggests coherence of the factor schema in both directions." | Do not interpret this as state-of-the-art graph reconstruction. |
+| Relation deletion exposes the weakness of entity-only coverage. | Strongly supported. | `paper/tables/table_webnlg_relation_deletion_sanity.md`, `paper/sections/06_results.tex` | "Entity-label coverage changes by only -0.0020 while Forward LEMON drops by -0.2106." | Keep the perturbation setting explicit; this is a controlled sanity check. |
+| LEMON detects polarity. | Conditionally supported. | Biomedical inventories and perturbation reports. | "LEMON reacts to polarity perturbations when polarity is encoded in the factor inventory." | Do not say it generally detects polarity in all datasets; WebNLG polarity is not encoded. |
+| LEMON transfers across domains. | Partially supported. | WebNLG, DrugProt, BC5CDR reports. | "The same inventory format is applied to open-domain and biomedical graph-text data." | Do not claim universal cross-domain validity. |
 | MINE-style baseline is included. | Supported as an adapted baseline. | `reports/mine1_like_lemon_pilot.json`, `reports/mine_external_inspection.*` | "MINE-style" or "MINE-inspired node/edge baseline." | Do not claim a reproduction of the KGGen/MINE benchmark. |
 | LLM judges validate the metric. | Not supported. | `reports/llm_reliability_summary_3judges.json`, `reports/paper_llm_reliability_compact.json` | "LLM judges provide a complementary recoverability signal." | Do not present LLM judgments as expert validation or gold labels. |
 | Diagnostic profile figure shows the niche of the method. | Usable with caveat. | `reports/radar_diagnostic_profile_values.json`, `paper/figures/figure_radar_diagnostic_profile.*` | "Normalized perturbation-sensitivity profile, not absolute accuracy." | Do not present the figure as a leaderboard; Vector cosine is an offline char-ngram baseline unless a dense backend is explicitly run. |
@@ -25,9 +25,9 @@ LEMON-Factor is a **source-driven, factor-level diagnostic metric for graph-text
 
 ## Metric interpretation notes
 
-### LEMON-Factor score
+### LEMON score
 
-LEMON-Factor is a partial-credit semantic coverage score over predicate factors. It is most informative as an audit trail and profile, not only as a scalar.
+LEMON is a partial-credit semantic coverage score over predicate factors. It is most informative as an audit trail and profile, not only as a scalar.
 
 ### Perturbation drops
 
@@ -52,11 +52,11 @@ The current diagnostic-profile JSON explicitly notes that values are normalized 
 
 `reports/layer_profile_values.json` remains supporting context for the current diagnostic-profile figure. Its values are diagnostic properties and perturbation drops, not absolute accuracy scores. The safe wording is:
 
-> The diagnostic-profile figure visualizes the niche of LEMON-Factor under controlled perturbations.
+> The diagnostic-profile figure visualizes the niche of LEMON under controlled perturbations.
 
 Avoid:
 
-> The diagnostic-profile figure proves that LEMON-Factor is globally more accurate than baseline systems.
+> The diagnostic-profile figure proves that LEMON is globally more accurate than baseline systems.
 
 The strongest layer claim currently supported is that role factors drive the largest ablation gain. Polarity should be reported only as inventory-dependent.
 
@@ -64,11 +64,11 @@ The strongest layer claim currently supported is that role factors drive the lar
 
 Use:
 
-> LEMON-Factor is a factor-level diagnostic layer for graph-text semantic fidelity.
+> LEMON is a factor-level diagnostic layer for graph-text semantic fidelity.
 
 Avoid:
 
-> LEMON-Factor is a general semantic similarity metric.
+> LEMON is a general semantic similarity metric.
 
 Use:
 
@@ -104,9 +104,9 @@ Safe wording:
 
 Avoid:
 
-> The diagnostic-profile figure proves that LEMON-Factor is globally more accurate than entity, triple, or embedding metrics.
+> The diagnostic-profile figure proves that LEMON is globally more accurate than entity, triple, or embedding metrics.
 
-The figure can compare LEMON-Factor, MINE-style node/edge, triple matching, entity recall, and Vector cosine because all plotted values use the same perturbation-drop scale. It still should not be treated as a general leaderboard: triple matching and MINE-style scoring are coarse detectors, Vector cosine is an offline character n-gram baseline unless a dense backend is explicitly materialized, while LEMON-Factor is intended to provide an auditable factor-level explanation of the response.
+The figure can compare LEMON, MINE-style node/edge, triple matching, entity recall, and Vector cosine because all plotted values use the same perturbation-drop scale. It still should not be treated as a general leaderboard: triple matching and MINE-style scoring are coarse detectors, Vector cosine is an offline character n-gram baseline unless a dense backend is explicitly materialized, while LEMON is intended to provide an auditable factor-level explanation of the response.
 
 ### Vector-space perturbation baseline
 
@@ -118,7 +118,7 @@ Safe wording:
 
 Avoid:
 
-> LEMON-Factor universally outperforms embedding models.
+> LEMON universally outperforms embedding models.
 
 Current diagnostic-profile extension:
 
@@ -142,7 +142,7 @@ The sample strengthens readiness for human validation but does not by itself pro
 
 ### LEM-24 paper style and submission-readiness audit
 
-The paper text was revised to keep the narrative centered on a single failure mode: entity names can survive while predicate meaning is lost. The safe scope remains unchanged: LEMON-Factor is a graph-text diagnostic layer for relation-level fidelity, not a general text-text similarity metric.
+The paper text was revised to keep the narrative centered on a single failure mode: entity names can survive while predicate meaning is lost. The safe scope remains unchanged: LEMON is a graph-text diagnostic layer for relation-level fidelity, not a general text-text similarity metric.
 
 Safe additions:
 
@@ -166,4 +166,11 @@ Unsafe wording:
 
 The worked-example figure in `paper/figures/figure_factor_scoring_examples.*` is illustrative. It uses current inventory weights to show how a coarse mismatch can be decomposed into different semantic causes. It should not be used as a separate benchmark result.
 
-The ablation table should be interpreted as internal component analysis. It does not rank LEMON-Factor against MINE-style or triple matching; it shows which factor groups contribute to LEMON-Factor's own diagnostic sensitivity.
+The ablation table should be interpreted as internal component analysis. It does not rank LEMON against MINE-style or triple matching; it shows which factor groups contribute to LEMON's own diagnostic sensitivity.
+
+## LEM-34 final compaction audit
+
+- The main paper no longer uses the heatmap/diagnostic-profile figure as a printed result; the generated files remain reproducibility artifacts in the repository.
+- The perturbation argument is carried by the compact sensitivity table. This table reports normalized score loss and must not be read as a global ranking across metrics.
+- Error analysis is merged into the limitations section. The retained error sources are inventory incompleteness and relation recoverability.
+- The biomedical transfer claim is restricted to diagnostic stress testing of relation roles, direction, polarity, causality, and evidence in scientific biomedical text. It does not claim a new biomedical relation extraction system or clinical deployment.

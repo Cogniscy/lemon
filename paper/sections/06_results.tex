@@ -1,42 +1,29 @@
 \section{Results}
 \subsection{From entity overlap to relation factors}
-The first WebNLG pass shows that predicate resources determine whether relation-level evaluation is possible. With the initial factor dictionary, only 140 of 308 development edges could be scored, and the missing decomposition rate was 0.5455. After deterministic decomposition and cue expansion, all 308 edges had predicate factors and Forward \lemonscore{} rose from 0.3683 to 0.7915. This increase is not a claim that all WebNLG texts are faithful. It shows that a factor-level metric needs explicit predicate resources before it can diagnose text quality.
+The first WebNLG experiment shows why predicate resources must be explicit. With the initial factor dictionary, only 140 of 308 development edges could be scored, and the missing decomposition rate was 0.546. After rule-based decomposition and cue expansion, all 308 edges had predicate factors and Forward LEMON rose from 0.368 to 0.792. This increase does not mean that all WebNLG texts are faithful. It shows that relation-level diagnosis requires predicate resources before text quality can be evaluated.
 
-Lexical controls isolate the added signal. Exact entity-label overlap is already high at 0.9215 and does not change under predicate-resource expansion. Token cosine and Jaccard are fixed because the graph--text strings do not change. The factor score changes because it checks relation roles, predicate meanings, and lexical evidence, not just entity mentions.
+Lexical controls identify the added signal. Exact entity-label overlap is already high at 0.922 and does not change under predicate-resource expansion. Token cosine and Jaccard remain fixed because the graph--text strings do not change. LEMON changes because it checks relation roles, predicate meanings, and lexical evidence instead of counting entity mentions alone.
 
-The reverse run gives a second check on the same representation. A deterministic lexical pseudo-extractor recovered 390 of 408 nodes and 196 of 308 edges from the WebNLG texts. Reverse \lemonscore{} reached 0.7789, close to the expanded Forward score of 0.7915. This does not evaluate a general-purpose extraction system; it shows that the same predicate factors can be used coherently in both directions.
+The reverse run checks the same representation from text back to graph. A lexical pseudo-extractor recovered 390 of 408 nodes and 196 of 308 edges from the WebNLG texts. Reverse LEMON reached 0.779, close to the expanded Forward score of 0.792. The MINE-style comparison explains the remaining difficulty: its composite score is 0.803, but the locked 50-fact subset has node information of 0.960 and edge/fact information of only 0.540. The relation is harder to recover than the names of the entities.
 
-The MINE-style comparison shows where the difficulty lies. Its deterministic node/edge composite is 0.8028, but the aggregate is dominated by node recovery. On the locked 50-fact subset, node information is 0.9600, while edge information and deterministic fact recoverability are both 0.5400. The pattern is consistent: entity mentions are easier to preserve and recover than the relations that connect them.
-
-A relation-deletion sanity check makes the same point more directly. Removing relation evidence changes exact entity-label coverage by only -0.0020, while Forward \lemonscore{} drops by -0.2106. Predicate cue coverage and MINE fact recoverability fall by -0.3636 and -0.3539. Preserving the entities is therefore not the same as preserving the predicate; relation-aware scores are needed to see this failure mode.
+A relation-deletion sanity check isolates the same failure mode. Removing relation evidence changes exact entity-label coverage by only 0.002, while Forward LEMON drops by 0.211. Predicate cue coverage and MINE fact recoverability fall by 0.364 and 0.354. Preserving entity names is therefore not the same as preserving the predicate.
 
 \subsection{Cross-domain perturbation sensitivity}
-The cross-domain perturbation files ask which metrics react when controlled edits damage relation meaning in WebNLG, DrugProt, and BC5CDR. Before reporting scalar drops, Table~\ref{tab:layer-profile} summarizes the semantic layers that the current factor schema can audit. This layer view is intentionally limited: a perturbation can only be diagnosed when the corresponding factor is present in the inventory.
+The cross-domain perturbation files test which metrics react when controlled edits damage relation meaning in WebNLG, DrugProt, and BC5CDR. The current inventories audit entity/domain support, predicate cues, participant roles, direction, polarity, and textual evidence. A perturbation can be diagnosed only when the corresponding factor group is present in the inventory.
 
-\input{tables/table_layer_profile}
-
-Figure~\ref{fig:radar-diagnostic-profile} restates the same comparison as an annotated matrix. This view is easier to read than the earlier polar chart because the scale is linear and the cell values are explicit. It also makes the central point harder to miss: MINE-style and triple-style scores are harsher scalar detectors, while \lemonscore{} trades some scalar drop for a response that remains attached to explicit predicate factors.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.90\linewidth]{figures/figure_radar_diagnostic_profile.pdf}
-\caption{Diagnostic perturbation matrix under controlled edits. Cell values are mean score drops, not absolute accuracy. Higher values indicate stronger scalar sensitivity to induced damage. MINE-style and triple-match act as coarse edge/fact detectors; vector cosine is the offline character n-gram vector baseline. \lemonscore{} is less harsh in aggregate, but its response remains tied to roles, polarity, direction, and evidence when those dimensions are encoded.}
-\label{fig:radar-diagnostic-profile}
-\end{figure}
-
-Table~\ref{tab:perturbation-sensitivity-drop} reports the same mean drops. Small values are not missing computations; they indicate weak sensitivity to that kind of damage. Large values should also be read carefully: they show a strong scalar reaction, not necessarily a more informative diagnosis.
+Table~\ref{tab:perturbation-sensitivity-drop} reports normalized score loss under five perturbations. The columns are different preservation signals rather than one shared accuracy scale: entity recall tracks entity survival; triple match and MINE-style node/edge scoring act as coarse edge/fact alarms; LEMON label-only removes factor decomposition; LEMON is the full weighted factor score.
 
 \input{tables/table_perturbation_sensitivity_drop}
 
-The pattern is simple. Entity recall drops least because entity strings often remain when the relation is damaged. Triple-style and node/edge scores react more strongly, but collapse the error into one coarse decision. \lemonscore{} is most useful as a diagnostic decomposition: it reacts to argument swap and polarity flip when those dimensions are encoded in the inventory, and stays quiet when they are absent. The metric can diagnose only the predicate dimensions that the inventory makes explicit.
+The table should not be read as a global ranking. Triple match and MINE-style scoring often react more strongly because they treat edge damage as a coarse failure. LEMON is most useful when the reason for failure matters. It reacts to argument swaps and polarity flips when those dimensions are encoded, and it links the response to factor groups that can be inspected.
 
 \input{tables/table_ablation_gain}
 
-The ablation is an internal component analysis, not a ranking against \minebase{} or triple matching. It asks which factor groups drive \lemonscore{}'s diagnostic sensitivity. Removing participant-role factors produces the largest positive gain for the full model over the ablated variant, so roles are the main source of sensitivity to argument and node-level damage. Evidence, polarity, and direction have smaller effects, mostly in biomedical predicates where these factors are explicit. Label-only scoring can produce a larger scalar drop when surface labels disappear, but it cannot say whether the damage concerns roles, direction, polarity, or evidence.
+Table~\ref{tab:ablation-gain} is an internal component analysis, not a comparison with MINE-style or triple matching. Removing participant-role factors produces the largest positive gain for the full model over the ablated variant, so role factors are the largest observed source of diagnostic sensitivity. Evidence, polarity, and direction have smaller effects, mainly in biomedical predicates where these factors are explicit. Label-only scoring can produce a stronger scalar reaction when surface labels disappear, but it cannot say whether the damage concerns roles, direction, polarity, or evidence.
 
 \subsection{LLM factor judging as a complementary view}
-The LLM probe evaluates semantic recoverability rather than deterministic damage. Each judge saw the source edge, factor inventory, and perturbed text, then labeled each factor as covered, partial, or absent. Table~\ref{tab:llm-reliability} summarizes the three judge batches.
+The LLM probe evaluates semantic recoverability rather than rule-based perturbation labels. Each judge saw the source edge, the factor inventory, and the perturbed text, then labeled each factor as covered, partial, or absent. Table~\ref{tab:llm-reliability} summarizes Gemini 2.0 Flash, GPT-4o-mini, and Llama-3.1-70B.
 
 \input{tables/table_llm_reliability}
 
-The mean LLM factor score is 0.809, pairwise agreement is 0.597, and agreement with deterministic perturbation labels is 0.561. This moderate agreement is useful rather than surprising. Deterministic perturbations record intended damage; LLM judges estimate how much of the original factor remains recoverable from residual context. \lemonscore{} exposes relation-level failure modes, while model-based judging can show which failures remain inferable.
+The mean LLM factor score is 0.809, pairwise agreement is 0.597, and agreement with rule-based perturbation labels is 0.561. These values indicate moderate stability rather than expert validation. Rule-based perturbations record intended damage; LLM judges estimate how much of the original factor remains recoverable from context. The two views are complementary: LEMON exposes controlled relation-level failures, while model-based judging shows which failures remain inferable.

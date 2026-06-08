@@ -13,7 +13,7 @@ EXPECTED_AXES = [
 ]
 
 EXPECTED_METHODS = {
-    "LEMON-Factor",
+    "LEMON",
     "MINE-style",
     "Triple match",
     "Entity recall",
@@ -72,14 +72,12 @@ def test_radar_profile_generator_outputs_documented_values(tmp_path):
                 assert cell["source_report"] == "reports/paper_metric_sensitivity_drops.json"
 
 
-def test_radar_profile_figure_is_included_in_paper():
+def test_radar_profile_figure_is_generated_as_supplementary_artifact():
     results = Path("paper/sections/06_results.tex").read_text(encoding="utf-8")
-    assert "figure_radar_diagnostic_profile.pdf" in results
-    assert "fig:radar-diagnostic-profile" in results
-    assert "annotated matrix" in results
+    assert "figure_radar_diagnostic_profile.pdf" not in results
+    assert "fig:radar-diagnostic-profile" not in results
     assert "MINE-style" in results
-    assert "offline character n-gram vector baseline" in results
-    assert "not necessarily a more informative diagnosis" in results
+    assert "not be read as a global ranking" in results or "not a global ranking" in results
 
     report = json.loads(Path("reports/radar_diagnostic_profile_values.json").read_text(encoding="utf-8"))
     assert report["figure"]["pdf"] == "paper/figures/figure_radar_diagnostic_profile.pdf"

@@ -141,3 +141,11 @@ Status: implemented. The Method section now includes a compact explanation of fa
 ## LEM-31 refined worked-example figure
 
 Status: implemented. The paper-facing worked-example figure was replaced with the refined vector version supplied for final submission. The generator script now reproduces that figure under the standard `paper/figures/figure_factor_scoring_examples.*` paths. No narrative or numerical results were changed.
+
+## LEM-32 intro metric and dataset clarity
+
+Status: implemented. The Introduction now introduces BLEU, METEOR, chrF++, TER, BERTScore, and BLEURT in context, with citations, before narrowing to graph-predicate fidelity. WebNLG, DrugProt, and BC5CDR are defined at first use, and Related Work now explains metric families without requiring the reader to consult the cited papers for basic context.
+
+## LEM-34 final compaction and biomedical motivation
+
+Status: implemented. The paper now removes the duplicate diagnostic-profile figure from the main text, keeps the perturbation comparison in Table 1, merges Error Analysis into `Limitations and Error Sources`, and shortens Related Work and Results around the central claim. The biomedical transfer paragraph now explains why polarity, modality, causality, and literal evidence make relation-level graph-text fidelity especially important in scientific biomedical text. The clean submission PDF is 14 A4 pages.

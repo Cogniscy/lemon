@@ -25,10 +25,10 @@ def test_layer_profile_values_are_documented_and_bounded():
         assert row["safe_interpretation"]
 
 
-def test_layer_profile_table_is_included_in_results():
+def test_layer_profile_table_source_is_retained_but_not_required_in_paper():
     results = Path("paper/sections/06_results.tex").read_text(encoding="utf-8")
-    assert "table_layer_profile" in results
-    assert "semantic layers" in results
+    assert "entity/domain support" in results
+    assert "table_layer_profile" not in results
     table = Path("paper/tables/table_layer_profile.tex").read_text(encoding="utf-8")
-    for term in ["Entity/domain", "Predicate cue", "Role/arg.", "Polarity"]:
+    for term in ["Entity/domain", "Predicate cue", "Role/argument", "Polarity"]:
         assert term in table
