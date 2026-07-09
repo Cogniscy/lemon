@@ -21,9 +21,14 @@ The table should not be read as a global ranking. Triple match and MINE-style sc
 
 Table~\ref{tab:ablation-gain} is an internal component analysis, not a comparison with MINE-style or triple matching. Removing participant-role factors produces the largest positive gain for the full model over the ablated variant, so role factors are the largest observed source of diagnostic sensitivity. Evidence, polarity, and direction have smaller effects, mainly in biomedical predicates where these factors are explicit. Label-only scoring can produce a stronger scalar reaction when surface labels disappear, but it cannot say whether the damage concerns roles, direction, polarity, or evidence.
 
+
+
+\subsection{Pilot expert trace review}\label{sec:expert-trace-review}
+The expert review directly addresses whether LEMON's factor-level traces agree with human assessments of relation failure. Four expert reviewers completed the form, yielding 140 expert--factor judgments over 35 factor rows. LEMON reached 85.0\% exact agreement with expert labels (119/140; Wilson 95\% CI: 78.2--90.0\%) and 85.8\% weighted exact agreement. Chance-corrected agreement was substantial: pooled Cohen's $\kappa=0.791$, Fleiss' inter-expert $\kappa=0.689$, and Krippendorff's ordinal $\alpha=0.871$. Experts formed a $\geq$3/4 majority on 28 rows; LEMON matched that majority on 27 rows (96.4\%), and every LEMON label was supported by at least one expert. Disagreements concentrated in relation-blur and relation-missing cases, especially predicate-meaning, direction, and evidence factors.
+
 \subsection{LLM factor judging as a complementary view}
 The LLM probe evaluates semantic recoverability rather than rule-based perturbation labels. Each judge saw the source edge, the factor inventory, and the perturbed text, then labeled each factor as covered, partial, or absent. Table~\ref{tab:llm-reliability} summarizes Gemini 2.0 Flash, GPT-4o-mini, and Llama-3.1-70B.
 
 \input{tables/table_llm_reliability}
 
-The mean LLM factor score is 0.809, pairwise agreement is 0.597, and agreement with rule-based perturbation labels is 0.561. These values indicate moderate stability rather than expert validation. Rule-based perturbations record intended damage; LLM judges estimate how much of the original factor remains recoverable from context. The two views are complementary: LEMON exposes controlled relation-level failures, while model-based judging shows which failures remain inferable.
+The mean LLM factor score is 0.809, pairwise agreement is 0.597, and agreement with rule-based perturbation labels is 0.561. These values indicate moderate model-judge stability. Rule-based perturbations record intended damage; LLM judges estimate how much of the original factor remains recoverable from context. The expert review above tests direct agreement with human factor labels, while model-based judging shows which failures remain inferable.
