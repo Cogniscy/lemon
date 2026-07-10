@@ -1,92 +1,89 @@
 \relax 
 \citation{gardent2017webnlg,castroferreira2020webnlg,gehrmann2021gem}
-\@writefile{toc}{\contentsline {title}{LEMON-Factor: Bidirectional Factor-Level Semantic Alignment for Graph--Text Pairs}{1}{}\protected@file@percent }
-\@writefile{toc}{\authcount {3}}
-\@writefile{toc}{\contentsline {author}{Tomilov A.A. \and Gineva D. \and Tirskih D.}{1}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {title}{LEMON: Factor-Level Semantic Alignment for Graph--Text Pairs}{1}{}\protected@file@percent }
+\@writefile{toc}{\authcount {5}}
+\@writefile{toc}{\contentsline {author}{Anton Tomilov \and Daria Gineva \and Danil Tirskikh \and Olesia Koroteeva \and Yuri Matveev}{1}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{}\protected@file@percent }
 \citation{mo2025kggen}
 \citation{gardent2017webnlg}
 \citation{castroferreira2020webnlg}
-\citation{gehrmann2021gem}
-\citation{he2025plangtg}
-\citation{papineni2002bleu,zhang2020bertscore,sellam2020bleurt}
+\citation{gehrmann2021gem,he2025plangtg}
 \@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{2}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}RDF-to-text benchmarks and reference metrics}{2}{}\protected@file@percent }
-\citation{dhingra2019parent}
-\citation{rebuffel2021dataquesteval}
-\citation{zha2023alignscore}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}RDF-to-text evaluation and reference metrics}{2}{}\protected@file@percent }
+\citation{papineni2002bleu,banerjee2005meteor,popovic2017chrf,snover2006ter}
+\citation{zhang2020bertscore,sellam2020bleurt}
+\citation{dhingra2019parent,rebuffel2021dataquesteval,zha2023alignscore}
 \citation{zhang2023factspotter}
-\citation{min2023factscore}
-\citation{sun2024veriscore}
-\citation{cai2013smatch}
-\citation{opitz2020s2match,opitz2023smatchpp}
+\citation{min2023factscore,sun2024veriscore}
+\citation{cai2013smatch,opitz2020s2match,opitz2023smatchpp}
 \citation{mo2025kggen}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Source-aware coverage and factuality metrics}{3}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Atomic facts, semantic graphs, and directionality}{3}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Text-to-KG extraction and MINE}{3}{}\protected@file@percent }
+\citation{liu2023geval,zheng2023mtbench}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Source-aware factuality and graph metrics}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}MINE-style recovery and LLM judging}{3}{}\protected@file@percent }
 \citation{ribeiro2020checklist}
-\citation{sai2021perturbation}
-\citation{he2023blindspots}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.5}Behavioral testing and metric calibration}{4}{}\protected@file@percent }
+\citation{sai2021perturbation,he2023blindspots}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Behavioral metric calibration}{4}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {3}Method}{4}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Problem setting}{4}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Predicate factorization}{4}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Predicate-factor evaluation for graph--text alignment. A source predicate is decomposed into semantic factors, which are checked as forward graph-to-text coverage and reverse text-to-graph recoverability. Solid arrows denote forward evidence checks; dashed arrows denote reverse recovery checks.}}{5}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Factor inventory construction and weights}{4}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Worked examples of factor-level scoring. The displayed weights come from the current predicate inventories. The \textsc  {MINE}-style{} view collapses both cases into a coarse relation mismatch, whereas \textsc  {LEMON}{} assigns partial credit to preserved factors and localizes the failure to polarity or relation class. The examples illustrate scoring mechanics, not a separate benchmark.}}{5}{}\protected@file@percent }
 \newlabel{fig:predicate-factor-eval}{{1}{5}{}{figure.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Forward LEMON: KG$\rightarrow $Text coverage}{5}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Reverse LEMON: Text$\rightarrow $KG recoverability}{5}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Forward LEMON: KG$\rightarrow $Text coverage}{5}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5}Reverse LEMON: Text$\rightarrow $KG recoverability}{5}{}\protected@file@percent }
 \citation{miranda2023drugprot}
 \citation{li2016bc5cdr}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5}MINE-style node/edge baseline}{6}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.6}Controlled perturbation calibration}{6}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.6}MINE-style node/edge baseline}{6}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.7}Controlled perturbation calibration}{6}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {4}Data and Experimental Resources}{6}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.1}WebNLG sample}{6}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Biomedical transfer resources}{6}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Biomedical transfer resources}{7}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Predicate-factor inventories}{7}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {5}Experiments}{7}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Forward and reverse factor scoring}{7}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Forward and reverse factor scoring}{8}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Node/edge retention and perturbations}{8}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Exploratory LLM factor judging}{8}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {6}Results}{8}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}From entity overlap to relation factors}{8}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Pilot expert trace review}{8}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Exploratory LLM factor judging}{9}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Results}{9}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}From entity overlap to relation factors}{9}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Cross-domain perturbation sensitivity}{9}{}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Layer view of the current factor schema. The rows are diagnostic layers, not independent models.}}{10}{}\protected@file@percent }
-\newlabel{tab:layer-profile}{{1}{10}{}{table.1}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Perturbation sensitivity as mean score drop. Larger values indicate that a metric reacts more strongly to the perturbation; unchanged or small drops mark blind spots rather than missing computations.}}{10}{}\protected@file@percent }
-\newlabel{tab:perturbation-sensitivity-drop}{{2}{10}{}{table.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}LLM factor judging as a complementary view}{10}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Perturbation profile under controlled edits. Values are mean score drops, not absolute accuracy. MINE-style and triple-match traces are coarse relation/edge detectors; vector cosine is the offline character n-gram vector baseline. \textsc  {LEMON-Factor}{} supplies a factor-level response tied to roles, polarity, direction, and evidence when those dimensions are encoded.}}{11}{}\protected@file@percent }
-\newlabel{fig:radar-diagnostic-profile}{{2}{11}{}{figure.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {7}Error Analysis}{11}{}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Perturbation sensitivity as mean score drop. Larger values indicate that a metric reacts more strongly to the perturbation; unchanged or small drops mark blind spots rather than missing computations.}}{10}{}\protected@file@percent }
+\newlabel{tab:perturbation-sensitivity-drop}{{1}{10}{}{table.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Ablation sensitivity. Mean drop is the average perturbation response. Gain is full drop minus ablated drop; positive values mean that removing the component reduces sensitivity.}}{10}{}\protected@file@percent }
+\newlabel{tab:ablation-gain}{{2}{10}{}{table.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Pilot expert trace review}{10}{}\protected@file@percent }
+\newlabel{sec:expert-trace-review}{{6.3}{10}{}{subsection.6.3}{}}
 \citation{liu2023geval,zheng2023mtbench}
-\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Ablation sensitivity. Mean drop is the average perturbation response. Gain is full drop minus ablated drop; positive values mean that removing the component reduces sensitivity.}}{12}{}\protected@file@percent }
-\newlabel{tab:ablation-gain}{{3}{12}{}{table.3}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Exploratory LLM reliability probe. Judges are Gemini 2.0 Flash, GPT-4o-mini, and Llama-3.1-70B. Mean score treats covered, partial, and absent factor judgments as 1, 0.5, and 0; agreements are computed only on overlapping factor judgments.}}{12}{}\protected@file@percent }
-\newlabel{tab:llm-reliability}{{4}{12}{}{table.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {8}Limitations}{12}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {9}Conclusion}{13}{}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Exploratory LLM reliability probe. Judges are Gemini 2.0 Flash, GPT-4o-mini, and Llama-3.1-70B. Mean score treats covered, partial, and absent factor judgments as 1, 0.5, and 0; agreements are computed only on overlapping factor judgments.}}{11}{}\protected@file@percent }
+\newlabel{tab:llm-reliability}{{3}{11}{}{table.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.4}LLM factor judging as a complementary view}{11}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}Limitations and Error Sources}{11}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {8}Conclusion}{12}{}\protected@file@percent }
 \bibcite{gardent2017webnlg}{1}
 \bibcite{castroferreira2020webnlg}{2}
 \bibcite{gehrmann2021gem}{3}
 \bibcite{he2025plangtg}{4}
 \bibcite{papineni2002bleu}{5}
-\bibcite{zhang2020bertscore}{6}
-\bibcite{sellam2020bleurt}{7}
-\bibcite{dhingra2019parent}{8}
-\bibcite{rebuffel2021dataquesteval}{9}
-\bibcite{zha2023alignscore}{10}
-\bibcite{zhang2023factspotter}{11}
-\bibcite{min2023factscore}{12}
-\bibcite{sun2024veriscore}{13}
-\bibcite{cai2013smatch}{14}
-\bibcite{opitz2020s2match}{15}
-\bibcite{opitz2023smatchpp}{16}
-\bibcite{miranda2023drugprot}{17}
-\bibcite{li2016bc5cdr}{18}
-\bibcite{mo2025kggen}{19}
-\bibcite{ribeiro2020checklist}{20}
-\bibcite{sai2021perturbation}{21}
-\bibcite{he2023blindspots}{22}
-\bibcite{liu2023geval}{23}
-\bibcite{zheng2023mtbench}{24}
-\gdef \@abspage@last{15}
+\bibcite{banerjee2005meteor}{6}
+\bibcite{popovic2017chrf}{7}
+\bibcite{snover2006ter}{8}
+\bibcite{zhang2020bertscore}{9}
+\bibcite{sellam2020bleurt}{10}
+\bibcite{dhingra2019parent}{11}
+\bibcite{rebuffel2021dataquesteval}{12}
+\bibcite{zha2023alignscore}{13}
+\bibcite{zhang2023factspotter}{14}
+\bibcite{min2023factscore}{15}
+\bibcite{sun2024veriscore}{16}
+\bibcite{cai2013smatch}{17}
+\bibcite{opitz2020s2match}{18}
+\bibcite{opitz2023smatchpp}{19}
+\bibcite{miranda2023drugprot}{20}
+\bibcite{li2016bc5cdr}{21}
+\bibcite{mo2025kggen}{22}
+\bibcite{ribeiro2020checklist}{23}
+\bibcite{sai2021perturbation}{24}
+\bibcite{he2023blindspots}{25}
+\bibcite{liu2023geval}{26}
+\bibcite{zheng2023mtbench}{27}
+\gdef \@abspage@last{14}

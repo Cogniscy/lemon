@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.5.30)  30 MAY 2026 22:06
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.5.30)  10 JUL 2026 13:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -651,20 +651,20 @@ File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 ) (main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
 
 (C:\Users\tomil\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mk
 ii
@@ -699,15 +699,16 @@ Overfull \hbox (10.33084pt too wide) in paragraph at lines 15--1
 Drug-Prot, and BC5CDR;
  []
 
-[2]
-Overfull \hbox (15.14911pt too wide) in paragraph at lines 10--11
-\T1/cmr/m/n/10 Atomic fac-tu-al-ity met-rics de-com-pose gen-er-ated text into 
-ver-i-fi-able claims. FActScore
- []
-
-[3]) (sections/03_method.tex (figures/figure_predicate_factor_evaluation.tex)
-[4]
-Overfull \hbox (18.72882pt too wide) in paragraph at lines 17--18
+[2] [3]) (sections/03_method.tex
+(figures/figure_predicate_factor_evaluation.tex
+<figures/figure_factor_scoring_examples.pdf, id=31, 537.39975pt x 382.01923pt>
+File: figures/figure_factor_scoring_examples.pdf Graphic file (type pdf)
+<use figures/figure_factor_scoring_examples.pdf>
+Package pdftex.def Info: figures/figure_factor_scoring_examples.pdf  used on in
+put line 3.
+(pdftex.def)             Requested size: 340.17958pt x 241.82755pt.
+)
+Overfull \hbox (18.72882pt too wide) in paragraph at lines 20--21
 \T1/cmr/m/n/10 For an edge $\OML/cmm/m/it/10 e$\T1/cmr/m/n/10 , text $\OML/cmm/
 m/it/10 T$\T1/cmr/m/n/10 , and com-po-nent $\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 f
 []; r[]; w[]\OT1/cmr/m/n/10 )$\T1/cmr/m/n/10 , an ev-i-dence func-tion $\OML/cm
@@ -715,99 +716,91 @@ m/m/it/10 E\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 f[]; r[]; e; T\OT1/cmr/m/n/10 ) \O
 MS/cmsy/m/n/10 2
  []
 
-[5]) (sections/04_data.tex
-Overfull \hbox (15.7323pt too wide) in paragraph at lines 32--1
+[4] [5 <./figures/figure_factor_scoring_examples.pdf>]) (sections/04_data.tex
+Overfull \hbox (15.7323pt too wide) in paragraph at lines 35--1
 \T1/cmr/m/n/10 destroying per-tur-ba-tions and re-main com-par-a-tively sta-ble
  un-der meaning-preserving
  []
 
-[6]) (sections/05_experiments.tex
-Overfull \hbox (9.76154pt too wide) in paragraph at lines 8--9
-\T1/cmr/m/sc/10 Factor\T1/cmr/m/n/10 . The re-verse score is com-pared with ex-
-panded For-ward \T1/cmr/m/sc/10 LEMON-Factor\T1/cmr/m/n/10 .
+[6]) (sections/05_experiments.tex [7]
+Overfull \hbox (10.41661pt too wide) in paragraph at lines 8--9
+\T1/cmr/m/n/10 reverse gap would in-di-cate that the same fac-tor schema can su
+p-port both KG$\OMS/cmsy/m/n/10 !$\T1/cmr/m/n/10 Text
  []
 
-[7]
+
 Overfull \hbox (1.21173pt too wide) in paragraph at lines 13--14
 []\T1/cmr/m/n/10 Controlled per-tur-ba-tions are then in-jected into text and r
 e-con-structed graphs.
  []
 
-) (sections/06_results.tex
-Overfull \hbox (7.46933pt too wide) in paragraph at lines 3--4
-\T1/cmr/m/n/10 The first WebNLG pass shows that pred-i-cate re-sources de-ter-m
-ine whether relation-
+
+Overfull \hbox (3.5686pt too wide) in paragraph at lines 18--19
+\T1/cmr/m/n/10 mea-sured ex-act and weighted LEMON--expert agree-ment, chance-c
+orrected agree-
  []
 
-[8] (tables/table_layer_profile.tex)
-<figures/figure_radar_diagnostic_profile.pdf, id=52, 251.2564pt x 244.02733pt>
-File: figures/figure_radar_diagnostic_profile.pdf Graphic file (type pdf)
-<use figures/figure_radar_diagnostic_profile.pdf>
-Package pdftex.def Info: figures/figure_radar_diagnostic_profile.pdf  used on i
-nput line 22.
-(pdftex.def)             Requested size: 236.04146pt x 229.25539pt.
-
-(tables/table_perturbation_sensitivity_drop.tex) [9]
-(tables/table_ablation_gain.tex) (tables/table_llm_reliability.tex))
-(sections/07_error_analysis.tex [10]) (sections/08_limitations.tex [11 <./figur
-es/figure_radar_diagnostic_profile.pdf>] [12]) (sections/09_conclusion.tex)
-(references_latex.tex [13]
-Underfull \hbox (badness 1584) in paragraph at lines 10--11
+) (sections/06_results.tex [8] [9]
+(tables/table_perturbation_sensitivity_drop.tex)
+(tables/table_ablation_gain.tex) [10] (tables/table_llm_reliability.tex))
+(sections/08_limitations.tex [11]) (sections/09_conclusion.tex)
+(references_latex.tex [12]
+Underfull \hbox (badness 1584) in paragraph at lines 13--14
 []\T1/cmr/m/n/9 Rebuffel, C., Scialom, T., Soulier, L., Pi-wowarski, B., Lam-pr
 ier, S., Sta-
  []
 
-[14]
-Underfull \hbox (badness 10000) in paragraph at lines 17--18
+[13]
+Underfull \hbox (badness 10000) in paragraph at lines 20--21
 []\T1/cmr/m/n/9 Opitz, J.: Smatch++: Stan-dard-ized and Ex-tended Eval-u-a-tion
  of
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 17--18
+Underfull \hbox (badness 10000) in paragraph at lines 20--21
 \T1/cmr/m/n/9 Se-man-tic Graphs. In: Find-ings of EACL, pp. 1595--1608 (2023).
  []
 
 
-Underfull \hbox (badness 7064) in paragraph at lines 19--20
+Underfull \hbox (badness 7064) in paragraph at lines 22--23
 []\T1/cmr/m/n/9 Miranda-Escalada, A., Mehryary, F., Lu-oma, J., et al.: Overvie
 w of
  []
 
 
-Underfull \hbox (badness 2435) in paragraph at lines 19--20
+Underfull \hbox (badness 2435) in paragraph at lines 22--23
 \T1/cmr/m/n/9 Drug-Prot BioCre-ative VII track: qual-ity eval-u-a-tion and larg
 e scale text
  []
 
 
-Underfull \hbox (badness 6461) in paragraph at lines 19--20
+Underfull \hbox (badness 6461) in paragraph at lines 22--23
 \T1/cmr/m/n/9 min-ing of drug-gene/protein re-la-tions. Database 2023, baad080 
 (2023).
  []
 
-) [15] (main.aux)
+) [14] (main.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 14637 strings out of 467870
- 298141 string characters out of 5418355
- 700522 words of memory out of 5000000
- 43209 multiletter control sequences out of 15000+600000
+ 14419 strings out of 467870
+ 293659 string characters out of 5418355
+ 685369 words of memory out of 5000000
+ 42997 multiletter control sequences out of 15000+600000
  642822 words of font info for 73 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,10n,94p,1380b,836s stack positions out of 10000i,1000n,20000p,200000b,200000s
- <C:\Users\tomil\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt
-0900.pk> <C:\Users\tomil\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi60
-0\ecrm0700.pk> <C:\Users\tomil\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec
-/dpi600\ecbx1000.pk> <C:\Users\tomil\AppData\Local\MiKTeX\fonts/pk/ljfour/jknap
-pen/ec/dpi600\eccc1000.pk> <C:\Users\tomil\AppData\Local\MiKTeX\fonts/pk/ljfour
-/jknappen/ec/dpi600\ecti1000.pk> <C:\Users\tomil\AppData\Local\MiKTeX\fonts/pk/
-ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\tomil\AppData\Local\MiKTeX\fon
-ts/pk/ljfour/jknappen/ec/dpi600\tcrm0900.pk> <C:\Users\tomil\AppData\Local\MiKT
+ 84i,8n,94p,1496b,335s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ <C:\Users\tomil\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm
+0700.pk> <C:\Users\tomil\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi60
+0\ecbx1000.pk> <C:\Users\tomil\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec
+/dpi600\eccc1000.pk> <C:\Users\tomil\AppData\Local\MiKTeX\fonts/pk/ljfour/jknap
+pen/ec/dpi600\ecti1000.pk> <C:\Users\tomil\AppData\Local\MiKTeX\fonts/pk/ljfour
+/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\tomil\AppData\Local\MiKTeX\fonts/pk/
+ljfour/jknappen/ec/dpi600\tcrm0900.pk> <C:\Users\tomil\AppData\Local\MiKTeX\fon
+ts/pk/ljfour/jknappen/ec/dpi600\ectt0900.pk> <C:\Users\tomil\AppData\Local\MiKT
 eX\fonts/pk/ljfour/jknappen/ec/dpi600\eccc0900.pk> <C:\Users\tomil\AppData\Loca
 l\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx0900.pk> <C:\Users\tomil\AppDat
 a\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm0900.pk> <C:\Users\tomil\
@@ -818,15 +811,14 @@ sers/tomil/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbsy10
 cm/cmex10.pfb><C:/Users/tomil/AppData/Local/Programs/MiKTeX/fonts/type1/public/
 amsfonts/cm/cmmi10.pfb><C:/Users/tomil/AppData/Local/Programs/MiKTeX/fonts/type
 1/public/amsfonts/cm/cmmi7.pfb><C:/Users/tomil/AppData/Local/Programs/MiKTeX/fo
-nts/type1/public/amsfonts/cm/cmmi9.pfb><C:/Users/tomil/AppData/Local/Programs/M
-iKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/tomil/AppData/Local/Pr
-ograms/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/tomil/AppData/L
-ocal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/tomil/Ap
-pData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users
-/tomil/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy9.pfb>
-Output written on main.pdf (15 pages, 298698 bytes).
+nts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/tomil/AppData/Local/Programs/M
+iKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/tomil/AppData/Local/Pro
+grams/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/tomil/AppData/Lo
+cal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/tomil/A
+ppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy9.pfb>
+Output written on main.pdf (14 pages, 295612 bytes).
 PDF statistics:
- 638 PDF objects out of 1000 (max. 8388607)
+ 567 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  18 words of extra memory for PDF output out of 10000 (max. 10000000)
 
