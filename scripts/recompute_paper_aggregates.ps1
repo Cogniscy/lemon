@@ -6,8 +6,8 @@ param(
   ),
   [string]$Ablation = "reports/ablation_summary.json",
   [string]$Llm = "reports/llm_reliability_summary_3judges.json",
-  [string]$OutDir = "reports",
-  [string]$TableDir = "paper/tables"
+  [string]$OutDir = "artifacts/recomputed",
+  [string]$TableDir = "artifacts/recomputed/tables"
 )
 
 python -m lemon_factor.analysis.recompute_paper_aggregates `

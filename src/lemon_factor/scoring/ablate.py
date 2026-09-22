@@ -37,7 +37,7 @@ _ABLATION_ORDER = [
 ]
 
 _ABLATION_LABELS = {
-    "full": "LEMON-full",
+    "full": "Damage proxy",
     "label_only": "Label-only",
     "unweighted": "Unweighted",
     "minus_roles": "- roles",
@@ -120,6 +120,8 @@ def ablate_reports(paths: list[str | Path]) -> dict[str, Any]:
         inventory_path = _resolve_path(str(report["inventory"]), base_dir=base_dir)
         inventory = PredicateDecompositionSet.from_json_file(inventory_path)
         records = _read_records(input_path)
+        if "record_count" in report:
+            records = records[:report["record_count"]]
 
         for record in records:
             for ablation in _ABLATION_ORDER:
@@ -164,13 +166,15 @@ def ablate_reports(paths: list[str | Path]) -> dict[str, Any]:
 
     return {
         "status": "passed",
+        "schema_version": "factor-damage-ablation-v2",
+        "evidence_source": "Intended damage metadata; internal proxy analysis, not text error detection.",
         "datasets": datasets,
         "ablation_order": _ABLATION_ORDER,
         "summary": summary,
         "by_variant": by_variant,
         "rows": raw_rows,
         "notes": {
-            "mean_drop": "1 - deterministic factor score; higher values mean stronger detection of controlled damage.",
+            "mean_drop": "1 - deterministic factor score; higher values mean greater prescribed factor damage.",
             "llm": "No LLM calls are used in this ablation study.",
         },
     }

@@ -87,4 +87,4 @@ def test_ablation_report_uses_scoring_report_paths(tmp_path: Path) -> None:
 
     table = render_latex_table(report, caption="Ablation", label="tab:ablation")
     assert "\\caption{Ablation}" in table
-    assert "LEMON-full" in table
+    assert "Damage proxy" in table

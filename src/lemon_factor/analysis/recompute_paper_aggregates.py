@@ -27,12 +27,14 @@ from pathlib import Path
 from statistics import mean
 from typing import Any, Iterable
 
+from lemon_factor.scoring.report_schema import normalize_scoring_report, PROXY_EVIDENCE
+
 DEFAULT_METRICS = [
     "entity_recall",
     "triple_match",
     "mine_style",
     "lemon_label_only",
-    "lemon_full",
+    "factor_damage_proxy",
 ]
 
 METRIC_LABELS = {
@@ -40,7 +42,7 @@ METRIC_LABELS = {
     "triple_match": "Triple",
     "mine_style": "Node/edge",
     "lemon_label_only": "Label-only",
-    "lemon_full": "LEMON-Factor",
+    "factor_damage_proxy": "Damage proxy",
 }
 
 VARIANT_ORDER = [
@@ -70,7 +72,7 @@ ABLATION_ORDER = [
 ]
 
 ABLATION_LABELS = {
-    "full": "LEMON-full",
+    "full": "Damage proxy",
     "label_only": "Label-only",
     "unweighted": "Unweighted",
     "minus_roles": "Minus roles",
@@ -119,7 +121,7 @@ def _bootstrap_ci(values: list[float], *, seed: int = 13, samples: int = 0) -> t
 def load_scoring_rows(scoring_paths: Iterable[Path]) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     for path in scoring_paths:
-        data = _read_json(path)
+        data = normalize_scoring_report(_read_json(path))
         dataset = data.get("dataset") or Path(path).stem.replace("scoring_", "")
         for row in data.get("rows", []):
             scores = row.get("scores", {})
@@ -194,6 +196,8 @@ def compute_sensitivity(rows: list[dict[str, Any]], metrics: list[str]) -> dict[
 
     return {
         "status": "passed",
+        "schema_version": "perturbation-sensitivity-v2",
+        "proxy_evidence": PROXY_EVIDENCE,
         "definition": "mean_drop = 1 - preservation_score; larger means more sensitivity to perturbation",
         "metrics": metrics,
         "by_variant": variant_rows,
@@ -239,6 +243,8 @@ def compute_ablation_gain(ablation_path: Path) -> dict[str, Any]:
 
     return {
         "status": "passed",
+        "schema_version": "factor-damage-ablation-gain-v2",
+        "proxy_evidence": PROXY_EVIDENCE,
         "definition": "mean_drop is perturbation sensitivity. full_minus_ablation > 0 means the full model is more sensitive than the ablated variant.",
         "datasets": datasets,
         "rows": rows,
@@ -304,7 +310,7 @@ def write_sensitivity_tex(path: Path, sensitivity: dict[str, Any], metrics: list
         r"\begin{table}[t]",
         r"\centering",
         r"\small",
-        r"\caption{Perturbation sensitivity as mean score drop. Larger values indicate that a metric reacts more strongly to the perturbation; unchanged or small drops mark blind spots rather than missing computations.}",
+        r"\caption{Mean score drop under controlled perturbations. Damage proxy uses intended-damage metadata; its response is prescribed rather than inferred from text.}",
         r"\label{tab:perturbation-sensitivity-drop}",
         r"\begin{tabular}{l" + "r" * len(metrics) + r"}",
         r"\toprule",
@@ -332,7 +338,7 @@ def write_ablation_tex(path: Path, ablation: dict[str, Any]) -> None:
         r"\begin{table}[t]",
         r"\centering",
         r"\small",
-        r"\caption{Ablation sensitivity. Mean drop is the average perturbation response; gain is $\Delta_{full}-\Delta_{ablated}$, so positive values mean that removing the component reduces sensitivity.}",
+        r"\caption{Internal ablation of the prescribed damage model. Gain is full drop minus ablated drop; this is not independent text-error detection.}",
         r"\label{tab:ablation-gain}",
         r"\begin{tabular}{lrr}",
         r"\toprule",
@@ -382,7 +388,8 @@ def write_markdown_report(path: Path, sensitivity: dict[str, Any], ablation: dic
         "## Definitions",
         "",
         "- Perturbation sensitivity is `1 - preservation_score`; larger values mean the metric reacts more strongly.",
-        "- Ablation gain is `full_drop - ablated_drop`; positive values mean the removed component contributed sensitivity.",
+        "- Damage proxy receives intended-damage metadata; it does not infer errors from text.",
+        "- Ablation gain is `full_drop - ablated_drop` within that prescribed damage model.",
         "- LLM mean score maps `covered/partial/absent` to `1/0.5/0`.",
         "- Pairwise LLM agreement is reported only for overlapping factor judgments.",
         "",
@@ -411,8 +418,8 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument("--scoring", nargs="+", required=True, type=Path, help="Scoring JSON files.")
     parser.add_argument("--ablation", required=True, type=Path, help="Ablation summary JSON.")
     parser.add_argument("--llm", required=True, type=Path, help="LLM reliability summary JSON.")
-    parser.add_argument("--out-dir", type=Path, default=Path("reports"))
-    parser.add_argument("--table-dir", type=Path, default=Path("paper/tables"))
+    parser.add_argument("--out-dir", type=Path, default=Path("artifacts/recomputed"))
+    parser.add_argument("--table-dir", type=Path, default=Path("artifacts/recomputed/tables"))
     parser.add_argument("--metrics", nargs="+", default=DEFAULT_METRICS)
     args = parser.parse_args(argv)
 

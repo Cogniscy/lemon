@@ -1,13 +1,13 @@
 \begin{table}[t]
 \centering
 \small
-\caption{Ablation sensitivity. Mean drop is the average perturbation response. Gain is full drop minus ablated drop; positive values mean that removing the component reduces sensitivity.}
+\caption{Internal ablation of the prescribed damage model. Gain is full drop minus ablated drop; this is not independent text-error detection.}
 \label{tab:ablation-gain}
 \begin{tabular}{lrr}
 \toprule
 Variant & Mean drop & Gain vs. full \\
 \midrule
-LEMON-full & 0.320 & 0.000 \\
+Damage proxy & 0.320 & 0.000 \\
 Label-only & 0.417 & -0.097 \\
 Unweighted & 0.310 & 0.010 \\
 Minus roles & 0.185 & 0.135 \\

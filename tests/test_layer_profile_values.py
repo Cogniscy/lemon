@@ -1,7 +1,9 @@
+import pytest
 import json
 from pathlib import Path
 
 
+@pytest.mark.artifacts("reports/layer_profile_values.json")
 def test_layer_profile_values_are_documented_and_bounded():
     path = Path("reports/layer_profile_values.json")
     assert path.exists()
@@ -30,5 +32,5 @@ def test_layer_profile_table_source_is_retained_but_not_required_in_paper():
     assert "entity/domain support" in results
     assert "table_layer_profile" not in results
     table = Path("paper/tables/table_layer_profile.tex").read_text(encoding="utf-8")
-    for term in ["Entity/domain", "Predicate cue", "Role/argument", "Polarity"]:
+    for term in ["Entity/domain", "Predicate cue", "Role/arg.", "Polarity"]:
         assert term in table

@@ -11,6 +11,7 @@ from typing import Any
 from lemon_factor.factors.decomposition import PredicateDecompositionSet
 from lemon_factor.perturbations.schema import PerturbedGraphTextRecord
 from lemon_factor.scoring.baselines import score_record
+from lemon_factor.scoring.report_schema import SCHEMA_VERSION, PROXY_EVIDENCE
 
 _METRIC_ORDER = [
     "entity_recall",
@@ -18,7 +19,7 @@ _METRIC_ORDER = [
     "triple_match",
     "mine_style",
     "lemon_label_only",
-    "lemon_full",
+    "factor_damage_proxy",
 ]
 
 _VARIANT_ORDER = [
@@ -43,7 +44,7 @@ _METRIC_LABELS = {
     "triple_match": "Triple",
     "mine_style": "MINE-style",
     "lemon_label_only": "LEMON label",
-    "lemon_full": "LEMON full",
+    "factor_damage_proxy": "Damage proxy",
 }
 
 
@@ -103,7 +104,7 @@ def render_latex_table(
         r"\scriptsize",
         r"\begin{tabular}{lrrrrrr}",
         r"\toprule",
-        r"Perturbation & Entity & Label & Triple & MINE-style & LEMON-label & LEMON-full \\",
+        r"Perturbation & Entity & Label & Triple & MINE-style & LEMON-label & Damage proxy \\",
         r"\midrule",
     ]
     for row in summary:
@@ -116,7 +117,7 @@ def render_latex_table(
             f"{metrics['triple_match']:.4f} & "
             f"{metrics['mine_style']:.4f} & "
             f"{metrics['lemon_label_only']:.4f} & "
-            f"{metrics['lemon_full']:.4f} \\\\".replace("\\\\\\", "\\\\")
+            f"{metrics['factor_damage_proxy']:.4f} \\\\".replace("\\\\\\", "\\\\")
         )
     lines.extend([r"\bottomrule", r"\end{tabular}", r"\end{table}", ""])
     return "\n".join(lines)
@@ -124,7 +125,7 @@ def render_latex_table(
 
 def render_markdown_table(summary: list[dict[str, Any]]) -> str:
     lines = [
-        "| Perturbation | Records | Entity | Label | Triple | MINE-style | LEMON-label | LEMON-full |",
+        "| Perturbation | Records | Entity | Label | Triple | MINE-style | LEMON-label | Damage proxy |",
         "|---|---:|---:|---:|---:|---:|---:|---:|",
     ]
     for row in summary:
@@ -134,7 +135,7 @@ def render_markdown_table(summary: list[dict[str, Any]]) -> str:
             f"| {name} | {row['records']} | "
             f"{metrics['entity_recall']:.4f} | {metrics['label_match']:.4f} | "
             f"{metrics['triple_match']:.4f} | {metrics['mine_style']:.4f} | "
-            f"{metrics['lemon_label_only']:.4f} | {metrics['lemon_full']:.4f} |"
+            f"{metrics['lemon_label_only']:.4f} | {metrics['factor_damage_proxy']:.4f} |"
         )
     return "\n".join(lines) + "\n"
 
@@ -165,6 +166,8 @@ def score_file(
     summary = _aggregate(rows)
     return {
         "status": "passed",
+        "schema_version": SCHEMA_VERSION,
+        "proxy_evidence": PROXY_EVIDENCE,
         "input": str(input_path),
         "inventory": str(inventory_path),
         "dataset": dataset or (records[0].dataset if records else "unknown"),

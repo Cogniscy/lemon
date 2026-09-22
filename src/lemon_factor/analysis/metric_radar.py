@@ -8,6 +8,8 @@ from pathlib import Path
 from statistics import mean
 from typing import Any
 
+from lemon_factor.scoring.report_schema import normalize_metrics, PROXY_EVIDENCE
+
 VARIANTS = ["node_deletion", "edge_deletion", "argument_swap", "polarity_flip", "relation_blur"]
 
 
@@ -22,7 +24,7 @@ def _variant_scores_from_summary(report: dict[str, Any], metric: str) -> dict[st
     for row in report.get("summary", []) or []:
         variant = row.get("variant")
         if variant in values:
-            metrics = row.get("metrics", {})
+            metrics = normalize_metrics(row.get("metrics", {}))
             if metric in metrics:
                 values[variant].append(float(metrics[metric]))
     return {variant: mean(vals) if vals else 0.0 for variant, vals in values.items()}
@@ -34,7 +36,7 @@ def _combine_lemon(scoring_paths: list[str]) -> dict[str, float]:
         report = _load(path)
         if not report:
             continue
-        scores = _variant_scores_from_summary(report, "lemon_full")
+        scores = _variant_scores_from_summary(report, "factor_damage_proxy")
         for variant, score in scores.items():
             by_variant[variant].append(score)
     return {variant: mean(vals) if vals else 0.0 for variant, vals in by_variant.items()}
@@ -70,12 +72,13 @@ def build(scoring: list[str], mine: str, triple: str, out: str, tex_out: str | N
     triple_scores = _variant_scores_from_baseline(triple_report, "exact_recovery")
 
     methods = {
-        "LEMON-Factor": _axes_from_preservation(lemon_scores, recoverability=mean(lemon_scores.values()) if lemon_scores else 0.0, determinism=1.0),
+        "Damage proxy": _axes_from_preservation(lemon_scores, recoverability=mean(lemon_scores.values()) if lemon_scores else 0.0, determinism=1.0),
         "MINE-1-compatible": _axes_from_preservation(mine_scores, recoverability=float(mine_report.get("mine1_like_score", 0.0)), determinism=0.7 if mine_report.get("mode") == "llm_saved" else 1.0),
         "Triple-F1": _axes_from_preservation(triple_scores, recoverability=float(triple_report.get("exact_recovery", 0.0)), determinism=1.0),
     }
     report = {
         "status": "passed",
+        "proxy_evidence": PROXY_EVIDENCE,
         "note": "Radar values are normalized diagnostic properties, not absolute accuracy scores.",
         "axes": list(next(iter(methods.values())).keys()),
         "methods": methods,

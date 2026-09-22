@@ -12,3 +12,16 @@ __pycache__/
 /reports/*.csv
 /reports/*.json
 /reports/*.html
+
+# Local development and build outputs
+.idea/
+*.egg-info/
+build/
+dist/
+artifacts/
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.synctex.gz
+/lemon.zip

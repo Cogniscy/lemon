@@ -1,0 +1,58 @@
+{
+  "source_edge": {
+    "subj": "person",
+    "pred": "birthPlace",
+    "obj": "place"
+  },
+  "node_labels": {
+    "person": "Alex Morgan",
+    "place": "Cedar Bay"
+  },
+  "decomposition": {
+    "predicate": "birthPlace",
+    "components": [
+      {
+        "factor": "biographical_relation",
+        "role": "predicate_meaning",
+        "weight": 0.45
+      },
+      {
+        "factor": "person",
+        "role": "subject_domain",
+        "weight": 0.2
+      },
+      {
+        "factor": "place",
+        "role": "object_domain",
+        "weight": 0.35
+      }
+    ]
+  },
+  "lexical_cues": {
+    "birthPlace": [
+      "born in"
+    ]
+  },
+  "cases": [
+    {
+      "id": "correct",
+      "text": "Alex Morgan was born in Cedar Bay.",
+      "known_limitation": null
+    },
+    {
+      "id": "missing_relation",
+      "text": "Alex Morgan visited Cedar Bay.",
+      "known_limitation": null
+    },
+    {
+      "id": "negation",
+      "text": "Alex Morgan was not born in Cedar Bay.",
+      "known_limitation": "The lexical scorer does not resolve negation; a high score is a false positive."
+    },
+    {
+      "id": "other_participant",
+      "text": "Alex Morgan visited Cedar Bay. Taylor was born in Hill Town.",
+      "known_limitation": "The lexical scorer does not bind a relation cue to its participants; a high score is a false positive."
+    }
+  ]
+}

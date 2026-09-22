@@ -1,9 +1,14 @@
+[build-system]
+requires = ["setuptools>=68.2", "wheel>=0.41"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "lemon-factor"
 version = "0.1.0"
 description = "Pilot implementation of LEMON-Factor: factorized semantic decomposition for graph-text meaning preservation evaluation."
 readme = "README.md"
 requires-python = ">=3.11"
+license = {file = "LICENSE"}
 dependencies = [
   "pydantic>=2.0",
 ]
@@ -11,7 +16,13 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
   "pytest>=8.0",
+  "build>=1.0",
+  "setuptools>=68.2",
+  "wheel>=0.41",
 ]
+data = ["datasets>=2.19", "pandas>=2.2"]
+plots = ["matplotlib>=3.8", "numpy>=1.26"]
+embeddings = ["sentence-transformers>=3.0", "scikit-learn>=1.4"]
 research = [
   "datasets>=2.19",
   "sentence-transformers>=3.0",
@@ -27,3 +38,11 @@ pythonpath = ["src"]
 
 [tool.ruff]
 line-length = 100
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["lemon_factor*"]
+namespaces = true
+
+[tool.setuptools.package-data]
+lemon_factor = ["demo_data/*.json", "llm/prompts/*.md", "mine_nodes_edges/prompts/*.md"]

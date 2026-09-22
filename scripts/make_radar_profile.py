@@ -10,9 +10,15 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 from typing import Any
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+from lemon_factor.scoring.report_schema import normalize_sensitivity_report
+
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.colors import LinearSegmentedColormap
@@ -21,9 +27,9 @@ ROOT = Path(__file__).resolve().parents[1]
 PERTURBATION_REPORT = ROOT / "reports" / "paper_metric_sensitivity_drops.json"
 EMBEDDING_REPORT = ROOT / "reports" / "embedding_baseline_perturbation.json"
 LAYER_PROFILE = ROOT / "reports" / "layer_profile_values.json"
-OUT_JSON = ROOT / "reports" / "radar_diagnostic_profile_values.json"
-OUT_PDF = ROOT / "paper" / "figures" / "figure_radar_diagnostic_profile.pdf"
-OUT_PNG = ROOT / "paper" / "figures" / "figure_radar_diagnostic_profile.png"
+OUT_JSON = ROOT / "artifacts" / "radar_diagnostic_profile_values.json"
+OUT_PDF = ROOT / "artifacts" / "figure_radar_diagnostic_profile.pdf"
+OUT_PNG = ROOT / "artifacts" / "figure_radar_diagnostic_profile.png"
 
 AXES = [
     ("Node deletion", "node_deletion"),
@@ -35,7 +41,7 @@ AXES = [
 PLOT_AXIS_LABELS = ["Node\ndeletion", "Edge\ndeletion", "Argument\nswap", "Polarity\nflip", "Relation\nblur"]
 
 METHODS = [
-    ("LEMON-Factor", "lemon_full", "reports/paper_metric_sensitivity_drops.json"),
+    ("Damage proxy", "factor_damage_proxy", "reports/paper_metric_sensitivity_drops.json"),
     ("MINE-style", "mine_style", "reports/paper_metric_sensitivity_drops.json"),
     ("Triple match", "triple_match", "reports/paper_metric_sensitivity_drops.json"),
     ("Entity recall", "entity_recall", "reports/paper_metric_sensitivity_drops.json"),
@@ -52,13 +58,21 @@ def _write_json(path: Path, data: Any) -> None:
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
-def build_values() -> dict[str, Any]:
-    perturbation = _read_json(PERTURBATION_REPORT)
-    embedding = _read_json(EMBEDDING_REPORT)
-    layer_profile = _read_json(LAYER_PROFILE)
+def build_values(perturbation_path=PERTURBATION_REPORT, embedding_path=EMBEDDING_REPORT, layer_path=LAYER_PROFILE) -> dict[str, Any]:
+    perturbation = normalize_sensitivity_report(_read_json(perturbation_path))
+    embedding = _read_json(embedding_path)
+    layer_profile = _read_json(layer_path)
     by_variant = {row["variant"]: row for row in perturbation["by_variant"]}
     vector_by_variant = {row["variant"]: row for row in embedding["by_variant"]}
 
+    def source_name(path):
+        path = Path(path).resolve()
+        return path.relative_to(ROOT).as_posix() if path.is_relative_to(ROOT) else str(path)
+    sources = {
+        "reports/paper_metric_sensitivity_drops.json": source_name(perturbation_path),
+        "reports/embedding_baseline_perturbation.json": source_name(embedding_path),
+        "reports/layer_profile_values.json": source_name(layer_path),
+    }
     axis_rows: list[dict[str, Any]] = []
     methods: dict[str, dict[str, float]] = {name: {} for name, _, _ in METHODS}
 
@@ -85,7 +99,7 @@ def build_values() -> dict[str, Any]:
             cell = {
                 "value": rounded,
                 "metric_key": metric_key,
-                "source_report": source_report,
+                "source_report": sources[source_report],
                 "n": n_value,
             }
             if backend:
@@ -109,22 +123,19 @@ def build_values() -> dict[str, Any]:
         "axes": [label for label, _ in AXES],
         "methods": methods,
         "axis_records": axis_rows,
-        "source_files": [
-            "reports/paper_metric_sensitivity_drops.json",
-            "reports/embedding_baseline_perturbation.json",
-            "reports/layer_profile_values.json",
-        ],
+        "source_files": list(sources.values()),
         "source_context": {
             "layer_profile_status": layer_profile.get("status"),
             "layer_profile_note": layer_profile.get("note"),
             "vector_backend": embedding.get("backend"),
+            "vector_algorithm": "unknown" if embedding.get("backend") == "char_ngram_vector_cosine" else embedding.get("backend"),
             "vector_backend_note": embedding.get("backend_note"),
             "vector_definition": embedding.get("definition"),
         },
         "safe_interpretation": (
             "MINE-style and triple-match are harsher scalar detectors under "
-            "controlled perturbations. LEMON-Factor is less harsh in aggregate, "
-            "but its response is anchored in predicate-factor traces that localize "
+            "controlled perturbations. The damage proxy is less harsh in aggregate, "
+            "but the proxy response is prescribed by intended damage metadata for "
             "roles, polarity, direction, and evidence when those dimensions are encoded."
         ),
         "do_not_claim": [
@@ -174,7 +185,7 @@ def plot(values: dict[str, Any], out_pdf: Path = OUT_PDF, out_png: Path = OUT_PN
             weight = "bold" if method_names[i] == "LEMON-Factor" else "normal"
             ax.text(j, i, f"{value:.3f}", ha="center", va="center", fontsize=6.4, color=text_color, fontweight=weight)
 
-    lemon_idx = method_names.index("LEMON-Factor")
+    lemon_idx = method_names.index("Damage proxy")
     ax.add_patch(plt.Rectangle((-0.5, lemon_idx - 0.5), len(axis_names), 1, fill=False, edgecolor="#0b4f8a", linewidth=1.6))
 
     cbar = fig.colorbar(im, ax=ax, fraction=0.05, pad=0.02)
@@ -190,6 +201,7 @@ def plot(values: dict[str, Any], out_pdf: Path = OUT_PDF, out_png: Path = OUT_PN
     fig.tight_layout(rect=(0, 0.07, 1, 1))
     out_pdf.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(out_pdf, bbox_inches="tight")
+    out_png.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(out_png, bbox_inches="tight")
     plt.close(fig)
 
@@ -199,9 +211,14 @@ def main() -> None:
     parser.add_argument("--json", type=Path, default=OUT_JSON, help="Output JSON path.")
     parser.add_argument("--pdf", type=Path, default=OUT_PDF, help="Output PDF figure path.")
     parser.add_argument("--png", type=Path, default=OUT_PNG, help="Output PNG figure path.")
+    parser.add_argument("--perturbation", type=Path, default=PERTURBATION_REPORT)
+    parser.add_argument("--embedding", type=Path, default=EMBEDDING_REPORT)
+    parser.add_argument("--layer-profile", type=Path, default=LAYER_PROFILE)
     args = parser.parse_args()
 
-    values = build_values()
+    values = build_values(args.perturbation, args.embedding, args.layer_profile)
+    values["figure"]["pdf"] = str(args.pdf)
+    values["figure"]["png"] = str(args.png)
     _write_json(args.json, values)
     plot(values, args.pdf, args.png)
     print(f"Wrote {args.json}")

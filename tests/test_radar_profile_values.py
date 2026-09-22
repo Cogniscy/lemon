@@ -3,84 +3,44 @@ import subprocess
 import sys
 from pathlib import Path
 
+import pytest
 
-EXPECTED_AXES = [
-    "Node deletion",
-    "Edge deletion",
-    "Argument swap",
-    "Polarity flip",
-    "Relation blur",
-]
-
-EXPECTED_METHODS = {
-    "LEMON",
-    "MINE-style",
-    "Triple match",
-    "Entity recall",
-    "Vector cosine",
-}
+VARIANTS = ["node_deletion", "edge_deletion", "argument_swap", "polarity_flip", "relation_blur"]
 
 
-def test_radar_profile_generator_outputs_documented_values(tmp_path):
-    out_json = tmp_path / "radar.json"
-    out_pdf = tmp_path / "radar.pdf"
-    out_png = tmp_path / "radar.png"
-    subprocess.run(
-        [
-            sys.executable,
-            "scripts/make_radar_profile.py",
-            "--json",
-            str(out_json),
-            "--pdf",
-            str(out_pdf),
-            "--png",
-            str(out_png),
-        ],
-        check=True,
-    )
-    assert out_json.exists()
-    assert out_pdf.exists() and out_pdf.stat().st_size > 1000
-    assert out_png.exists() and out_png.stat().st_size > 1000
-
-    data = json.loads(out_json.read_text(encoding="utf-8"))
-    assert data["status"] == "passed"
-    assert "not absolute accuracy" in data["note"] or "not absolute accuracy" in data["note"].replace("Figure values are ", "")
-    assert "reports/paper_metric_sensitivity_drops.json" in data["source_files"]
-    assert "reports/embedding_baseline_perturbation.json" in data["source_files"]
-    assert "reports/layer_profile_values.json" in data["source_files"]
-    assert data["axes"] == EXPECTED_AXES
-    assert set(data["methods"]) == EXPECTED_METHODS
-    assert data["source_context"]["vector_backend"] == "char_ngram_vector_cosine"
-    assert "not a dense semantic embedding" in data["source_context"]["vector_backend_note"]
-
-    for method_values in data["methods"].values():
-        assert set(method_values) == set(data["axes"])
-        for value in method_values.values():
-            assert 0.0 <= value <= 1.0
-
-    for record in data["axis_records"]:
-        assert record["normalization_rule"]
-        assert set(record["values"]) == EXPECTED_METHODS
-        for method_name, cell in record["values"].items():
-            assert 0.0 <= cell["value"] <= 1.0
-            assert cell["n"] > 0
-            assert cell["source_report"] in data["source_files"]
-            if method_name == "Vector cosine":
-                assert cell["backend"] == "char_ngram_vector_cosine"
-                assert cell["source_report"] == "reports/embedding_baseline_perturbation.json"
-            else:
-                assert cell["source_report"] == "reports/paper_metric_sensitivity_drops.json"
+def test_radar_generator_supports_legacy_input_with_honest_labels(tmp_path):
+    pytest.importorskip("matplotlib", reason="Plot generation requires .[plots]")
+    metrics = ["lemon_full", "mine_style", "triple_match", "entity_recall"]
+    inputs = {
+        "perturbation": {"metrics": metrics, "by_dataset": [], "by_dataset_variant": [],
+            "by_variant": [{"variant": variant, **{key: {"mean_drop": 0.4, "n": 2}
+                for key in metrics}} for variant in VARIANTS]},
+        "embedding": {"backend": "char_ngram_vector_cosine", "backend_note": "Legacy ambiguous backend",
+            "by_variant": [{"variant": variant, "mean_drop": 0.2, "n": 2} for variant in VARIANTS]},
+        "layer-profile": {"status": "fixture"},
+    }
+    command = [sys.executable, "scripts/make_radar_profile.py"]
+    for name, data in inputs.items():
+        path = tmp_path / f"{name}.json"
+        path.write_text(json.dumps(data))
+        command += ["--" + name, str(path)]
+    command += ["--json", str(tmp_path / "output.json"), "--pdf", str(tmp_path / "output.pdf"),
+                "--png", str(tmp_path / "output.png")]
+    result = subprocess.run(command, capture_output=True, text=True)
+    assert result.returncode == 0, result.stderr
+    report = json.loads((tmp_path / "output.json").read_text())
+    assert set(report["methods"]) == {"Damage proxy", "MINE-style", "Triple match", "Entity recall", "Vector cosine"}
+    assert report["source_context"]["vector_algorithm"] == "unknown"
+    assert len(report["axis_records"]) == 5
+    assert all(value == 0.4 for value in report["methods"]["Damage proxy"].values())
+    for suffix in ("pdf", "png"):
+        assert (tmp_path / f"output.{suffix}").stat().st_size > 1000
 
 
-def test_radar_profile_figure_is_generated_as_supplementary_artifact():
-    results = Path("paper/sections/06_results.tex").read_text(encoding="utf-8")
-    assert "figure_radar_diagnostic_profile.pdf" not in results
-    assert "fig:radar-diagnostic-profile" not in results
-    assert "MINE-style" in results
-    assert "not be read as a global ranking" in results or "not a global ranking" in results
-
-    report = json.loads(Path("reports/radar_diagnostic_profile_values.json").read_text(encoding="utf-8"))
-    assert report["figure"]["pdf"] == "paper/figures/figure_radar_diagnostic_profile.pdf"
-    assert set(report["methods"]) == EXPECTED_METHODS
-    assert Path(report["figure"]["pdf"]).exists()
-    assert Path(report["figure"]["png"]).exists()
+@pytest.mark.artifacts("reports/radar_diagnostic_profile_values.json")
+def test_historical_radar_is_retained():
+    report = json.loads(Path("reports/radar_diagnostic_profile_values.json").read_text())
+    assert "methods" in report
+    assert set(report["methods"]) >= {"MINE-style", "Entity recall", "Vector cosine"}
+    for values in report["methods"].values():
+        assert all(0 <= value <= 1 for value in values.values())

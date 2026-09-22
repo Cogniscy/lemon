@@ -152,5 +152,5 @@ def test_metric_radar_build(tmp_path: Path):
     triple.write_text(json.dumps({"exact_recovery": 0.1, "by_dataset_variant": [{"variant": "edge_deletion", "exact_recovery": 0.0}]}), encoding="utf8")
     report = build_metric_radar([str(scoring)], str(mine), str(triple), str(out), tex_out=str(tex))
     assert report["status"] == "passed"
-    assert "LEMON-Factor" in report["methods"]
+    assert "Damage proxy" in report["methods"]
     assert tex.exists()

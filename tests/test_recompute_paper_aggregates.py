@@ -10,14 +10,14 @@ from lemon_factor.analysis.recompute_paper_aggregates import (
 
 def test_compute_sensitivity_uses_drop_direction() -> None:
     rows = [
-        {"dataset": "d", "variant": "node_deletion", "scores": {"entity_recall": 0.25, "lemon_full": 0.75}},
-        {"dataset": "d", "variant": "node_deletion", "scores": {"entity_recall": 0.75, "lemon_full": 0.25}},
+        {"dataset": "d", "variant": "node_deletion", "scores": {"entity_recall": 0.25, "factor_damage_proxy": 0.75}},
+        {"dataset": "d", "variant": "node_deletion", "scores": {"entity_recall": 0.75, "factor_damage_proxy": 0.25}},
     ]
-    out = compute_sensitivity(rows, ["entity_recall", "lemon_full"])
+    out = compute_sensitivity(rows, ["entity_recall", "factor_damage_proxy"])
     node = out["by_variant"][0]
     assert node["variant"] == "node_deletion"
     assert round(node["entity_recall"]["mean_drop"], 3) == 0.5
-    assert round(node["lemon_full"]["mean_drop"], 3) == 0.5
+    assert round(node["factor_damage_proxy"]["mean_drop"], 3) == 0.5
 
 
 def test_compute_ablation_gain(tmp_path: Path) -> None:
