@@ -1,3 +1,6 @@
+> Current implementation and remaining work: [IMPLEMENTATION_STATUS.md](IMPLEMENTATION_STATUS.md).
+> The milestone list below is historical.
+
 # LEMON Roadmap
 
 ## Current paper scope

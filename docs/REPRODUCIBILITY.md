@@ -1,202 +1,138 @@
-# Reproducibility guide
+# Reproducibility
 
-This guide records the shortest reliable path for reproducing the current SPECOM paper artifacts. It is written for a fresh local checkout after the generated reports and data files have already been included in the repository.
+## Installed package
 
-The current paper is a graph-text diagnostic study. The commands below reproduce the materialized paper artifacts; they do not rerun every historical data-conversion or LLM experiment.
-
-## Environment
-
-Use Python 3.11 or newer.
-
-From the repository root, install the package with development and research dependencies:
+After `python -m pip install .`, these commands work outside the checkout:
 
 ```bash
-python -m pip install -e ".[dev,research]"
+python -m lemon_factor demo
+python -m lemon_factor demo --format json
+python -m lemon_factor reproduce-demo --out artifacts/demo
 ```
 
-The research dependency group includes the libraries needed by the radar and vector-space baseline scripts:
+The final command saves the actual scores, summary and input/configuration manifest.
+It is a deterministic synthetic demonstration, not reproduction of the paper.
+Add `--overwrite` only when replacing those three output files is intended.
 
-```text
-matplotlib
-scikit-learn
-numpy
-pandas
-sentence-transformers
-```
+## Tests and distribution
 
-The default vector baseline does not download a dense model. The `sentence-transformers` backend is optional and should only be used when the model files are available.
-
-For the paper build, install a LaTeX distribution with `latexmk` and the LNCS class.
-
-## Repository-root convention
-
-Run Python scripts from the repository root. For example:
+From the checkout:
 
 ```bash
-python scripts/make_radar_profile.py
+python -m pip install -e ".[dev,plots]"
+python -m pytest -q -m "not artifacts"
+python -m pytest -q -m artifacts
+python -m build
 ```
 
-Do not run that command from `paper/`; relative paths are resolved from the repository root.
+Artifact tests list required historical files and skip only when they are absent.
+Their results do not establish completeness of the paper's source data.
+Two strict expected failures document unresolved negation and participant-binding
+limitations. An unexpected pass requires removing the corresponding xfail.
 
-## Minimal verification
+CI builds wheel and sdist and runs `scripts/smoke_installed.py` with the Python
+from an independent wheel installation outside the checkout. The smoke test
+checks CLI output, resource inclusion and network-free execution.
+The workflow targets Windows/Linux and Python 3.11/3.12.
+Local validation and remaining gaps are recorded in [status](IMPLEMENTATION_STATUS.md).
 
-Run the test suite:
+## Recomputing research results
+
+Install only the extras needed by an experiment. The old `.[research]` aggregate
+remains available, but is not required for the demo.
+
+The following commands require prepared data; a fresh clone does not include all
+processed JSONL files or historical JSON reports. See [provenance](RESULT_PROVENANCE.md)
+before running them. New outputs are separated from historical reports.
+
+Example scoring of a prepared DrugProt perturbation file:
 
 ```bash
-python -m pytest -q
+python -m lemon_factor.scoring.score_perturbations --input data/biomedical/perturbed/drugprot_perturbed.jsonl --inventory resources/factors/drugprot.json --out artifacts/scoring_drugprot.json --table-out artifacts/scoring_drugprot.md
 ```
 
-Expected result in the current repository state:
+This computes the **factor damage proxy** from metadata, alongside lexical baselines.
 
-```text
-all tests pass
-```
-
-The exact count may change as tests are added. In the LEM-25 local check it was `225 passed`.
-
-## Regenerate the expert-validation CSV
-
-The reviewer-facing Excel workbook is stored under `annotation/linguist_review_pack/`. The source CSV can be regenerated with:
+Explicit vector control over a prepared file:
 
 ```bash
-python scripts/build_expert_validation_pack.py
+python scripts/run_embedding_baseline.py --backend hashed-char --limit-per-variant 10 data/biomedical/perturbed/drugprot_perturbed.jsonl
 ```
 
-Expected output:
+Outputs default to `artifacts/embedding_baseline_perturbation.json` and `.md`.
+For TF-IDF, install `.[embeddings]` and choose `--backend tfidf-char`.
+Dense models require `--backend sentence-transformers` and model availability;
+that command can download weights.
 
-```text
-annotation/expert_validation_sample.csv
-```
-
-The generated sample should contain 50 review rows: 36 WebNLG, 12 DrugProt, and 2 BC5CDR examples.
-
-## Regenerate the vector-space perturbation baseline
-
-Run:
+Recompute compact tables from historical scoring, ablation and judge reports:
 
 ```bash
-python scripts/run_embedding_baseline.py
+python -m lemon_factor.analysis.recompute_paper_aggregates --scoring reports/scoring_webnlg.json reports/scoring_drugprot.json reports/scoring_bc5cdr.json --ablation reports/ablation_summary.json --llm reports/llm_reliability_summary_3judges.json --out-dir artifacts/recomputed --table-dir artifacts/recomputed/tables
 ```
 
-Expected outputs:
-
-```text
-reports/embedding_baseline_perturbation.json
-reports/embedding_baseline_perturbation.md
-```
-
-The default backend is `char_ngram_vector_cosine`, an offline character n-gram vector cosine. It is a reproducible lexical/topical control, not a dense semantic embedding benchmark.
-
-Optional dense backend:
+Generate a revised diagnostic profile using those aggregates and a new vector report:
 
 ```bash
-python scripts/run_embedding_baseline.py --backend sentence-transformers
+python scripts/make_radar_profile.py --perturbation artifacts/recomputed/paper_metric_sensitivity_drops.json --embedding artifacts/embedding_baseline_perturbation.json --layer-profile reports/layer_profile_values.json
 ```
 
-Only use the dense backend when `sentence-transformers` and the selected model files are available. Do not mix dense and offline-vector results without naming the backend in the report.
+The layer profile is historical context and must be supplied. Plotting uses Agg,
+so no graphical desktop or Tk is needed.
 
-## Regenerate the radar profile
+## Expert data and manuscript
 
-Run the vector baseline first, then:
+The 50-row inventory preparation workbook in `annotation/linguist_review_pack/`
+is retained. It must not be confused with the paper's 35-row trace review.
+Four completed submissions are now included as anonymized judgments in
+`annotation/expert_trace_review/ratings.csv`. Recompute all agreement coefficients:
 
 ```bash
-python scripts/make_radar_profile.py
+python -m lemon_factor.analysis.expert_review --ratings annotation/expert_trace_review/ratings.csv --out artifacts/expert-review
 ```
 
-Expected outputs:
+The output directory must be new. Exact agreement is 119/140; ordinal alpha is
+0.873. The historical 0.871 is the interval-rank coefficient. Both are calculated
+explicitly and independently checked against the `krippendorff` implementation.
+The script uses historical LEMON labels from the forms, not a fresh scorer run.
+No replacement or synthetic annotations have been created.
 
-```text
-reports/radar_diagnostic_profile_values.json
-paper/figures/figure_radar_diagnostic_profile.pdf
-paper/figures/figure_radar_diagnostic_profile.png
-```
-
-The radar is a perturbation-sensitivity profile. Values are mean drops under controlled edits. They are not absolute accuracy scores and not a global leaderboard.
-
-## Build the paper
-
-From the repository root:
+Building the manuscript requires an external LaTeX distribution, LNCS class
+and all included figure files:
 
 ```bash
 cd paper
-```
-
-```bash
 latexmk -pdf -interaction=nonstopmode main.tex
 ```
 
-Expected output:
+The revised source was built and checked on 2026-09-22 (14 pages, no overfull boxes).
+The reviewed output is artifacts/paper/lemon-reviewed.pdf. The tracked historical PDF is preserved.
 
-```text
-paper/main.pdf
-```
+## Environment records
 
-The current SPECOM/LNCS draft is expected to remain within 15 pages. After references or labels change, `latexmk` may run `pdflatex` more than once; that is normal.
+`constraints/demo-windows-py311.txt` pins the runtime used for local wheel
+validation. It is deliberately limited to the demo/runtime, not a claim that all
+research experiments or other platforms were reproduced. The CI workflow is configured
+for fresh resolution; remote execution is pending. The deterministic scoring/plot
+environment below has been verified, while acquisition and model dependencies have not.
 
-## Full local check
+## Verified prepared-data replay (2026-09-22)
 
-A compact end-to-end local check is:
-
-```bash
-python scripts/build_expert_validation_pack.py
-```
-
-```bash
-python scripts/run_embedding_baseline.py
-```
+On Windows CPython 3.11, install deterministic scoring/plot dependencies with:
 
 ```bash
-python scripts/make_radar_profile.py
+python -m pip install -c constraints/deterministic-windows-py311.txt ".[plots]"
+python scripts/reproduce_local_research.py --reports reports/scoring_webnlg.json reports/scoring_drugprot.json reports/scoring_bc5cdr.json --out artifacts/research-replay
 ```
 
-```bash
-python -m pytest -q
-```
+The output directory must be new or empty. The script reads the recorded input,
+inventory and sample count from each historical report, recomputes all scores,
+compares every row and summary, and writes an input-hash manifest and ablations.
+A mismatch fails the command. The verified local replay matched all 5,045 rows.
+This does not reproduce upstream acquisition, LLM calls or human annotations.
+The required local input reports and prepared corpora are not in a fresh clone.
 
-```bash
-cd paper
-```
-
-```bash
-latexmk -pdf -interaction=nonstopmode main.tex
-```
-
-## Paper-ready generated files
-
-The paper reads compact generated artifacts from `reports/`, `paper/tables/`, and `paper/figures/`. The most important files are:
-
-```text
-reports/scoring_webnlg.json
-reports/scoring_drugprot.json
-reports/scoring_bc5cdr.json
-reports/paper_metric_sensitivity_drops.json
-reports/paper_ablation_gain.json
-reports/paper_llm_reliability_compact.json
-reports/llm_reliability_summary_3judges.json
-reports/radar_diagnostic_profile_values.json
-reports/embedding_baseline_perturbation.json
-paper/figures/figure_radar_diagnostic_profile.pdf
-paper/tables/table_layer_profile.tex
-paper/tables/table_perturbation_sensitivity_drop.tex
-paper/tables/table_ablation_gain.tex
-paper/tables/table_llm_reliability.tex
-```
-
-## Known warnings
-
-The LaTeX build may report minor LNCS layout warnings, mostly overfull or underfull boxes from compact tables, formulas, and reference entries. These warnings are acceptable only if the rendered PDF has no clipped text, missing figures, broken references, or undefined citations.
-
-A clean submission build should satisfy:
-
-```text
-no undefined citations
-no undefined references
-paper/main.pdf opens correctly
-paper/main.pdf has 15 pages or fewer
-```
-
-## What is not reproduced by the default commands
-
-The default commands do not rerun paid or remote LLM calls. The LLM reliability probe is reported from materialized files. OpenRouter-dependent experiments require configured credentials and should be treated as optional.
-
-The default commands also do not claim expert validation results. The expert workbook is a prepared review pack; validation rates should be reported only after the returned workbook is summarized.
+The source snapshot without ignored files passed on Windows Python 3.11 and 3.12:
+230 passed, 3 historical-artifact skips, 2 documented expected failures.
+The revised manuscript was built and visually checked at the affected tables:
+14 pages, no overfull boxes or undefined references. Reviewed PDF:
+`artifacts/paper/lemon-reviewed.pdf` (local output; the tracked historical PDF is preserved).

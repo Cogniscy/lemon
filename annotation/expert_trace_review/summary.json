@@ -1,0 +1,38 @@
+{
+  "schema_version": "expert-review-v1",
+  "reviewers": 4,
+  "factor_rows": 35,
+  "examples": 8,
+  "judgments": 140,
+  "exact_matches": 119,
+  "exact_agreement": 0.85,
+  "wilson_95": [
+    0.7815562129072435,
+    0.8997494468341674
+  ],
+  "wilson_note": "Descriptive binomial interval; repeated judgments are clustered by factor/example, not independent.",
+  "weighted_exact_agreement": 0.8578125000000003,
+  "pooled_cohen_kappa": 0.7906579322130446,
+  "fleiss_kappa": 0.6889790398918186,
+  "krippendorff_alpha_ordinal": 0.8726722592003561,
+  "krippendorff_alpha_interval_rank": 0.8710995016423151,
+  "label_order": [
+    "contradicted",
+    "lost",
+    "mostly_lost",
+    "partial",
+    "mostly_preserved",
+    "preserved"
+  ],
+  "alpha_definition": "Ordinal uses squared marginal-frequency distances; interval_rank uses squared differences of equally spaced ranks 0..5. Experts only.",
+  "majority_threshold": 3,
+  "majority_rows": 28,
+  "majority_matches": 27,
+  "all_lemon_labels_supported": true,
+  "per_reviewer": {
+    "R1": 32,
+    "R2": 30,
+    "R3": 27,
+    "R4": 30
+  }
+}

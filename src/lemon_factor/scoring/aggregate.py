@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 from typing import Any
 
+from lemon_factor.scoring.report_schema import normalize_scoring_report, PROXY_EVIDENCE
 from lemon_factor.scoring.score_perturbations import render_latex_table, render_markdown_table
 
 
@@ -18,7 +19,7 @@ _DATASET_LABELS = {
 
 
 def aggregate_reports(paths: list[str | Path]) -> dict[str, Any]:
-    reports = [json.loads(Path(path).read_text(encoding="utf-8")) for path in paths]
+    reports = [normalize_scoring_report(json.loads(Path(path).read_text(encoding="utf-8"))) for path in paths]
     summary: list[dict[str, Any]] = []
     for report in reports:
         dataset = report.get("dataset", "unknown")
@@ -28,6 +29,8 @@ def aggregate_reports(paths: list[str | Path]) -> dict[str, Any]:
             summary.append(merged)
     return {
         "status": "passed",
+        "schema_version": "perturbation-aggregate-v2",
+        "proxy_evidence": PROXY_EVIDENCE,
         "report_count": len(reports),
         "datasets": [report.get("dataset", "unknown") for report in reports],
         "summary": summary,
@@ -45,7 +48,7 @@ def render_combined_latex(summary: list[dict[str, Any]], *, caption: str, label:
         r"\scriptsize",
         r"\begin{tabular}{llrrrrrr}",
         r"\toprule",
-        r"Dataset & Perturbation & Entity & Label & Triple & MINE-style & LEMON-label & LEMON-full \\",
+        r"Dataset & Perturbation & Entity & Label & Triple & MINE-style & LEMON-label & Damage proxy \\",
         r"\midrule",
     ]
     variant_labels = {
@@ -63,7 +66,7 @@ def render_combined_latex(summary: list[dict[str, Any]], *, caption: str, label:
             f"{dataset} & {perturbation} & "
             f"{metrics['entity_recall']:.4f} & {metrics['label_match']:.4f} & "
             f"{metrics['triple_match']:.4f} & {metrics['mine_style']:.4f} & "
-            f"{metrics['lemon_label_only']:.4f} & {metrics['lemon_full']:.4f} \\\\".replace("\\\\\\", "\\\\")
+            f"{metrics['lemon_label_only']:.4f} & {metrics['factor_damage_proxy']:.4f} \\\\".replace("\\\\\\", "\\\\")
         )
     lines.extend([r"\bottomrule", r"\end{tabular}", r"\end{table}", ""])
     return "\n".join(lines)

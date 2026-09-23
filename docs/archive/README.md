@@ -1,0 +1,33 @@
+# Historical development notes
+
+These files describe earlier stages; they are not current setup instructions.
+See [current reproducibility guide](../REPRODUCIBILITY.md) and [architecture](../ARCHITECTURE.md).
+
+- [lem-01-scope-claims-freeze.md](lem-01-scope-claims-freeze.md)
+- [lem-02-biomedical-pipeline-fix.md](lem-02-biomedical-pipeline-fix.md)
+- [lem-03-factor-inventories.md](lem-03-factor-inventories.md)
+- [lem-04-perturbations.md](lem-04-perturbations.md)
+- [lem-05-baseline-scoring.md](lem-05-baseline-scoring.md)
+- [lem-06-final-results.md](lem-06-final-results.md)
+- [lemon-01.md](lemon-01.md)
+- [lemon-02.1.md](lemon-02.1.md)
+- [lemon-02.md](lemon-02.md)
+- [lemon-03.md](lemon-03.md)
+- [lemon-04.md](lemon-04.md)
+- [lemon-05.md](lemon-05.md)
+- [lemon-06.1.md](lemon-06.1.md)
+- [lemon-06.2.md](lemon-06.2.md)
+- [lemon-06.md](lemon-06.md)
+- [lemon-07.md](lemon-07.md)
+- [lemon-08.md](lemon-08.md)
+- [lemon-09.md](lemon-09.md)
+- [lemon-10.md](lemon-10.md)
+- [lemon-11.md](lemon-11.md)
+- [lemon-12.1.md](lemon-12.1.md)
+- [lemon-12.2.md](lemon-12.2.md)
+- [lemon-12.md](lemon-12.md)
+- [lemon-13.md](lemon-13.md)
+- [lemon-14.md](lemon-14.md)
+- [lemon-15.1.1.md](lemon-15.1.1.md)
+- [lemon-15.1.2.md](lemon-15.1.2.md)
+- [lemon-15.1.md](lemon-15.1.md)

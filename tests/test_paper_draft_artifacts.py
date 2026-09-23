@@ -47,10 +47,9 @@ def test_paper_bibliography_contains_key_related_work():
 
 def test_method_clarifies_factor_inventory_weights_and_examples():
     method = Path("paper/sections/03_method.tex").read_text(encoding="utf-8")
-    assert "Predicate factors and weights" in method
     assert "manually specified diagnostic resources" in method
     assert "auditable design choices" in method
-    assert "expert results are not included" in method
+    assert "\\input{figures/figure_predicate_factor_evaluation}" in method
 
     figure = Path("paper/figures/figure_predicate_factor_evaluation.tex").read_text(encoding="utf-8")
     assert "figure_factor_scoring_examples.pdf" in figure

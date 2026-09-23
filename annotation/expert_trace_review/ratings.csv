@@ -1,0 +1,141 @@
+reviewer_id,example_id,row_id,domain,error_type,triple,text,factor,role,weight,lemon_trace,expert_trace
+R1,T01,T01_F01,DrugProt,polarity error,Aspirin | inhibits | COX-1,Aspirin activates COX-1.,chemical actor,subject_domain,0.2,preserved,preserved
+R1,T01,T01_F02,DrugProt,polarity error,Aspirin | inhibits | COX-1,Aspirin activates COX-1.,protein target,object_domain,0.2,preserved,preserved
+R1,T01,T01_F03,DrugProt,polarity error,Aspirin | inhibits | COX-1,Aspirin activates COX-1.,regulation relation,predicate_meaning,0.15,partial,partial
+R1,T01,T01_F04,DrugProt,polarity error,Aspirin | inhibits | COX-1,Aspirin activates COX-1.,negative polarity / inhibition,polarity,0.3,contradicted,contradicted
+R1,T01,T01_F05,DrugProt,polarity error,Aspirin | inhibits | COX-1,Aspirin activates COX-1.,chemical → protein direction,direction,0.15,preserved,preserved
+R1,T02,T02_F01,WebNLG,relation-class loss,"Alan_Bean | birthPlace | Wheeler,_Texas","Alan Bean lived in Wheeler, Texas.",person subject,subject_domain,0.25,preserved,preserved
+R1,T02,T02_F02,WebNLG,relation-class loss,"Alan_Bean | birthPlace | Wheeler,_Texas","Alan Bean lived in Wheeler, Texas.",place object,object_domain,0.25,preserved,preserved
+R1,T02,T02_F03,WebNLG,relation-class loss,"Alan_Bean | birthPlace | Wheeler,_Texas","Alan Bean lived in Wheeler, Texas.",birth relation,predicate_meaning,0.35,lost,mostly_lost
+R1,T02,T02_F04,WebNLG,relation-class loss,"Alan_Bean | birthPlace | Wheeler,_Texas","Alan Bean lived in Wheeler, Texas.",person → place direction,direction,0.15,preserved,preserved
+R1,T03,T03_F01,DrugProt,role/direction swap,Aspirin | inhibits | COX-1,COX-1 inhibits Aspirin.,chemical actor,subject_domain,0.2,contradicted,contradicted
+R1,T03,T03_F02,DrugProt,role/direction swap,Aspirin | inhibits | COX-1,COX-1 inhibits Aspirin.,protein target,object_domain,0.2,contradicted,contradicted
+R1,T03,T03_F03,DrugProt,role/direction swap,Aspirin | inhibits | COX-1,COX-1 inhibits Aspirin.,inhibition relation,predicate_meaning,0.3,preserved,preserved
+R1,T03,T03_F04,DrugProt,role/direction swap,Aspirin | inhibits | COX-1,COX-1 inhibits Aspirin.,chemical → protein direction,direction,0.3,contradicted,contradicted
+R1,T04,T04_F01,WebNLG,direction error,Aarhus_Airport | locatedIn | Tirstrup,Tirstrup is located in Aarhus Airport.,facility subject,subject_domain,0.2,contradicted,contradicted
+R1,T04,T04_F02,WebNLG,direction error,Aarhus_Airport | locatedIn | Tirstrup,Tirstrup is located in Aarhus Airport.,location object,object_domain,0.2,contradicted,contradicted
+R1,T04,T04_F03,WebNLG,direction error,Aarhus_Airport | locatedIn | Tirstrup,Tirstrup is located in Aarhus Airport.,spatial location relation,predicate_meaning,0.35,preserved,preserved
+R1,T04,T04_F04,WebNLG,direction error,Aarhus_Airport | locatedIn | Tirstrup,Tirstrup is located in Aarhus Airport.,facility → location direction,direction,0.25,contradicted,contradicted
+R1,T05,T05_F01,DrugProt,relation blur,Drug_X | inhibits | Protein_Y,Drug X affects Protein Y.,chemical actor,subject_domain,0.2,preserved,preserved
+R1,T05,T05_F02,DrugProt,relation blur,Drug_X | inhibits | Protein_Y,Drug X affects Protein Y.,protein target,object_domain,0.2,preserved,preserved
+R1,T05,T05_F03,DrugProt,relation blur,Drug_X | inhibits | Protein_Y,Drug X affects Protein Y.,general interaction,predicate_meaning,0.2,partial,mostly_lost
+R1,T05,T05_F04,DrugProt,relation blur,Drug_X | inhibits | Protein_Y,Drug X affects Protein Y.,specific inhibition,polarity,0.25,lost,lost
+R1,T05,T05_F05,DrugProt,relation blur,Drug_X | inhibits | Protein_Y,Drug X affects Protein Y.,chemical → protein direction,direction,0.15,mostly_preserved,mostly_preserved
+R1,T06,T06_F01,BC5CDR,causality contradiction,Chemical_X | chemical_induced_disease | Disease_Y,Chemical X was not associated with Disease Y.,chemical exposure,subject_domain,0.2,preserved,preserved
+R1,T06,T06_F02,BC5CDR,causality contradiction,Chemical_X | chemical_induced_disease | Disease_Y,Chemical X was not associated with Disease Y.,disease outcome,object_domain,0.2,preserved,preserved
+R1,T06,T06_F03,BC5CDR,causality contradiction,Chemical_X | chemical_induced_disease | Disease_Y,Chemical X was not associated with Disease Y.,causal association,predicate_meaning,0.3,contradicted,contradicted
+R1,T06,T06_F04,BC5CDR,causality contradiction,Chemical_X | chemical_induced_disease | Disease_Y,Chemical X was not associated with Disease Y.,chemical → disease direction,direction,0.15,mostly_preserved,mostly_preserved
+R1,T06,T06_F05,BC5CDR,causality contradiction,Chemical_X | chemical_induced_disease | Disease_Y,Chemical X was not associated with Disease Y.,document-level evidence,evidence,0.15,lost,lost
+R1,T07,T07_F01,WebNLG,relation missing,Apple_Inc. | foundedBy | Steve_Jobs,Steve Jobs worked at Apple Inc.,organization subject,subject_domain,0.2,preserved,preserved
+R1,T07,T07_F02,WebNLG,relation missing,Apple_Inc. | foundedBy | Steve_Jobs,Steve Jobs worked at Apple Inc.,person object,object_domain,0.2,preserved,preserved
+R1,T07,T07_F03,WebNLG,relation missing,Apple_Inc. | foundedBy | Steve_Jobs,Steve Jobs worked at Apple Inc.,founding relation,predicate_meaning,0.45,lost,mostly_lost
+R1,T07,T07_F04,WebNLG,relation missing,Apple_Inc. | foundedBy | Steve_Jobs,Steve Jobs worked at Apple Inc.,organization → founder direction,direction,0.15,mostly_lost,mostly_lost
+R1,T08,T08_F01,Biomedical literal,literal/evidence loss,Drug_A | dosage | 50 mg,Drug A was administered to the patient.,drug entity,subject_domain,0.2,preserved,preserved
+R1,T08,T08_F02,Biomedical literal,literal/evidence loss,Drug_A | dosage | 50 mg,Drug A was administered to the patient.,dosage literal 50 mg,literal_value,0.4,lost,lost
+R1,T08,T08_F03,Biomedical literal,literal/evidence loss,Drug_A | dosage | 50 mg,Drug A was administered to the patient.,administration event,predicate_meaning,0.25,mostly_preserved,mostly_preserved
+R1,T08,T08_F04,Biomedical literal,literal/evidence loss,Drug_A | dosage | 50 mg,Drug A was administered to the patient.,measurement evidence,evidence,0.15,lost,lost
+R2,T01,T01_F01,DrugProt,polarity error,Aspirin | inhibits | COX-1,Aspirin activates COX-1.,chemical actor,subject_domain,0.2,preserved,preserved
+R2,T01,T01_F02,DrugProt,polarity error,Aspirin | inhibits | COX-1,Aspirin activates COX-1.,protein target,object_domain,0.2,preserved,preserved
+R2,T01,T01_F03,DrugProt,polarity error,Aspirin | inhibits | COX-1,Aspirin activates COX-1.,regulation relation,predicate_meaning,0.15,partial,partial
+R2,T01,T01_F04,DrugProt,polarity error,Aspirin | inhibits | COX-1,Aspirin activates COX-1.,negative polarity / inhibition,polarity,0.3,contradicted,contradicted
+R2,T01,T01_F05,DrugProt,polarity error,Aspirin | inhibits | COX-1,Aspirin activates COX-1.,chemical → protein direction,direction,0.15,preserved,preserved
+R2,T02,T02_F01,WebNLG,relation-class loss,"Alan_Bean | birthPlace | Wheeler,_Texas","Alan Bean lived in Wheeler, Texas.",person subject,subject_domain,0.25,preserved,preserved
+R2,T02,T02_F02,WebNLG,relation-class loss,"Alan_Bean | birthPlace | Wheeler,_Texas","Alan Bean lived in Wheeler, Texas.",place object,object_domain,0.25,preserved,preserved
+R2,T02,T02_F03,WebNLG,relation-class loss,"Alan_Bean | birthPlace | Wheeler,_Texas","Alan Bean lived in Wheeler, Texas.",birth relation,predicate_meaning,0.35,lost,lost
+R2,T02,T02_F04,WebNLG,relation-class loss,"Alan_Bean | birthPlace | Wheeler,_Texas","Alan Bean lived in Wheeler, Texas.",person → place direction,direction,0.15,preserved,preserved
+R2,T03,T03_F01,DrugProt,role/direction swap,Aspirin | inhibits | COX-1,COX-1 inhibits Aspirin.,chemical actor,subject_domain,0.2,contradicted,contradicted
+R2,T03,T03_F02,DrugProt,role/direction swap,Aspirin | inhibits | COX-1,COX-1 inhibits Aspirin.,protein target,object_domain,0.2,contradicted,contradicted
+R2,T03,T03_F03,DrugProt,role/direction swap,Aspirin | inhibits | COX-1,COX-1 inhibits Aspirin.,inhibition relation,predicate_meaning,0.3,preserved,preserved
+R2,T03,T03_F04,DrugProt,role/direction swap,Aspirin | inhibits | COX-1,COX-1 inhibits Aspirin.,chemical → protein direction,direction,0.3,contradicted,contradicted
+R2,T04,T04_F01,WebNLG,direction error,Aarhus_Airport | locatedIn | Tirstrup,Tirstrup is located in Aarhus Airport.,facility subject,subject_domain,0.2,contradicted,contradicted
+R2,T04,T04_F02,WebNLG,direction error,Aarhus_Airport | locatedIn | Tirstrup,Tirstrup is located in Aarhus Airport.,location object,object_domain,0.2,contradicted,contradicted
+R2,T04,T04_F03,WebNLG,direction error,Aarhus_Airport | locatedIn | Tirstrup,Tirstrup is located in Aarhus Airport.,spatial location relation,predicate_meaning,0.35,preserved,preserved
+R2,T04,T04_F04,WebNLG,direction error,Aarhus_Airport | locatedIn | Tirstrup,Tirstrup is located in Aarhus Airport.,facility → location direction,direction,0.25,contradicted,contradicted
+R2,T05,T05_F01,DrugProt,relation blur,Drug_X | inhibits | Protein_Y,Drug X affects Protein Y.,chemical actor,subject_domain,0.2,preserved,preserved
+R2,T05,T05_F02,DrugProt,relation blur,Drug_X | inhibits | Protein_Y,Drug X affects Protein Y.,protein target,object_domain,0.2,preserved,preserved
+R2,T05,T05_F03,DrugProt,relation blur,Drug_X | inhibits | Protein_Y,Drug X affects Protein Y.,general interaction,predicate_meaning,0.2,partial,partial
+R2,T05,T05_F04,DrugProt,relation blur,Drug_X | inhibits | Protein_Y,Drug X affects Protein Y.,specific inhibition,polarity,0.25,lost,lost
+R2,T05,T05_F05,DrugProt,relation blur,Drug_X | inhibits | Protein_Y,Drug X affects Protein Y.,chemical → protein direction,direction,0.15,mostly_preserved,preserved
+R2,T06,T06_F01,BC5CDR,causality contradiction,Chemical_X | chemical_induced_disease | Disease_Y,Chemical X was not associated with Disease Y.,chemical exposure,subject_domain,0.2,preserved,preserved
+R2,T06,T06_F02,BC5CDR,causality contradiction,Chemical_X | chemical_induced_disease | Disease_Y,Chemical X was not associated with Disease Y.,disease outcome,object_domain,0.2,preserved,preserved
+R2,T06,T06_F03,BC5CDR,causality contradiction,Chemical_X | chemical_induced_disease | Disease_Y,Chemical X was not associated with Disease Y.,causal association,predicate_meaning,0.3,contradicted,contradicted
+R2,T06,T06_F04,BC5CDR,causality contradiction,Chemical_X | chemical_induced_disease | Disease_Y,Chemical X was not associated with Disease Y.,chemical → disease direction,direction,0.15,mostly_preserved,mostly_preserved
+R2,T06,T06_F05,BC5CDR,causality contradiction,Chemical_X | chemical_induced_disease | Disease_Y,Chemical X was not associated with Disease Y.,document-level evidence,evidence,0.15,lost,lost
+R2,T07,T07_F01,WebNLG,relation missing,Apple_Inc. | foundedBy | Steve_Jobs,Steve Jobs worked at Apple Inc.,organization subject,subject_domain,0.2,preserved,contradicted
+R2,T07,T07_F02,WebNLG,relation missing,Apple_Inc. | foundedBy | Steve_Jobs,Steve Jobs worked at Apple Inc.,person object,object_domain,0.2,preserved,contradicted
+R2,T07,T07_F03,WebNLG,relation missing,Apple_Inc. | foundedBy | Steve_Jobs,Steve Jobs worked at Apple Inc.,founding relation,predicate_meaning,0.45,lost,lost
+R2,T07,T07_F04,WebNLG,relation missing,Apple_Inc. | foundedBy | Steve_Jobs,Steve Jobs worked at Apple Inc.,organization → founder direction,direction,0.15,mostly_lost,contradicted
+R2,T08,T08_F01,Biomedical literal,literal/evidence loss,Drug_A | dosage | 50 mg,Drug A was administered to the patient.,drug entity,subject_domain,0.2,preserved,preserved
+R2,T08,T08_F02,Biomedical literal,literal/evidence loss,Drug_A | dosage | 50 mg,Drug A was administered to the patient.,dosage literal 50 mg,literal_value,0.4,lost,lost
+R2,T08,T08_F03,Biomedical literal,literal/evidence loss,Drug_A | dosage | 50 mg,Drug A was administered to the patient.,administration event,predicate_meaning,0.25,mostly_preserved,lost
+R2,T08,T08_F04,Biomedical literal,literal/evidence loss,Drug_A | dosage | 50 mg,Drug A was administered to the patient.,measurement evidence,evidence,0.15,lost,lost
+R3,T01,T01_F01,DrugProt,polarity error,Aspirin | inhibits | COX-1,Aspirin activates COX-1.,chemical actor,subject_domain,0.2,preserved,preserved
+R3,T01,T01_F02,DrugProt,polarity error,Aspirin | inhibits | COX-1,Aspirin activates COX-1.,protein target,object_domain,0.2,preserved,preserved
+R3,T01,T01_F03,DrugProt,polarity error,Aspirin | inhibits | COX-1,Aspirin activates COX-1.,regulation relation,predicate_meaning,0.15,partial,contradicted
+R3,T01,T01_F04,DrugProt,polarity error,Aspirin | inhibits | COX-1,Aspirin activates COX-1.,negative polarity / inhibition,polarity,0.3,contradicted,contradicted
+R3,T01,T01_F05,DrugProt,polarity error,Aspirin | inhibits | COX-1,Aspirin activates COX-1.,chemical → protein direction,direction,0.15,preserved,preserved
+R3,T02,T02_F01,WebNLG,relation-class loss,"Alan_Bean | birthPlace | Wheeler,_Texas","Alan Bean lived in Wheeler, Texas.",person subject,subject_domain,0.25,preserved,preserved
+R3,T02,T02_F02,WebNLG,relation-class loss,"Alan_Bean | birthPlace | Wheeler,_Texas","Alan Bean lived in Wheeler, Texas.",place object,object_domain,0.25,preserved,preserved
+R3,T02,T02_F03,WebNLG,relation-class loss,"Alan_Bean | birthPlace | Wheeler,_Texas","Alan Bean lived in Wheeler, Texas.",birth relation,predicate_meaning,0.35,lost,lost
+R3,T02,T02_F04,WebNLG,relation-class loss,"Alan_Bean | birthPlace | Wheeler,_Texas","Alan Bean lived in Wheeler, Texas.",person → place direction,direction,0.15,preserved,preserved
+R3,T03,T03_F01,DrugProt,role/direction swap,Aspirin | inhibits | COX-1,COX-1 inhibits Aspirin.,chemical actor,subject_domain,0.2,contradicted,contradicted
+R3,T03,T03_F02,DrugProt,role/direction swap,Aspirin | inhibits | COX-1,COX-1 inhibits Aspirin.,protein target,object_domain,0.2,contradicted,contradicted
+R3,T03,T03_F03,DrugProt,role/direction swap,Aspirin | inhibits | COX-1,COX-1 inhibits Aspirin.,inhibition relation,predicate_meaning,0.3,preserved,preserved
+R3,T03,T03_F04,DrugProt,role/direction swap,Aspirin | inhibits | COX-1,COX-1 inhibits Aspirin.,chemical → protein direction,direction,0.3,contradicted,contradicted
+R3,T04,T04_F01,WebNLG,direction error,Aarhus_Airport | locatedIn | Tirstrup,Tirstrup is located in Aarhus Airport.,facility subject,subject_domain,0.2,contradicted,contradicted
+R3,T04,T04_F02,WebNLG,direction error,Aarhus_Airport | locatedIn | Tirstrup,Tirstrup is located in Aarhus Airport.,location object,object_domain,0.2,contradicted,contradicted
+R3,T04,T04_F03,WebNLG,direction error,Aarhus_Airport | locatedIn | Tirstrup,Tirstrup is located in Aarhus Airport.,spatial location relation,predicate_meaning,0.35,preserved,preserved
+R3,T04,T04_F04,WebNLG,direction error,Aarhus_Airport | locatedIn | Tirstrup,Tirstrup is located in Aarhus Airport.,facility → location direction,direction,0.25,contradicted,contradicted
+R3,T05,T05_F01,DrugProt,relation blur,Drug_X | inhibits | Protein_Y,Drug X affects Protein Y.,chemical actor,subject_domain,0.2,preserved,preserved
+R3,T05,T05_F02,DrugProt,relation blur,Drug_X | inhibits | Protein_Y,Drug X affects Protein Y.,protein target,object_domain,0.2,preserved,preserved
+R3,T05,T05_F03,DrugProt,relation blur,Drug_X | inhibits | Protein_Y,Drug X affects Protein Y.,general interaction,predicate_meaning,0.2,partial,mostly_lost
+R3,T05,T05_F04,DrugProt,relation blur,Drug_X | inhibits | Protein_Y,Drug X affects Protein Y.,specific inhibition,polarity,0.25,lost,mostly_lost
+R3,T05,T05_F05,DrugProt,relation blur,Drug_X | inhibits | Protein_Y,Drug X affects Protein Y.,chemical → protein direction,direction,0.15,mostly_preserved,preserved
+R3,T06,T06_F01,BC5CDR,causality contradiction,Chemical_X | chemical_induced_disease | Disease_Y,Chemical X was not associated with Disease Y.,chemical exposure,subject_domain,0.2,preserved,preserved
+R3,T06,T06_F02,BC5CDR,causality contradiction,Chemical_X | chemical_induced_disease | Disease_Y,Chemical X was not associated with Disease Y.,disease outcome,object_domain,0.2,preserved,preserved
+R3,T06,T06_F03,BC5CDR,causality contradiction,Chemical_X | chemical_induced_disease | Disease_Y,Chemical X was not associated with Disease Y.,causal association,predicate_meaning,0.3,contradicted,contradicted
+R3,T06,T06_F04,BC5CDR,causality contradiction,Chemical_X | chemical_induced_disease | Disease_Y,Chemical X was not associated with Disease Y.,chemical → disease direction,direction,0.15,mostly_preserved,preserved
+R3,T06,T06_F05,BC5CDR,causality contradiction,Chemical_X | chemical_induced_disease | Disease_Y,Chemical X was not associated with Disease Y.,document-level evidence,evidence,0.15,lost,contradicted
+R3,T07,T07_F01,WebNLG,relation missing,Apple_Inc. | foundedBy | Steve_Jobs,Steve Jobs worked at Apple Inc.,organization subject,subject_domain,0.2,preserved,preserved
+R3,T07,T07_F02,WebNLG,relation missing,Apple_Inc. | foundedBy | Steve_Jobs,Steve Jobs worked at Apple Inc.,person object,object_domain,0.2,preserved,preserved
+R3,T07,T07_F03,WebNLG,relation missing,Apple_Inc. | foundedBy | Steve_Jobs,Steve Jobs worked at Apple Inc.,founding relation,predicate_meaning,0.45,lost,lost
+R3,T07,T07_F04,WebNLG,relation missing,Apple_Inc. | foundedBy | Steve_Jobs,Steve Jobs worked at Apple Inc.,organization → founder direction,direction,0.15,mostly_lost,lost
+R3,T08,T08_F01,Biomedical literal,literal/evidence loss,Drug_A | dosage | 50 mg,Drug A was administered to the patient.,drug entity,subject_domain,0.2,preserved,preserved
+R3,T08,T08_F02,Biomedical literal,literal/evidence loss,Drug_A | dosage | 50 mg,Drug A was administered to the patient.,dosage literal 50 mg,literal_value,0.4,lost,lost
+R3,T08,T08_F03,Biomedical literal,literal/evidence loss,Drug_A | dosage | 50 mg,Drug A was administered to the patient.,administration event,predicate_meaning,0.25,mostly_preserved,lost
+R3,T08,T08_F04,Biomedical literal,literal/evidence loss,Drug_A | dosage | 50 mg,Drug A was administered to the patient.,measurement evidence,evidence,0.15,lost,lost
+R4,T01,T01_F01,DrugProt,polarity error,Aspirin | inhibits | COX-1,Aspirin activates COX-1.,chemical actor,subject_domain,0.2,preserved,preserved
+R4,T01,T01_F02,DrugProt,polarity error,Aspirin | inhibits | COX-1,Aspirin activates COX-1.,protein target,object_domain,0.2,preserved,preserved
+R4,T01,T01_F03,DrugProt,polarity error,Aspirin | inhibits | COX-1,Aspirin activates COX-1.,regulation relation,predicate_meaning,0.15,partial,mostly_preserved
+R4,T01,T01_F04,DrugProt,polarity error,Aspirin | inhibits | COX-1,Aspirin activates COX-1.,negative polarity / inhibition,polarity,0.3,contradicted,contradicted
+R4,T01,T01_F05,DrugProt,polarity error,Aspirin | inhibits | COX-1,Aspirin activates COX-1.,chemical → protein direction,direction,0.15,preserved,preserved
+R4,T02,T02_F01,WebNLG,relation-class loss,"Alan_Bean | birthPlace | Wheeler,_Texas","Alan Bean lived in Wheeler, Texas.",person subject,subject_domain,0.25,preserved,preserved
+R4,T02,T02_F02,WebNLG,relation-class loss,"Alan_Bean | birthPlace | Wheeler,_Texas","Alan Bean lived in Wheeler, Texas.",place object,object_domain,0.25,preserved,preserved
+R4,T02,T02_F03,WebNLG,relation-class loss,"Alan_Bean | birthPlace | Wheeler,_Texas","Alan Bean lived in Wheeler, Texas.",birth relation,predicate_meaning,0.35,lost,lost
+R4,T02,T02_F04,WebNLG,relation-class loss,"Alan_Bean | birthPlace | Wheeler,_Texas","Alan Bean lived in Wheeler, Texas.",person → place direction,direction,0.15,preserved,preserved
+R4,T03,T03_F01,DrugProt,role/direction swap,Aspirin | inhibits | COX-1,COX-1 inhibits Aspirin.,chemical actor,subject_domain,0.2,contradicted,contradicted
+R4,T03,T03_F02,DrugProt,role/direction swap,Aspirin | inhibits | COX-1,COX-1 inhibits Aspirin.,protein target,object_domain,0.2,contradicted,contradicted
+R4,T03,T03_F03,DrugProt,role/direction swap,Aspirin | inhibits | COX-1,COX-1 inhibits Aspirin.,inhibition relation,predicate_meaning,0.3,preserved,preserved
+R4,T03,T03_F04,DrugProt,role/direction swap,Aspirin | inhibits | COX-1,COX-1 inhibits Aspirin.,chemical → protein direction,direction,0.3,contradicted,contradicted
+R4,T04,T04_F01,WebNLG,direction error,Aarhus_Airport | locatedIn | Tirstrup,Tirstrup is located in Aarhus Airport.,facility subject,subject_domain,0.2,contradicted,contradicted
+R4,T04,T04_F02,WebNLG,direction error,Aarhus_Airport | locatedIn | Tirstrup,Tirstrup is located in Aarhus Airport.,location object,object_domain,0.2,contradicted,contradicted
+R4,T04,T04_F03,WebNLG,direction error,Aarhus_Airport | locatedIn | Tirstrup,Tirstrup is located in Aarhus Airport.,spatial location relation,predicate_meaning,0.35,preserved,preserved
+R4,T04,T04_F04,WebNLG,direction error,Aarhus_Airport | locatedIn | Tirstrup,Tirstrup is located in Aarhus Airport.,facility → location direction,direction,0.25,contradicted,contradicted
+R4,T05,T05_F01,DrugProt,relation blur,Drug_X | inhibits | Protein_Y,Drug X affects Protein Y.,chemical actor,subject_domain,0.2,preserved,preserved
+R4,T05,T05_F02,DrugProt,relation blur,Drug_X | inhibits | Protein_Y,Drug X affects Protein Y.,protein target,object_domain,0.2,preserved,preserved
+R4,T05,T05_F03,DrugProt,relation blur,Drug_X | inhibits | Protein_Y,Drug X affects Protein Y.,general interaction,predicate_meaning,0.2,partial,partial
+R4,T05,T05_F04,DrugProt,relation blur,Drug_X | inhibits | Protein_Y,Drug X affects Protein Y.,specific inhibition,polarity,0.25,lost,mostly_lost
+R4,T05,T05_F05,DrugProt,relation blur,Drug_X | inhibits | Protein_Y,Drug X affects Protein Y.,chemical → protein direction,direction,0.15,mostly_preserved,preserved
+R4,T06,T06_F01,BC5CDR,causality contradiction,Chemical_X | chemical_induced_disease | Disease_Y,Chemical X was not associated with Disease Y.,chemical exposure,subject_domain,0.2,preserved,preserved
+R4,T06,T06_F02,BC5CDR,causality contradiction,Chemical_X | chemical_induced_disease | Disease_Y,Chemical X was not associated with Disease Y.,disease outcome,object_domain,0.2,preserved,preserved
+R4,T06,T06_F03,BC5CDR,causality contradiction,Chemical_X | chemical_induced_disease | Disease_Y,Chemical X was not associated with Disease Y.,causal association,predicate_meaning,0.3,contradicted,contradicted
+R4,T06,T06_F04,BC5CDR,causality contradiction,Chemical_X | chemical_induced_disease | Disease_Y,Chemical X was not associated with Disease Y.,chemical → disease direction,direction,0.15,mostly_preserved,partial
+R4,T06,T06_F05,BC5CDR,causality contradiction,Chemical_X | chemical_induced_disease | Disease_Y,Chemical X was not associated with Disease Y.,document-level evidence,evidence,0.15,lost,lost
+R4,T07,T07_F01,WebNLG,relation missing,Apple_Inc. | foundedBy | Steve_Jobs,Steve Jobs worked at Apple Inc.,organization subject,subject_domain,0.2,preserved,preserved
+R4,T07,T07_F02,WebNLG,relation missing,Apple_Inc. | foundedBy | Steve_Jobs,Steve Jobs worked at Apple Inc.,person object,object_domain,0.2,preserved,preserved
+R4,T07,T07_F03,WebNLG,relation missing,Apple_Inc. | foundedBy | Steve_Jobs,Steve Jobs worked at Apple Inc.,founding relation,predicate_meaning,0.45,lost,mostly_lost
+R4,T07,T07_F04,WebNLG,relation missing,Apple_Inc. | foundedBy | Steve_Jobs,Steve Jobs worked at Apple Inc.,organization → founder direction,direction,0.15,mostly_lost,mostly_lost
+R4,T08,T08_F01,Biomedical literal,literal/evidence loss,Drug_A | dosage | 50 mg,Drug A was administered to the patient.,drug entity,subject_domain,0.2,preserved,preserved
+R4,T08,T08_F02,Biomedical literal,literal/evidence loss,Drug_A | dosage | 50 mg,Drug A was administered to the patient.,dosage literal 50 mg,literal_value,0.4,lost,lost
+R4,T08,T08_F03,Biomedical literal,literal/evidence loss,Drug_A | dosage | 50 mg,Drug A was administered to the patient.,administration event,predicate_meaning,0.25,mostly_preserved,mostly_preserved
+R4,T08,T08_F04,Biomedical literal,literal/evidence loss,Drug_A | dosage | 50 mg,Drug A was administered to the patient.,measurement evidence,evidence,0.15,lost,lost

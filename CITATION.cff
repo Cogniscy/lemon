@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "Please cite the LEMON software and consult paper/main.tex for the working manuscript."
+type: software
+title: "LEMON: Factor-Level Semantic Alignment for Graph–Text Pairs"
+authors:
+  - family-names: Tomilov
+    given-names: Anton
+  - family-names: Gineva
+    given-names: Daria
+  - family-names: Tirskikh
+    given-names: Danil
+  - family-names: Koroteeva
+    given-names: Olesia
+  - family-names: Matveev
+    given-names: Yuri
+repository-code: "https://github.com/Cogniscy/lemon"
+version: "0.1.0"
+abstract: "Research prototype for factor-level graph–text diagnostics. Supported by the Russian Science Foundation, project 26-11-00193. The manuscript remains a draft."
+license: Apache-2.0

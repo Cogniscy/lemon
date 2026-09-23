@@ -110,8 +110,8 @@ def test_score_record_penalizes_factor_damage(tmp_path: Path) -> None:
     assert scores["entity_recall"] == 1.0
     assert scores["label_match"] == 0.0
     assert scores["triple_match"] == 0.0
-    assert 0.0 < scores["lemon_full"] < 1.0
-    assert scores["lemon_full"] < scores["entity_recall"]
+    assert 0.0 < scores["factor_damage_proxy"] < 1.0
+    assert scores["factor_damage_proxy"] < scores["entity_recall"]
 
 
 def test_score_file_and_table_render(tmp_path: Path) -> None:
@@ -121,7 +121,7 @@ def test_score_file_and_table_render(tmp_path: Path) -> None:
     report = score_file(input_path, inv, dataset="drugprot")
     assert report["status"] == "passed"
     assert report["record_count"] == 1
-    assert report["summary"][0]["metrics"]["lemon_full"] < 1.0
+    assert report["summary"][0]["metrics"]["factor_damage_proxy"] < 1.0
     table = render_latex_table(report["summary"], caption="Test", label="tab:test")
     assert "\\caption{Test}" in table
-    assert "LEMON-full" in table
+    assert "Damage proxy" in table

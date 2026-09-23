@@ -1,0 +1,42 @@
+{
+  "schema_version": "expert-import-v1",
+  "sources": [
+    {
+      "sha256": "ca3c22b9104ff004e124f0f75f2ad93d881ee9e7f8f349a810e71357a019e150",
+      "rows": 35,
+      "escaped_record_separators": true,
+      "status": "included",
+      "reviewer_id": "R1"
+    },
+    {
+      "sha256": "cdef848814008d1d40f7cd7b3aa0514ee45e95caa8f4b786f0ca0f03fcd7ef15",
+      "rows": 35,
+      "escaped_record_separators": true,
+      "status": "included",
+      "reviewer_id": "R2"
+    },
+    {
+      "sha256": "a500fa6b3df423d4bd193e539e76be417ad8b0cbc5cd2d033af214d538cf3431",
+      "rows": 35,
+      "escaped_record_separators": true,
+      "status": "included",
+      "reviewer_id": "R3"
+    },
+    {
+      "sha256": "402485b9765da8c66313e705c4cc5e2f2ed9de87b0af11d0464fc05c4fa8c1ad",
+      "rows": 35,
+      "escaped_record_separators": true,
+      "status": "included",
+      "reviewer_id": "R4"
+    },
+    {
+      "sha256": "aab90ba5e5bac0afe8c92743f9de382f9e3ffb0c250f2c0be9dbf270cc9090bf",
+      "rows": 35,
+      "escaped_record_separators": true,
+      "status": "excluded_empty_template"
+    }
+  ],
+  "anonymization": "Reviewer IDs replaced; source IDs, filenames, comments, confidence and severity omitted.",
+  "normalization": "UTF-8 BOM accepted; literal record separators repaired outside quotes only; Russian labels mapped explicitly.",
+  "normalized_sha256": "f3b0d4ee2e79b196baa64865b0eaa72eba2d35b83a233c04edb5fd9879ecb94f"
+}

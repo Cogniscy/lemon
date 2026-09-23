@@ -1,169 +1,100 @@
-# LEMON-Factor
+# LEMON
 
-LEMON-Factor is a SPECOM-oriented research prototype for **factor-level graph-text semantic fidelity**. It evaluates whether a text preserves the semantic commitments of graph predicates and whether a reconstructed graph can recover those commitments from text.
+LEMON evaluates lexical evidence for the semantic factors of an explicit graph edge.
+It is a research prototype for graph–text diagnostics: scores come with a factor trace.
 
-The current paper is deliberately narrow: it is about **graph-text alignment when an explicit source graph or relation inventory is available**. It is not a general text-text similarity system and it does not claim to replace semantic embeddings, AMR metrics, or expert human validation.
+For the fact `Alex Morgan --birthPlace--> Cedar Bay`, the packaged example scores
+“Alex Morgan was born in Cedar Bay” at 1.0 and “Alex Morgan visited Cedar Bay” at 0.55.
+It also shows why negation and an unrelated person's birthplace can be false positives.
 
-## Current scope
+## Install and try
 
-```text
-source graph / relation annotation + text
-        -> unified GraphText records
-        -> predicate factor inventory
-        -> forward KG->Text factor coverage
-        -> reverse Text->KG recoverability diagnostics
-        -> perturbation, ablation, and MINE-style comparisons
-```
-
-A predicate is treated as a small bundle of typed semantic factors. For example, `birthPlace` contains a person-like subject, a biographical relation, and a place-like object; biomedical predicates may encode chemical/protein roles, directed effects, polarity, causality, and evidence cues.
-
-## What the method does
-
-- Decomposes graph predicates into weighted semantic factors.
-- Scores how well predicate factors are expressed in text.
-- Scores how well source predicate factors survive in a reconstructed graph.
-- Gives partial credit when entities survive but relation meaning is weakened or lost.
-- Produces an auditable trace: missing role, missing relation cue, wrong direction, missing polarity, weak evidence, etc.
-- Compares this factor view with exact entity/triple signals and a MINE-style node/edge baseline.
-
-## What it does not claim
-
-- It is not a universal theory of meaning.
-- It is not a general-purpose text-text semantic similarity metric.
-- It is not a full text-to-KG extractor.
-- It is not a reproduction of the original KGGen/MINE benchmark.
-- It does not currently handle pragmatics such as irony, implicature, or presupposition.
-- It does not replace expert validation of predicate factor inventories.
-
-## Repository layout
-
-```text
-src/lemon_factor/        Core package: schema, factors, metrics, datasets, baselines
-paper/                   SPECOM/LNCS paper draft, tables, figures, references
-docs/                    Roadmap, claims audit, annotation instructions, milestone notes
-annotation/              Lightweight expert-review templates
-reports/                 Generated metric summaries and experiment reports
-configs/                 LLM model/adjudicator configs
-scripts/                 Utility scripts
-tests/                   Pytest test suite
-```
-
-Key documentation:
-
-- `docs/ROADMAP.md` - current near-term roadmap.
-- `docs/REPRODUCIBILITY.md` - exact local commands, expected outputs, and known warnings.
-- `docs/SUBMISSION_CHECKLIST.md` - paper/package checks before SPECOM submission.
-- `docs/CLAIMS_AND_METRICS_AUDIT.md` - safe wording for claims and metric caveats.
-- `docs/LINGUIST_VALIDATION.md` - compact task description for expert predicate validation.
-- `docs/annotation_guidelines.md` - older, broader annotation notes.
-- `docs/reference_sources.md` - external datasets and baseline references.
-
-## Quick start
-
-Install in editable mode with development and research dependencies:
+From a checkout, use Python 3.11 or newer. CI is configured for Python 3.11 and 3.12
+on Windows and Linux; see [validation status](docs/IMPLEMENTATION_STATUS.md) for checks actually run.
 
 ```bash
-python -m pip install -e ".[dev,research]"
+python -m venv .venv
 ```
 
-Run the test suite:
+Activate on Windows PowerShell:
 
-```bash
-python -m pytest -q
+```powershell
+.\.venv\Scripts\Activate.ps1
 ```
 
-Regenerate the vector baseline and radar profile from the repository root:
+Or on Linux/macOS:
 
 ```bash
-python scripts/run_embedding_baseline.py
+source .venv/bin/activate
 ```
 
 ```bash
-python scripts/make_radar_profile.py
+python -m pip install .
+python -m lemon_factor demo
+python -m lemon_factor demo --format json
 ```
 
-Build the paper:
+Installation may download dependencies. The installed demo needs no network, model,
+API key, dataset or LaTeX, and works from any directory. It does not write files.
+
+## Reproduce a small example
 
 ```bash
-cd paper
+python -m lemon_factor reproduce-demo --out artifacts/demo
 ```
+
+This writes `scores.json`, `summary.md` and `manifest.json`, including configuration
+and the SHA-256 of the packaged input. Existing outputs require `--overwrite`.
+The inputs are original synthetic examples, not a benchmark or a sample of expert annotations.
+
+## What the scores mean
+
+- **Lexical factor coverage** runs on text, names and relation cues. It does not resolve
+  negation, reliably bind relation cues to participants, or establish semantic entailment.
+- **Factor damage proxy** uses the generator's intended-damage metadata. Its perturbation
+  response and ablations describe the prescribed damage model, not independent error detection.
+  Older reports call this value `lemon_full`; new reports use `factor_damage_proxy`.
+- **Vector cosine** is a separate control. Choose `hashed-char`, `tfidf-char` or
+  `sentence-transformers` explicitly. Historical `char_ngram_vector_cosine`
+  does not identify which of the former implementation's two algorithms ran.
+
+The [pilot expert review](annotation/expert_trace_review/README.md) includes anonymized
+judgments and a reproducible calculation: 119/140 exact matches, ordinal alpha 0.873.
+The earlier [50-row inventory preparation workbook](annotation/linguist_review_pack/expert_validation_form.xlsx)
+is separate from this 35-row review.
+Agreement uses historical LEMON labels supplied to reviewers, not a new scorer run.
+
+## Development and research
 
 ```bash
-latexmk -pdf -interaction=nonstopmode main.tex
+python -m pip install -e ".[dev,plots]"
+python -m pytest -q -m "not artifacts"
+python -m build
 ```
 
-For the complete command sequence, expected outputs, and known warnings, see `docs/REPRODUCIBILITY.md`. For final paper/package checks, see `docs/SUBMISSION_CHECKLIST.md`.
+Optional extras: `data` (dataset tools), `plots`, `embeddings` (TF-IDF and dense
+models), and `research` (the previous combined dependency group).
 
-## Reproducing the current paper artifacts
+[Reproducibility](docs/REPRODUCIBILITY.md) separates installed-package examples from
+experiments requiring external datasets or historical local reports.
+[Result provenance](docs/RESULT_PROVENANCE.md) maps published numbers to inputs and commands.
 
-Most paper-ready results are already materialized in `reports/` and `paper/tables/`. The current paper uses these generated artifacts rather than requiring every upstream dataset conversion to be rerun.
+## Repository
 
-Important report files:
+- `src/lemon_factor/`: schemas, lexical coverage, perturbations, baselines and CLI.
+- `tests/`: unit fixtures, known-limit tests and optional historical artifact checks.
+- `resources/`: research factor inventories; demo resources are included in the package.
+- `paper/`: manuscript and historical tables.
+- `artifacts/`: new local outputs (ignored by Git).
+- [Architecture](docs/ARCHITECTURE.md), [report migration](docs/REPORT_FORMATS.md),
+  [historical development notes](docs/archive/README.md).
 
-```text
-reports/scoring_webnlg.json
-reports/scoring_drugprot.json
-reports/scoring_bc5cdr.json
-reports/paper_metric_sensitivity_drops.json
-reports/paper_ablation_gain.json
-reports/paper_llm_reliability_compact.json
-reports/llm_reliability_summary_3judges.json
-reports/metric_radar_comparison.json
-reports/radar_diagnostic_profile_values.json
-reports/embedding_baseline_perturbation.json
-reports/mine1_like_lemon_pilot.json
-reports/triple_f1_baseline.json
-```
+Citation metadata is in [CITATION.cff](CITATION.cff); the manuscript remains a draft.
+Original software is licensed under [Apache-2.0](LICENSE). This covers source code,
+scripts, tests and build configuration. Third-party dependencies and datasets retain
+their own terms; the software license does not assign publication rights to the manuscript
+or license the expert submissions.
 
-Important paper files:
+## Acknowledgments
 
-```text
-paper/main.tex
-paper/sections/*.tex
-paper/tables/*.tex
-paper/figures/*.tex
-```
-
-## Current main findings
-
-The current draft supports a restricted graph-text fidelity claim:
-
-- Forward LEMON-Factor on WebNLG: `0.7915`.
-- Reverse LEMON-Factor on WebNLG: `0.7789`.
-- Relation-evidence deletion barely changes exact entity-label coverage (`-0.0020`) but reduces Forward LEMON-Factor by `-0.2106`.
-- Node information is easier to recover than edge information in the MINE-style comparison.
-- Controlled perturbations show that LEMON-Factor reacts only to dimensions represented in the factor inventory; for example, polarity sensitivity is expected only where polarity is encoded.
-- LLM judges are used as an exploratory recoverability probe, not as gold validation.
-- The offline vector-space perturbation baseline keeps cosine similarity very high under most controlled edits; it is a topical/lexical reference signal, not a complete dense-embedding comparison.
-
-## Expert validation
-
-A compact expert-validation pack is available for a 2--3 day review. The easiest reviewer-facing version is the Excel folder:
-
-```text
-annotation/linguist_review_pack/
-annotation/linguist_review_pack/expert_validation_form.xlsx
-```
-
-The workbook contains 50 predicate-factor rows: 36 WebNLG, 12 DrugProt, and 2 BC5CDR examples. The expert only fills the yellow columns and checks whether the proposed factors are correct, sufficient, and role/direction/polarity-safe. The general protocol is documented in `docs/EXPERT_VALIDATION_PACK.md`. The source CSV remains available at `annotation/expert_validation_sample.csv`; the older minimal template remains available at `annotation/linguist_predicate_review_template.csv`.
-
-## Near-term development sequence
-
-Completed stabilization steps:
-
-1. Narrow paper positioning and documentation.
-2. Compact layer/profile table.
-3. Radar/spider chart based on perturbation-drop values.
-4. Offline vector-space perturbation baseline.
-5. Radar extension with MINE-style and Vector cosine traces.
-6. Expert-validation workbook prepared for a 2--3 day review.
-7. Paper narrative/style audit while preserving the 15-page limit.
-8. Reproducibility and submission-readiness documentation.
-
-Remaining before submission:
-
-1. Final author/affiliation and acknowledgement metadata.
-2. Final PDF/source package check.
-3. Optional integration of compact expert rates if the linguist review returns in time.
-
-Future work may generalize this into an LLM-assisted layered semantic graph metric for text-text comparison, but the current paper should remain a controlled graph-text fidelity study.
+The research was financially supported by the Russian Science Foundation (project 26-11-00193).

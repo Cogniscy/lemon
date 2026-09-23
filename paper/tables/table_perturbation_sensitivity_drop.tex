@@ -1,11 +1,11 @@
 \begin{table}[t]
 \centering
 \scriptsize
-\caption{Perturbation sensitivity as mean score drop. Larger values indicate that a metric reacts more strongly to the perturbation; unchanged or small drops mark blind spots rather than missing computations.}
+\caption{Mean score drop under controlled perturbations. Damage proxy uses intended-damage metadata; its response is prescribed rather than inferred from text.}
 \label{tab:perturbation-sensitivity-drop}
 \begin{tabular}{lrrrrr}
 \toprule
-Perturbation & Entity & Triple & Node/edge & Label-only & LEMON-Factor \\
+Perturbation & Entity & Triple & Node/edge & Label-only & Damage proxy \\
 \midrule
 Node deletion & 0.326 & 0.675 & 0.657 & 0.323 & 0.352 \\
 Edge deletion & 0.215 & 0.655 & 0.637 & 0.482 & 0.281 \\

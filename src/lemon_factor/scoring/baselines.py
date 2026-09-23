@@ -25,7 +25,7 @@ class EdgeScore:
     label_match: float
     triple_match: float
     lemon_label_only: float
-    lemon_full: float
+    factor_damage_proxy: float
 
 
 _GENERIC_CUES: dict[str, list[str]] = {
@@ -94,7 +94,7 @@ _GENERIC_CUES: dict[str, list[str]] = {
 }
 
 # Variant-specific factor damage. These values are used only for the deterministic
-# LEMON-full proxy in perturbation scoring. LLM adjudication is handled in a later
+# Damage proxy proxy in perturbation scoring. LLM adjudication is handled in a later
 # patch and should not be confused with this proxy.
 _TARGET_TO_GROUPS: dict[str, set[str]] = {
     "entity_presence": {"entity_presence", "participant_roles"},
@@ -269,7 +269,7 @@ def lemon_factor_proxy_score(
     return max(0.0, min(1.0, retained))
 
 
-def _lemon_full_proxy(
+def _factor_damage_proxy_proxy(
     record: PerturbedGraphTextRecord,
     edge_predicate: str,
     inventory: PredicateDecompositionSet,
@@ -295,13 +295,13 @@ def score_edge(
     pred = str(edge.get("pred", ""))
     label = predicate_match(record.text, pred)
     triple = 1.0 if subj_present and obj_present and label > 0.0 else 0.0
-    lemon_full = _lemon_full_proxy(record, pred, inventory)
+    factor_damage_proxy = _factor_damage_proxy_proxy(record, pred, inventory)
     return EdgeScore(
         entity_pair_recall=entity_pair_recall,
         label_match=label,
         triple_match=triple,
         lemon_label_only=label,
-        lemon_full=lemon_full,
+        factor_damage_proxy=factor_damage_proxy,
     )
 
 
@@ -346,7 +346,7 @@ def score_record(
     mine_edge = triple_match
     mine_style = _harmonic(mine_node, mine_edge)
     lemon_label_only = _safe_mean(score.lemon_label_only for score in edge_scores)
-    lemon_full = _safe_mean(score.lemon_full for score in edge_scores)
+    factor_damage_proxy = _safe_mean(score.factor_damage_proxy for score in edge_scores)
     return {
         "entity_recall": round(entity_recall, 6),
         "entity_jaccard": round(_entity_jaccard(record), 6),
@@ -356,5 +356,5 @@ def score_record(
         "mine_edge": round(mine_edge, 6),
         "mine_style": round(mine_style, 6),
         "lemon_label_only": round(lemon_label_only, 6),
-        "lemon_full": round(lemon_full, 6),
+        "factor_damage_proxy": round(factor_damage_proxy, 6),
     }

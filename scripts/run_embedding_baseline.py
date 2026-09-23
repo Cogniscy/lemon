@@ -1,6 +1,6 @@
 """Compute a vector-space perturbation baseline for graph-text pairs.
 
-The default backend is an offline hashed character n-gram cosine. It is a
+The default backend is an explicit offline hashed character n-gram cosine. It is a
 reproducible vector-space baseline, not a dense semantic embedding. A dense
 sentence-transformer backend can be requested with --backend sentence-transformers
 when the optional model dependency and model files are available.
@@ -14,6 +14,8 @@ import json
 import math
 import re
 from collections import Counter, defaultdict
+from importlib.metadata import version
+import platform
 from dataclasses import dataclass
 from pathlib import Path
 from statistics import mean, pstdev
@@ -25,8 +27,8 @@ DEFAULT_INPUTS = [
     ROOT / "data" / "biomedical" / "perturbed" / "drugprot_perturbed.jsonl",
     ROOT / "data" / "biomedical" / "perturbed" / "bc5cdr_perturbed.jsonl",
 ]
-OUT_JSON = ROOT / "reports" / "embedding_baseline_perturbation.json"
-OUT_MD = ROOT / "reports" / "embedding_baseline_perturbation.md"
+OUT_JSON = ROOT / "artifacts" / "embedding_baseline_perturbation.json"
+OUT_MD = ROOT / "artifacts" / "embedding_baseline_perturbation.md"
 
 VARIANT_LABELS = {
     "node_deletion": "Node deletion",
@@ -116,49 +118,33 @@ def _sparse_cosine(a: dict[int, float], b: dict[int, float]) -> float:
     return sum(value * b.get(key, 0.0) for key, value in a.items())
 
 
-def hash_char_cosines(
+def hashed_char_cosines(
     pairs: Sequence[Pair], *, dims: int = 2**18, min_n: int = 3, max_n: int = 5
 ) -> list[float]:
-    """Fast offline vector-space cosine using sklearn when available.
+    """Pure-Python hashed character counts; no optional backend or truncation."""
+    return [max(0.0, min(1.0, _sparse_cosine(
+        _hashed_char_ngram_vector(pair.original_text, dims, min_n, max_n),
+        _hashed_char_ngram_vector(pair.perturbed_text, dims, min_n, max_n),
+    ))) for pair in pairs]
 
-    The function name is kept for CLI/backward compatibility. It uses a
-    character n-gram TF-IDF representation with a capped vocabulary. If sklearn
-    is unavailable, it falls back to a smaller pure-Python hashed representation.
-    """
+
+def tfidf_char_cosines(
+    pairs: Sequence[Pair], *, dims: int = 2**18, min_n: int = 3, max_n: int = 5
+) -> list[float]:
+    """Fit TF-IDF on both sides of the selected pairs, explicitly."""
     try:
-        from sklearn.feature_extraction.text import TfidfVectorizer  # type: ignore
-    except Exception:
-        scores: list[float] = []
-        # Pure-Python fallback. Use at most 4096 characters per side to keep this
-        # path usable on machines without sklearn.
-        for pair in pairs:
-            original_vec = _hashed_char_ngram_vector(
-                pair.original_text[:4096], dims, min_n, max_n
-            )
-            perturbed_vec = _hashed_char_ngram_vector(
-                pair.perturbed_text[:4096], dims, min_n, max_n
-            )
-            scores.append(max(0.0, min(1.0, _sparse_cosine(original_vec, perturbed_vec))))
-        return scores
-
-    texts: list[str] = []
-    for pair in pairs:
-        texts.append(pair.original_text)
-        texts.append(pair.perturbed_text)
+        from sklearn.feature_extraction.text import TfidfVectorizer
+    except ImportError as exc:
+        raise RuntimeError("tfidf-char requires scikit-learn; install .[embeddings] or select hashed-char") from exc
+    texts = [text for pair in pairs for text in (pair.original_text, pair.perturbed_text)]
     vectorizer = TfidfVectorizer(
-        analyzer="char_wb",
-        ngram_range=(min_n, max_n),
-        lowercase=True,
-        strip_accents="unicode",
-        max_features=min(dims, 50000),
-        norm="l2",
+        analyzer="char_wb", ngram_range=(min_n, max_n), lowercase=True,
+        strip_accents="unicode", max_features=min(dims, 50000), norm="l2",
     )
     matrix = vectorizer.fit_transform(texts)
-    scores = []
-    for idx in range(0, matrix.shape[0], 2):
-        cosine = matrix[idx].multiply(matrix[idx + 1]).sum()
-        scores.append(max(0.0, min(1.0, float(cosine))))
-    return scores
+    return [max(0.0, min(1.0, float(matrix[i].multiply(matrix[i+1]).sum())))
+            for i in range(0, matrix.shape[0], 2)]
+
 
 def sentence_transformer_cosines(pairs: Sequence[Pair], model_name: str, batch_size: int) -> list[float]:
     try:
@@ -166,7 +152,7 @@ def sentence_transformer_cosines(pairs: Sequence[Pair], model_name: str, batch_s
     except Exception as exc:  # pragma: no cover - depends on optional environment
         raise RuntimeError(
             "sentence-transformers is not installed. Install optional research dependencies "
-            "or use --backend hash-char."
+            "or use --backend hashed-char."
         ) from exc
 
     model = SentenceTransformer(model_name)
@@ -221,6 +207,12 @@ def summarize(pairs: Sequence[Pair], cosines: Sequence[float]) -> dict:
 
 
 def build_report(args: argparse.Namespace) -> dict:
+    if args.backend == "hash-char":
+        raise ValueError("hash-char is ambiguous legacy behavior; choose hashed-char or tfidf-char explicitly")
+    if args.hash_dims < 1 or not 1 <= args.min_ngram <= args.max_ngram:
+        raise ValueError("Require positive hash dimensions and 1 <= min-ngram <= max-ngram")
+    if args.limit_per_variant is not None and args.limit_per_variant < 1:
+        raise ValueError("limit-per-variant must be positive")
     input_paths = [Path(path).resolve() for path in args.inputs]
     pairs = load_pairs(input_paths, args.limit_per_variant)
     if not pairs:
@@ -228,20 +220,19 @@ def build_report(args: argparse.Namespace) -> dict:
 
     backend = args.backend
     backend_note = ""
-    if backend == "hash-char":
-        cosines = hash_char_cosines(
+    if backend in {"hashed-char", "tfidf-char"}:
+        scorer = hashed_char_cosines if backend == "hashed-char" else tfidf_char_cosines
+        cosines = scorer(
             pairs, dims=args.hash_dims, min_n=args.min_ngram, max_n=args.max_ngram
         )
-        backend_name = "char_ngram_vector_cosine"
-        backend_note = (
-            "Offline character n-gram vector cosine. The implementation uses sklearn "
-            "TF-IDF when available and a bounded hashed fallback otherwise. This is a "
-            "reproducible vector-space baseline, not a dense semantic embedding."
-        )
+        backend_name = "hashed_char_cosine" if backend == "hashed-char" else "tfidf_char_cosine"
+        backend_note = "Explicit character n-gram cosine; not a dense semantic embedding. No automatic fallback."
         backend_params = {
             "hash_dims": args.hash_dims,
             "min_ngram": args.min_ngram,
             "max_ngram": args.max_ngram,
+            "fit_scope": "none" if backend == "hashed-char" else "both sides of all selected pairs",
+            "max_features": None if backend == "hashed-char" else min(args.hash_dims, 50000),
         }
     elif backend == "sentence-transformers":
         cosines = sentence_transformer_cosines(pairs, args.model, args.batch_size)
@@ -254,6 +245,9 @@ def build_report(args: argparse.Namespace) -> dict:
     summary = summarize(pairs, cosines)
     return {
         "status": "passed",
+        "schema_version": "vector-baseline-v2",
+        "input_sha256": {str(path): hashlib.sha256(path.read_bytes()).hexdigest() for path in input_paths},
+        "library_versions": {"python": platform.python_version(), **({"scikit-learn": version("scikit-learn")} if backend == "tfidf-char" else {}), **({"sentence-transformers": version("sentence-transformers")} if backend == "sentence-transformers" else {})},
         "backend": backend_name,
         "backend_note": backend_note,
         "backend_params": backend_params,
@@ -316,7 +310,7 @@ def write_markdown(report: dict, path: Path) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run vector-space baseline on perturbation pairs.")
-    parser.add_argument("--backend", choices=["hash-char", "sentence-transformers"], default="hash-char")
+    parser.add_argument("--backend", choices=["hashed-char", "tfidf-char", "sentence-transformers", "hash-char"], default="hashed-char")
     parser.add_argument("--model", default="sentence-transformers/all-MiniLM-L6-v2")
     parser.add_argument("--batch-size", type=int, default=32)
     parser.add_argument("--hash-dims", type=int, default=2**18)
@@ -328,7 +322,10 @@ def main() -> None:
     parser.add_argument("inputs", nargs="*", default=[str(path) for path in DEFAULT_INPUTS])
     args = parser.parse_args()
 
-    report = build_report(args)
+    try:
+        report = build_report(args)
+    except (ValueError, RuntimeError, OSError) as exc:
+        parser.exit(1, f"Error: {exc}\n")
     args.json.parent.mkdir(parents=True, exist_ok=True)
     args.json.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     write_markdown(report, args.md)
