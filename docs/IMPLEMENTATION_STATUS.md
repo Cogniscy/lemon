@@ -55,23 +55,21 @@ Exact agreement: 119/140. Ordinal alpha: 0.8726722592; interval-rank alpha:
 0.8710995016. Both independently match the krippendorff package to 1e-12.
 The manuscript now reports ordinal alpha 0.873 and explains the pilot's limits.
 
-## Remote CI blocker
+## Remote publication and CI
 
-The user approved the separate 33-file CI-only branch and subsequent merge into
-the default branch (master). The approved request is below the review size limit,
-but GitHub returned HTTP 403: Resource not accessible by integration.
-Local SSH authentication also fails, and HTTPS has no working credentials.
-No branch, commit, pull request or workflow run has been created remotely.
-Contents and Workflows write access, or working local Git authentication, is needed.
-The earlier full-tree request exceeded the automatic review size limit; the
-separately approved reduced request is blocked by authentication instead.
-Retry on 2026-09-23 confirmed both blockers.
-The complete implementation is prepared on local branch improvement/reproducible-repository.
-Details: CI_REVIEW.md. The remote master branch remains unchanged.
+Git authentication was restored with Git Credential Manager on 2026-09-23.
+The maintainer explicitly approved publication of all 122 files, including anonymized
+expert judgments. Branch improvement/reproducible-repository is published:
+https://github.com/Cogniscy/lemon/pull/1
+
+The first remote run exposed an overly strict floating-point equality assertion on
+Python 3.12 (differences below 4e-16). The regression test now compares coefficient
+values with absolute tolerance 1e-12 and retains exact checks for counts and metadata.
+Merge into master is authorized after successful Windows/Linux Python 3.11/3.12 CI.
 
 ## Still requiring input or further verification
 
-- Working GitHub write access; Linux and remote Actions results remain unverified.
+- Final GitHub Actions matrix and merge status are recorded on PR #1.
 - Apache-2.0 applied following the maintainer instruction to proceed. Funding
   acknowledgment: Russian Science Foundation, project 26-11-00193. The specific
   grant agreement and institutional rights arrangements were not legally reviewed.

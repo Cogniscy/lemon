@@ -48,7 +48,14 @@ def test_anonymized_pilot_reproduces_saved_report():
     report = summarize(ratings)
     expected = json.loads((path/"summary.json").read_text(encoding="utf-8"))
     # JSON converts the declared tuple of categories to a list.
-    assert json.loads(json.dumps(report)) == expected
+    actual = json.loads(json.dumps(report))
+    assert actual.keys() == expected.keys()
+    for key, value in expected.items():
+        # Floating reductions can differ in the last bits across Python versions.
+        if isinstance(value, float) or key == "wilson_95":
+            assert actual[key] == pytest.approx(value, rel=0, abs=1e-12), key
+        else:
+            assert actual[key] == value, key
     assert report["exact_matches"] == 119
     assert report["judgments"] == 140
     assert report["majority_rows"] == 28

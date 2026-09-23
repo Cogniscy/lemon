@@ -1,6 +1,6 @@
 # Proposed CI-only branch
 
-Status: publication and subsequent merge approved by the user; blocked by GitHub write access (HTTP 403).
+Status: full publication authorized and completed; PR #1 is awaiting successful CI.
 
 Base: 723077d07ce00baf8aee00dd73fd500358052716 (current remote master when inspected).
 Suggested branch: validation/package-and-ci-20260922.
@@ -63,3 +63,13 @@ Once Git write access works, push this branch, open a pull request against `mast
 and merge after all four CI matrix jobs pass. Local master remains at the original
 base until remote validation. The earlier file list describes the reduced request,
 not the complete local branch.
+
+## Publication update
+
+Git authentication is restored. The maintainer explicitly authorized the complete
+122-file payload, including anonymized expert judgments. PR #1 is published:
+https://github.com/Cogniscy/lemon/pull/1
+Earlier access blockers above describe the preparation history and are resolved.
+Python 3.12 exposed sub-4e-16 floating-point differences in the expert-review fixture;
+coefficient comparison now uses a strict absolute 1e-12 tolerance. Counts and metadata
+remain exact. Merge remains conditional on a successful final CI matrix.
